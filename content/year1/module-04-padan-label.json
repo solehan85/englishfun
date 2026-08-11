@@ -1,0 +1,129 @@
+{
+  "moduleId": "y1_sfaf_reading_padan_label",
+  "title": {
+    "bm": "Padan Label",
+    "en": "Match the Label"
+  },
+  "year": 1,
+  "world": "self_family_friends",
+  "skill": "reading",
+  "mechanicType": "label_match",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "instructions": {
+    "en": "Read the word. Tap the picture that matches it."
+  },
+  "feedback": {
+    "correct": ["You read it right!", "Great reading!", "That's the word!"],
+    "incorrect": ["Read the word again carefully.", "Not quite — look at the letters again."],
+    "hint": "Sound out the first letter of the word."
+  },
+  "designNote": "Modul ini membina daripada Modul 1 & 3 (fonik & tracing) kepada pengecaman perkataan penuh (sight word reading), bukan sekadar huruf. Kebanyakan imej REUSE daripada Modul 1-2; hanya 2 aset baharu diperlukan (house_icon, ball_icon). Setiap perkataan disertakan 'labelContext' — di mana label ini 'muncul' dalam dunia permainan, supaya teks tidak terpencil (keperluan DSKP: teks mesti wujud dalam persekitaran, bukan disenaraikan berasingan).",
+  "items": [
+    {
+      "id": "pl001", "difficultyTier": 1,
+      "targetWord": "Mum", "imageAsset": "mother_figure",
+      "labelContext": "Label pada gambar keluarga di dinding rumah",
+      "distractorImages": ["family_cat", "house_icon"]
+    },
+    {
+      "id": "pl002", "difficultyTier": 1,
+      "targetWord": "Dad", "imageAsset": "father_figure",
+      "labelContext": "Label pada gambar keluarga di dinding rumah",
+      "distractorImages": ["ball_icon", "pet_dog"]
+    },
+    {
+      "id": "pl003", "difficultyTier": 1,
+      "targetWord": "Baby", "imageAsset": "baby_sibling",
+      "labelContext": "Label pada buaian bayi dalam bilik",
+      "distractorImages": ["house_icon", "girl_figure"]
+    },
+    {
+      "id": "pl004", "difficultyTier": 2,
+      "targetWord": "Sister", "imageAsset": "sister_figure",
+      "labelContext": "Label pada pintu bilik kakak",
+      "distractorImages": ["brother_figure", "mother_figure"]
+    },
+    {
+      "id": "pl005", "difficultyTier": 2,
+      "targetWord": "Brother", "imageAsset": "brother_figure",
+      "labelContext": "Label pada pintu bilik abang",
+      "distractorImages": ["sister_figure", "father_figure"]
+    },
+    {
+      "id": "pl006", "difficultyTier": 1,
+      "targetWord": "Family", "imageAsset": "family_group",
+      "labelContext": "Label pada album gambar keluarga",
+      "distractorImages": ["friend_amir", "house_icon"]
+    },
+    {
+      "id": "pl007", "difficultyTier": 2,
+      "targetWord": "Hand", "imageAsset": "hand_icon",
+      "labelContext": "Label pada poster 'basuh tangan' di dapur",
+      "distractorImages": ["nose_icon", "eye_icon"]
+    },
+    {
+      "id": "pl008", "difficultyTier": 2,
+      "targetWord": "Nose", "imageAsset": "nose_icon",
+      "labelContext": "Label pada carta bahagian badan di bilik darjah",
+      "distractorImages": ["eye_icon", "teeth_icon"]
+    },
+    {
+      "id": "pl009", "difficultyTier": 2,
+      "targetWord": "Eye", "imageAsset": "eye_icon",
+      "labelContext": "Label pada carta bahagian badan di bilik darjah",
+      "distractorImages": ["nose_icon", "hand_icon"]
+    },
+    {
+      "id": "pl010", "difficultyTier": 2,
+      "targetWord": "Teeth", "imageAsset": "teeth_icon",
+      "labelContext": "Label pada poster 'gosok gigi' di bilik air",
+      "distractorImages": ["eye_icon", "nose_icon"]
+    },
+    {
+      "id": "pl011", "difficultyTier": 3,
+      "targetWord": "Pet", "imageAsset": "pet_dog",
+      "labelContext": "Label pada mangkuk makanan haiwan peliharaan",
+      "distractorImages": ["family_cat", "girl_figure"],
+      "note": "Pet vs Cat — cabaran pembezaan makna umum vs khusus (HOTS)"
+    },
+    {
+      "id": "pl012", "difficultyTier": 3,
+      "targetWord": "Cat", "imageAsset": "family_cat",
+      "labelContext": "Label pada mangkuk makanan kucing",
+      "distractorImages": ["pet_dog", "brother_figure"],
+      "note": "Cat vs Pet — cabaran pembezaan makna umum vs khusus (HOTS)"
+    },
+    {
+      "id": "pl013", "difficultyTier": 1,
+      "targetWord": "Girl", "imageAsset": "girl_figure",
+      "labelContext": "Label pada pintu tandas sekolah",
+      "distractorImages": ["friend_amir", "baby_sibling"]
+    },
+    {
+      "id": "pl014", "difficultyTier": 2,
+      "targetWord": "Friend", "imageAsset": "friend_amir",
+      "labelContext": "Label pada halaman buku skrap 'rakan-rakanku'",
+      "distractorImages": ["sister_figure", "girl_figure"]
+    },
+    {
+      "id": "pl015", "difficultyTier": 1,
+      "targetWord": "House", "imageAsset": "house_icon",
+      "labelContext": "Label pada peta dunia 'World of Self, Family and Friends' (ikon rumah sebagai hub)",
+      "distractorImages": ["family_group", "ball_icon"]
+    },
+    {
+      "id": "pl016", "difficultyTier": 1,
+      "targetWord": "Ball", "imageAsset": "ball_icon",
+      "labelContext": "Label pada kotak mainan dalam bilik",
+      "distractorImages": ["pet_dog", "house_icon"]
+    }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": {
+      "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1
+    },
+    "passThreshold": 3
+  }
+}

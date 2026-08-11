@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>World Map — Eduverse English</title>
+<style>
+  :root{
+    --bg-1:#fff6e5; --bg-2:#e5f6ff;
+    --ink:#2b2b3d; --card:#ffffff;
+    --brand:#5b4bff; --brand-dark:#3f31c9;
+    --good:#2ecc71; --good-dark:#1f9e57;
+    --muted:#8a8aa3; --muted-dark:#6d6d85;
+    --radius:20px; --shadow:0 8px 0 rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    color:var(--ink); min-height:100%; padding:16px 12px 40px;
+  }
+  .wrap{ max-width:640px; margin:0 auto; }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:20px;
+  }
+  .welcome{ font-weight:800; font-size:1.05rem; }
+  .welcome-sub{ font-weight:600; font-size:.85rem; color:#6a6a80; }
+  .logout-btn{
+    border:none; cursor:pointer; background:#f0eeff; color:var(--brand-dark); font-weight:800;
+    padding:10px 14px; border-radius:14px; font-size:.85rem;
+  }
+  .logout-btn:active{ transform:translateY(2px); }
+
+  .world-section{ margin-bottom:26px; }
+  .world-header{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .world-emoji{ font-size:1.8rem; }
+  .world-title-primary{ font-weight:800; font-size:1.15rem; margin:0; }
+  .world-title-secondary{ font-weight:600; font-size:.85rem; color:#6a6a80; margin:0; }
+
+  .module-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (min-width:480px){ .module-grid{ grid-template-columns:1fr 1fr 1fr; } }
+
+  .module-tile{
+    background:var(--card); border-radius:18px; box-shadow:var(--shadow);
+    padding:16px 12px; text-align:center; cursor:pointer; border:none;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    font-family:inherit; color:var(--ink);
+  }
+  .module-tile:active{ transform:translateY(6px); box-shadow:none; }
+  .module-tile.locked{ opacity:.6; cursor:default; }
+  .module-tile.locked:active{ transform:none; box-shadow:var(--shadow); }
+  .module-emoji{ font-size:2rem; }
+  .module-title-primary{ font-weight:800; font-size:.92rem; line-height:1.2; }
+  .module-title-secondary{ font-weight:600; font-size:.72rem; color:#6a6a80; line-height:1.1; }
+  .module-status{
+    font-size:.72rem; font-weight:800; border-radius:999px; padding:3px 10px; margin-top:2px;
+  }
+  .status-new{ background:#f0eeff; color:var(--brand-dark); }
+  .status-played{ background:#fff3d6; color:#a8760a; }
+  .status-mastered{ background:#e3fbec; color:var(--good-dark); }
+  .status-explored{ background:#fdeee0; color:#b85c26; }
+  .status-soon{ background:#f0f0f4; color:var(--muted-dark); }
+
+  .empty-note{ color:#8a8aa3; font-weight:600; font-size:.9rem; padding:8px 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="welcome" id="welcomeText">Hai!</div>
+      <div class="welcome-sub" id="yearText"></div>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Log Out</button>
+  </div>
+
+  <div id="worldsContainer"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+  import {
+    getFirestore, doc, getDoc, collection, query, where, getDocs
+  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+  /* ============================================================
+     Firebase config — same object duplicated in login.html and
+     every modules/*.html file (each screen is a self-contained
+     page with no shared JS import). The API key is a public client
+     identifier; access is controlled by Firestore security rules.
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtlViRgm26PuMPvNC9GoKA9hBwtYT-HEg",
+    authDomain: "english-dbcda.firebaseapp.com",
+    projectId: "english-dbcda",
+    storageBucket: "english-dbcda.firebasestorage.app",
+    messagingSenderId: "174382751098",
+    appId: "1:174382751098:web:7736264ea3153970cd8ac3"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Active-session pointer only — the actual student record lives in Firestore.
+  const STUDENT_ID_KEY = "eduverse_student_id";
+
+  async function getActiveStudent(){
+    const id = localStorage.getItem(STUDENT_ID_KEY);
+    if (!id) return null;
+    const snap = await getDoc(doc(db, "students", id));
+    if (!snap.exists()) return null;
+    return { studentId: snap.id, ...snap.data() };
+  }
+
+  async function loadProgressMap(studentId){
+    const q = query(collection(db, "progress"), where("studentId", "==", studentId));
+    const snap = await getDocs(q);
+    const map = {};
+    snap.forEach(d => { map[d.data().moduleId] = d.data(); });
+    return map;
+  }
+
+  /* ============================================================
+     Module manifest (MVP, 18 modules). Only Module 1 has a playable
+     game file so far — the rest show a "Coming soon" tile until
+     they're built from the same template.
+     ============================================================ */
+  const MODULES = [
+    { id:"y1_sfaf_listening_bunyi_padan", num:1, world:"self_family_friends", skill:"listening", year:1, title:{bm:"Bunyi & Padan", en:"Sound & Match"}, path:"modules/module-01-bunyi-padan.html" },
+    { id:"y1_sfaf_speaking_sapa_balas", num:2, world:"self_family_friends", skill:"speaking", year:1, title:{bm:"Sapa & Balas", en:"Greet & Reply"}, path:"modules/module-02-sapa-balas.html" },
+    { id:"y1_sfaf_writing_jejak_huruf", num:3, world:"self_family_friends", skill:"writing", year:1, title:{bm:"Jejak Huruf", en:"Letter Trace"}, path:"modules/module-03-jejak-huruf.html" },
+    { id:"y1_sfaf_reading_padan_label", num:4, world:"self_family_friends", skill:"reading", year:1, title:{bm:"Padan Label", en:"Match the Label"}, path:"modules/module-04-padan-label.html" },
+    { id:"y1_sfaf_writing_bina_ayat_mini", num:5, world:"self_family_friends", skill:"writing", year:1, title:{bm:"Bina Ayat Mini", en:"Build a Mini Sentence"}, path:"modules/module-05-bina-ayat-mini.html" },
+    { id:"y1_stories_listening_ikut_arahan", num:6, world:"stories", skill:"listening", year:1, title:{bm:"Ikut Arahan", en:"Follow the Instruction"}, path:"modules/module-06-ikut-arahan.html" },
+    { id:"y1_stories_languagearts_puisi_lagu", num:7, world:"stories", skill:"language_arts", year:1, title:{bm:"Zon Puisi & Lagu", en:"Poem & Song Zone"}, path:"modules/module-07-puisi-lagu.html", noGate:true },
+    { id:"y2_stories_languagearts_bina_ceritaku", num:8, world:"stories", skill:"language_arts", year:2, title:{bm:"Bina Ceritaku", en:"Build My Story"}, path:"modules/module-08-bina-ceritaku.html" },
+    { id:"y1_stories_reading_susun_baca", num:9, world:"stories", skill:"reading", year:1, title:{bm:"Susun & Baca", en:"Blend & Read"}, path:"modules/module-09-susun-baca.html" },
+    { id:"y2_stories_reading_cari_dalam_dunia", num:10, world:"stories", skill:"reading", year:2, title:{bm:"Cari dalam Dunia", en:"Find It in the World"}, path:"modules/module-10-cari-dalam-dunia.html" },
+    { id:"y1_knowledge_languagearts_kedai_mini", num:11, world:"knowledge", skill:"language_arts", year:1, title:{bm:"Kedai Mini", en:"Mini Shop"}, path:"modules/module-11-kedai-mini.html" },
+    { id:"y1_knowledge_languagearts_puzzle_alam_sekitar", num:12, world:"knowledge", skill:"language_arts", year:1, title:{bm:"Puzzle Alam Sekitar", en:"Environment Puzzle"}, path:"modules/module-12-puzzle-alam-sekitar.html" },
+    { id:"y1_knowledge_speaking_suka_tak_suka", num:13, world:"knowledge", skill:"speaking", year:1, title:{bm:"Suka/Tak Suka", en:"Like/Don't Like"}, path:"modules/module-13-suka-tak-suka.html" },
+    { id:"y2_knowledge_speaking_nama_huraikan", num:14, world:"knowledge", skill:"speaking", year:2, title:{bm:"Nama & Huraikan", en:"Name & Describe"}, path:"modules/module-14-nama-huraikan.html" },
+    { id:"y2_knowledge_listening_dengar_perincian", num:15, world:"knowledge", skill:"listening", year:2, title:{bm:"Dengar & Perincian", en:"Listen for Detail"}, path:"modules/module-15-dengar-perincian.html" },
+    { id:"y2_knowledge_reading_faham_perincian", num:16, world:"knowledge", skill:"reading", year:2, title:{bm:"Faham Perincian", en:"Understand the Detail"}, path:"modules/module-16-faham-perincian.html" },
+    { id:"y2_knowledge_writing_bina_ayat_kreatif", num:17, world:"knowledge", skill:"writing", year:2, title:{bm:"Bina Ayat Kreatif", en:"Build a Creative Sentence"}, path:"modules/module-17-bina-ayat-kreatif.html" },
+    { id:"y2_knowledge_listening_bunyi_padan_lanjutan", num:18, world:"knowledge", skill:"listening", year:2, title:{bm:"Bunyi & Padan Lanjutan", en:"Sound & Match: Blends"}, path:"modules/module-18-bunyi-padan-lanjutan.html" }
+  ];
+
+  const WORLDS = [
+    { key:"self_family_friends", emoji:"🏡", bm:"Dunia Diri, Keluarga & Kawan", en:"World of Self, Family and Friends" },
+    { key:"stories", emoji:"📚", bm:"Dunia Cerita", en:"World of Stories" },
+    { key:"knowledge", emoji:"🌍", bm:"Dunia Pengetahuan", en:"World of Knowledge" }
+  ];
+
+  const SKILL_EMOJI = { listening:"🎧", speaking:"🗣️", reading:"📖", writing:"✍️", language_arts:"🎨" };
+
+  function statusBadge(mod, progressMap){
+    if (!mod.path) return { cls:"status-soon", label:"Coming Soon" };
+    const progress = progressMap[mod.id];
+    if (mod.noGate) {
+      // No PL/mastery concept for this module (see module-07's designNote) —
+      // a distinct badge avoids implying it was graded like the others.
+      return progress ? { cls:"status-explored", label:"✓ Explored" } : { cls:"status-new", label:"Not Tried Yet" };
+    }
+    if (!progress) return { cls:"status-new", label:"Not Played Yet" };
+    if (progress.masteryAchieved) return { cls:"status-mastered", label:"⭐ Mastered" };
+    return { cls:"status-played", label:"Tried" };
+  }
+
+  async function main(){
+    const student = await getActiveStudent();
+    if (!student) { window.location.href = "login.html"; return; }
+
+    document.getElementById("welcomeText").textContent = "Hi, " + student.name + "! 👋";
+    document.getElementById("yearText").textContent = "Year " + student.year;
+
+    const progressMap = await loadProgressMap(student.studentId);
+
+    const container = document.getElementById("worldsContainer");
+    WORLDS.forEach(world => {
+      const modules = MODULES.filter(m => m.world === world.key && m.year === student.year);
+
+    const section = document.createElement("div");
+    section.className = "world-section";
+
+    const header = document.createElement("div");
+    header.className = "world-header";
+    header.innerHTML = `
+      <div class="world-emoji">${world.emoji}</div>
+      <div>
+        <p class="world-title-primary">${world.en}</p>
+        <p class="world-title-secondary">${world.bm}</p>
+      </div>`;
+    section.appendChild(header);
+
+    if (modules.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-note";
+      empty.textContent = "No modules for Year " + student.year + " in this world yet.";
+      section.appendChild(empty);
+    } else {
+      const grid = document.createElement("div");
+      grid.className = "module-grid";
+      modules.forEach(mod => {
+        const badge = statusBadge(mod, progressMap);
+        const tile = document.createElement("button");
+        tile.className = "module-tile" + (mod.path ? "" : " locked");
+        tile.innerHTML = `
+          <div class="module-emoji">${SKILL_EMOJI[mod.skill] || "🎮"}</div>
+          <div class="module-title-primary">${mod.title.en}</div>
+          <div class="module-title-secondary">${mod.title.bm}</div>
+          <div class="module-status ${badge.cls}">${badge.label}</div>`;
+        if (mod.path) {
+          tile.addEventListener("click", () => { window.location.href = mod.path; });
+        } else {
+          tile.disabled = true;
+        }
+        grid.appendChild(tile);
+      });
+      section.appendChild(grid);
+    }
+
+    container.appendChild(section);
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem(STUDENT_ID_KEY);
+      window.location.href = "login.html";
+    });
+  }
+
+  await main();
+</script>
+</body>
+</html>

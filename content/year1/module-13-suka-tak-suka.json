@@ -1,0 +1,36 @@
+{
+  "moduleId": "y1_knowledge_speaking_suka_tak_suka",
+  "title": { "bm": "Suka/Tak Suka", "en": "Like/Don't Like" },
+  "year": 1,
+  "world": "knowledge",
+  "skill": "speaking",
+  "mechanicType": "selection_dialogue",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "designNote": "Sambungan mekanik 'preference binary' daripada Modul 2 (Sapa & Balas), kini dalam konteks World of Knowledge — nilai murni, keselamatan, dan kesedaran alam sekitar, selaras keperluan silang-kurikulum DSKP.",
+  "instructions": { "en": "Listen to the question. Tap how you feel about it." },
+  "feedback": {
+    "correct": ["Thanks for sharing!", "Good answer!"],
+    "hint": "There is no wrong answer — just say what you think."
+  },
+  "items": [
+    { "id": "st001", "difficultyTier": 1, "npcCharacter": "teacher", "npcLine": { "en": "Do you like keeping our classroom clean?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st002", "difficultyTier": 1, "npcCharacter": "friend_amir", "npcLine": { "en": "Do you like planting trees?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st003", "difficultyTier": 1, "npcCharacter": "mum", "npcLine": { "en": "Do you like saving water?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st004", "difficultyTier": 2, "npcCharacter": "teacher", "npcLine": { "en": "Do you like wearing a helmet on your bicycle?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st005", "difficultyTier": 2, "npcCharacter": "dad", "npcLine": { "en": "Do you like crossing the road carefully?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st006", "difficultyTier": 2, "npcCharacter": "friend_siti", "npcLine": { "en": "Do you like recycling paper and plastic?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st007", "difficultyTier": 2, "npcCharacter": "teacher", "npcLine": { "en": "Do you like sharing your toys with friends?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st008", "difficultyTier": 2, "npcCharacter": "mum", "npcLine": { "en": "Do you like eating vegetables?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st009", "difficultyTier": 3, "npcCharacter": "dad", "npcLine": { "en": "Do you like saving your coins instead of spending them?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st010", "difficultyTier": 3, "npcCharacter": "teacher", "npcLine": { "en": "Do you like turning off the lights when you leave a room?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st011", "difficultyTier": 3, "npcCharacter": "friend_amir", "npcLine": { "en": "Do you like being honest, even when it is hard?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] },
+    { "id": "st012", "difficultyTier": 3, "npcCharacter": "mum", "npcLine": { "en": "Do you like helping your family with small chores?" }, "responseOptions": ["Yes, I like it!", "No, I don't like it."] }
+  ],
+  "scoringLogic": {
+    "note": "Semua respons diterima sebagai 'betul' — modul ini menilai KEBOLEHAN menyatakan preferensi/nilai, bukan menilai pendirian pelajar. PL dikira berdasarkan kelancaran interaksi (bilangan hint diperlukan untuk faham & respons), bukan kandungan jawapan.",
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

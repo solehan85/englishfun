@@ -1,0 +1,166 @@
+{
+  "moduleId": "y1_sfaf_listening_bunyi_padan",
+  "title": {
+    "bm": "Bunyi & Padan",
+    "en": "Sound & Match"
+  },
+  "year": 1,
+  "world": "self_family_friends",
+  "skill": "listening",
+  "mechanicType": "audio_match",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "instructions": {
+    "en": "Listen to the sound. Tap the letter that matches what you hear."
+  },
+  "feedback": {
+    "correct": ["Well done!", "Great listening!", "That's right!"],
+    "incorrect": ["Try again — listen closely.", "Not quite, listen once more."],
+    "hint": "Listen to the word again. It starts with this sound."
+  },
+  "items": [
+    {
+      "id": "bp001", "difficultyTier": 1,
+      "targetPhoneme": "/m/", "targetGrapheme": "m",
+      "contextWord": { "en": "Mum" },
+      "audioScript": "m... m... Mum",
+      "imageAsset": "mother_figure",
+      "distractorGraphemes": ["t", "s", "r"]
+    },
+    {
+      "id": "bp002", "difficultyTier": 1,
+      "targetPhoneme": "/d/", "targetGrapheme": "d",
+      "contextWord": { "en": "Dad" },
+      "audioScript": "d... d... Dad",
+      "imageAsset": "father_figure",
+      "distractorGraphemes": ["l", "w", "g"]
+    },
+    {
+      "id": "bp003", "difficultyTier": 1,
+      "targetPhoneme": "/b/", "targetGrapheme": "b",
+      "contextWord": { "en": "Baby" },
+      "audioScript": "b... b... Baby",
+      "imageAsset": "baby_sibling",
+      "distractorGraphemes": ["h", "n", "c"]
+    },
+    {
+      "id": "bp004", "difficultyTier": 1,
+      "targetPhoneme": "/s/", "targetGrapheme": "s",
+      "contextWord": { "en": "Sister" },
+      "audioScript": "s... s... Sister",
+      "imageAsset": "sister_figure",
+      "distractorGraphemes": ["f", "p", "e"]
+    },
+    {
+      "id": "bp005", "difficultyTier": 1,
+      "targetPhoneme": "/f/", "targetGrapheme": "f",
+      "contextWord": { "en": "Family" },
+      "audioScript": "f... f... Family",
+      "imageAsset": "family_group",
+      "distractorGraphemes": ["w", "t", "g"]
+    },
+    {
+      "id": "bp006", "difficultyTier": 1,
+      "targetPhoneme": "/h/", "targetGrapheme": "h",
+      "contextWord": { "en": "Hand" },
+      "audioScript": "h... h... Hand",
+      "imageAsset": "hand_icon",
+      "distractorGraphemes": ["r", "l", "o"]
+    },
+    {
+      "id": "bp007", "difficultyTier": 2,
+      "targetPhoneme": "/n/", "targetGrapheme": "n",
+      "contextWord": { "en": "Nose" },
+      "audioScript": "n... n... Nose",
+      "imageAsset": "nose_icon",
+      "distractorGraphemes": ["m", "h", "s"]
+    },
+    {
+      "id": "bp008", "difficultyTier": 2,
+      "targetPhoneme": "/t/", "targetGrapheme": "t",
+      "contextWord": { "en": "Teeth" },
+      "audioScript": "t... t... Teeth",
+      "imageAsset": "teeth_icon",
+      "distractorGraphemes": ["d", "f", "p"]
+    },
+    {
+      "id": "bp009", "difficultyTier": 2,
+      "targetPhoneme": "/p/", "targetGrapheme": "p",
+      "contextWord": { "en": "Pet" },
+      "audioScript": "p... p... Pet",
+      "imageAsset": "pet_dog",
+      "distractorGraphemes": ["b", "g", "w"]
+    },
+    {
+      "id": "bp010", "difficultyTier": 2,
+      "targetPhoneme": "/w/", "targetGrapheme": "w",
+      "contextWord": { "en": "Wash" },
+      "audioScript": "w... w... Wash",
+      "imageAsset": "washing_hands",
+      "distractorGraphemes": ["d", "n", "c"]
+    },
+    {
+      "id": "bp011", "difficultyTier": 2,
+      "targetPhoneme": "/l/", "targetGrapheme": "l",
+      "contextWord": { "en": "Love" },
+      "audioScript": "l... l... Love",
+      "imageAsset": "heart_hug",
+      "distractorGraphemes": ["r", "s", "f"]
+    },
+    {
+      "id": "bp012", "difficultyTier": 2,
+      "targetPhoneme": "/g/", "targetGrapheme": "g",
+      "contextWord": { "en": "Girl" },
+      "audioScript": "g... g... Girl",
+      "imageAsset": "girl_figure",
+      "distractorGraphemes": ["h", "t", "e"]
+    },
+    {
+      "id": "bp013", "difficultyTier": 3,
+      "targetPhoneme": "/r/", "targetGrapheme": "r",
+      "contextWord": { "en": "Run" },
+      "audioScript": "r... r... Run",
+      "imageAsset": "child_running",
+      "distractorGraphemes": ["l", "n", "w"],
+      "note": "r/l confusion pair — intentional HOTS challenge"
+    },
+    {
+      "id": "bp014", "difficultyTier": 3,
+      "targetPhoneme": "/k/", "targetGrapheme": "c",
+      "contextWord": { "en": "Cat" },
+      "audioScript": "c... c... Cat",
+      "imageAsset": "family_cat",
+      "distractorGraphemes": ["g", "b", "p"]
+    },
+    {
+      "id": "bp015", "difficultyTier": 3,
+      "targetPhoneme": "/b/", "targetGrapheme": "b",
+      "contextWord": { "en": "Brother" },
+      "audioScript": "b... b... Brother",
+      "imageAsset": "brother_figure",
+      "distractorGraphemes": ["d", "m", "n"],
+      "note": "b/d confusion pair — intentional HOTS challenge"
+    },
+    {
+      "id": "bp016", "difficultyTier": 3,
+      "targetPhoneme": "/o/", "targetGrapheme": "o",
+      "contextWord": { "en": "Orange" },
+      "audioScript": "o... o... Orange",
+      "imageAsset": "orange_fruit",
+      "distractorGraphemes": ["e", "a", "u"]
+    }
+  ],
+  "scoringLogic": {
+    "note": "performanceLevel dikira per sesi (16 item), bukan per item",
+    "hintsUsed_to_PL": {
+      "0": 6,
+      "1-2": 5,
+      "3-4": 4,
+      "5-7": 3,
+      "8-10": 2,
+      "11+": 1
+    },
+    "passThreshold": 3
+  }
+}

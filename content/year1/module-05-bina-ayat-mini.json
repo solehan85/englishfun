@@ -1,0 +1,113 @@
+{
+  "moduleId": "y1_sfaf_writing_bina_ayat_mini",
+  "title": {
+    "bm": "Bina Ayat Mini",
+    "en": "Build a Mini Sentence"
+  },
+  "year": 1,
+  "world": "self_family_friends",
+  "skill": "writing",
+  "mechanicType": "sentence_builder",
+  "hotsLevel": "creation",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "instructions": {
+    "en": "Drag the word tiles into the correct order to build the sentence. Look at the picture for a clue."
+  },
+  "feedback": {
+    "correct": ["Lovely sentence!", "You built it!", "Perfect order!"],
+    "incorrect": ["Look at the picture again — try a different order.", "Almost — check the word order."],
+    "hint": "Every sentence starts with 'I'."
+  },
+  "designNote": "Modul terakhir World of Self, Family and Friends — menggabungkan kosa kata daripada Modul 1 & 4 (imej REUSE sepenuhnya, tiada aset baharu) ke dalam mekanik 'Creation' (HOTS peringkat tertinggi) selaras keperluan DSKP: gantikan pilihan berganda dengan tugasan menyusun/membina. Struktur ayat dikekalkan konsisten 'I [verb] [object].' (3 patah perkataan tepat) supaya beban kognitif tertumpu pada susunan ayat, bukan variasi struktur.",
+  "verbBank": ["love", "like", "see", "have"],
+  "items": [
+    {
+      "id": "ba001", "difficultyTier": 1,
+      "targetSentence": "I love Mum.", "imageAsset": "mother_figure",
+      "tiles": ["I", "love", "Mum"], "distractorTiles": []
+    },
+    {
+      "id": "ba002", "difficultyTier": 1,
+      "targetSentence": "I love Dad.", "imageAsset": "father_figure",
+      "tiles": ["I", "love", "Dad"], "distractorTiles": []
+    },
+    {
+      "id": "ba003", "difficultyTier": 1,
+      "targetSentence": "I love Baby.", "imageAsset": "baby_sibling",
+      "tiles": ["I", "love", "Baby"], "distractorTiles": []
+    },
+    {
+      "id": "ba004", "difficultyTier": 1,
+      "targetSentence": "I love Sister.", "imageAsset": "sister_figure",
+      "tiles": ["I", "love", "Sister"], "distractorTiles": []
+    },
+    {
+      "id": "ba005", "difficultyTier": 1,
+      "targetSentence": "I love Brother.", "imageAsset": "brother_figure",
+      "tiles": ["I", "love", "Brother"], "distractorTiles": []
+    },
+    {
+      "id": "ba006", "difficultyTier": 1,
+      "targetSentence": "I love Family.", "imageAsset": "family_group",
+      "tiles": ["I", "love", "Family"], "distractorTiles": []
+    },
+    {
+      "id": "ba007", "difficultyTier": 2,
+      "targetSentence": "I see Friend.", "imageAsset": "friend_amir",
+      "tiles": ["I", "see", "Friend"], "distractorTiles": ["like"]
+    },
+    {
+      "id": "ba008", "difficultyTier": 2,
+      "targetSentence": "I see Girl.", "imageAsset": "girl_figure",
+      "tiles": ["I", "see", "Girl"], "distractorTiles": ["love"]
+    },
+    {
+      "id": "ba009", "difficultyTier": 2,
+      "targetSentence": "I like Cat.", "imageAsset": "family_cat",
+      "tiles": ["I", "like", "Cat"], "distractorTiles": ["have"]
+    },
+    {
+      "id": "ba010", "difficultyTier": 2,
+      "targetSentence": "I have Pet.", "imageAsset": "pet_dog",
+      "tiles": ["I", "have", "Pet"], "distractorTiles": ["see"]
+    },
+    {
+      "id": "ba011", "difficultyTier": 2,
+      "targetSentence": "I have Ball.", "imageAsset": "ball_icon",
+      "tiles": ["I", "have", "Ball"], "distractorTiles": ["like"]
+    },
+    {
+      "id": "ba012", "difficultyTier": 3,
+      "targetSentence": "I see House.", "imageAsset": "house_icon",
+      "tiles": ["I", "see", "House"], "distractorTiles": ["love", "have"]
+    },
+    {
+      "id": "ba013", "difficultyTier": 3,
+      "targetSentence": "I see Hand.", "imageAsset": "hand_icon",
+      "tiles": ["I", "see", "Hand"], "distractorTiles": ["like", "Nose"]
+    },
+    {
+      "id": "ba014", "difficultyTier": 3,
+      "targetSentence": "I see Nose.", "imageAsset": "nose_icon",
+      "tiles": ["I", "see", "Nose"], "distractorTiles": ["have", "Eye"]
+    },
+    {
+      "id": "ba015", "difficultyTier": 3,
+      "targetSentence": "I see Eye.", "imageAsset": "eye_icon",
+      "tiles": ["I", "see", "Eye"], "distractorTiles": ["love", "Teeth"]
+    },
+    {
+      "id": "ba016", "difficultyTier": 3,
+      "targetSentence": "I see Teeth.", "imageAsset": "teeth_icon",
+      "tiles": ["I", "see", "Teeth"], "distractorTiles": ["like", "Eye"]
+    }
+  ],
+  "scoringLogic": {
+    "note": "Untuk tier 2-3, pelajar mesti KEDUA-DUA: (a) pilih 3 jubin betul daripada kolam (abaikan distractorTiles), DAN (b) susun ikut turutan betul. Kesilapan pada mana-mana bahagian dikira sebagai satu percubaan gagal untuk item tersebut.",
+    "hintsUsed_to_PL": {
+      "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1
+    },
+    "passThreshold": 3
+  }
+}

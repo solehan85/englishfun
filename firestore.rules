@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // students/{studentId} — created once at registration, never edited
+    // or deleted from the client. Login needs to query by nameLower +
+    // kelasLower, so read access has to stay open (there's no Firebase
+    // Auth in this MVP — see CLAUDE.md's "Auth ringkas" — so this can't
+    // be scoped to "your own doc only" the way an authed app could).
+    match /students/{studentId} {
+      allow read: if true;
+      allow create: if
+        !exists(/databases/$(database)/documents/students/$(studentId)) &&
+        request.resource.data.keys().hasAll(['name','kelas','nameLower','kelasLower','pinHash','year']) &&
+        request.resource.data.name is string &&
+        request.resource.data.kelas is string &&
+        request.resource.data.nameLower is string &&
+        request.resource.data.kelasLower is string &&
+        request.resource.data.pinHash is string &&
+        request.resource.data.pinHash.size() == 64 &&
+        request.resource.data.year in [1, 2];
+      allow update, delete: if false;
+    }
+
+    // progress/{studentId}_{moduleId} — upserted at the end of every
+    // session. Document id must match the studentId/moduleId inside it,
+    // so a client can't overwrite another student's progress record by
+    // guessing an id. Module 7 (Zon Puisi & Lagu) is a deliberate
+    // exception — it has no PL/mastery/hint concept (see its content
+    // JSON's designNote) and writes {studentId, moduleId, songsExplored,
+    // lastPlayed} instead, so both shapes are accepted here.
+    match /progress/{progressId} {
+      allow read: if true;
+      allow write: if
+        request.resource.data.keys().hasAll(['studentId','moduleId','lastPlayed']) &&
+        request.resource.data.studentId is string &&
+        request.resource.data.moduleId is string &&
+        progressId == request.resource.data.studentId + '_' + request.resource.data.moduleId &&
+        (
+          (
+            request.resource.data.keys().hasAll(['performanceLevel','hintsUsed','attempts','masteryAchieved']) &&
+            request.resource.data.performanceLevel is int &&
+            request.resource.data.hintsUsed is int &&
+            request.resource.data.attempts is int &&
+            request.resource.data.masteryAchieved is bool
+          ) ||
+          (
+            request.resource.data.keys().hasAll(['songsExplored']) &&
+            request.resource.data.songsExplored is int
+          )
+        );
+      allow delete: if false;
+    }
+  }
+}

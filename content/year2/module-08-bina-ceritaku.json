@@ -1,0 +1,65 @@
+{
+  "moduleId": "y2_stories_languagearts_bina_ceritaku",
+  "title": { "bm": "Bina Ceritaku", "en": "Build My Story" },
+  "year": 2,
+  "world": "stories",
+  "skill": "language_arts",
+  "mechanicType": "story_sequence",
+  "hotsLevel": "creation",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Modul Tahun 2 — keperluan DSKP Y2 Language Arts: 'allowing players to build or modify story elements rather than simple rote selection'. Pelajar susun blok cerita ikut turutan logik, BUKAN pilih jawapan tunggal. Guna watak & dunia sama (Kancil, hutan) untuk kesinambungan naratif dengan Modul 6, 7, 9, 10.",
+  "instructions": { "en": "Look at the story pictures. Drag them into the correct order — what happens first, next, and last?" },
+  "feedback": {
+    "correct": ["You told the story perfectly!", "Great story order!"],
+    "incorrect": ["Look again — what happened first?"],
+    "hint": "Look for clues: does Kancil look happy or worried in this picture?"
+  },
+  "storySets": [
+    {
+      "setId": "story01_kancil_buaya",
+      "title": { "en": "Kancil and the Crocodiles" },
+      "panels": [
+        { "order": 1, "imageAsset": "kancil_hungry_riverbank", "captionEn": "Kancil is hungry. He sees fruit on the other side of the river." },
+        { "order": 2, "imageAsset": "kancil_talks_crocodile", "captionEn": "Kancil asks the crocodiles to line up so he can count them." },
+        { "order": 3, "imageAsset": "kancil_hops_crocodiles", "captionEn": "Kancil hops across the river on the crocodiles' backs." },
+        { "order": 4, "imageAsset": "kancil_eats_fruit", "captionEn": "Kancil reaches the other side and eats the fruit happily." }
+      ]
+    },
+    {
+      "setId": "story02_kancil_harimau",
+      "title": { "en": "Kancil and the Tiger" },
+      "panels": [
+        { "order": 1, "imageAsset": "kancil_meets_tiger", "captionEn": "A tiger finds Kancil in the forest and wants to eat him." },
+        { "order": 2, "imageAsset": "kancil_points_trap", "captionEn": "Kancil points to a cage and says it protects animals from danger." },
+        { "order": 3, "imageAsset": "tiger_enters_cage", "captionEn": "The curious tiger steps into the cage to see for himself." },
+        { "order": 4, "imageAsset": "kancil_closes_cage", "captionEn": "Kancil quickly closes the cage and runs away safely." }
+      ]
+    },
+    {
+      "setId": "story03_kancil_lebah",
+      "title": { "en": "Kancil and the Bees" },
+      "panels": [
+        { "order": 1, "imageAsset": "kancil_lost_path", "captionEn": "Kancil is lost and cannot find his way home." },
+        { "order": 2, "imageAsset": "kancil_finds_beehive", "captionEn": "He finds a beehive buzzing loudly on a tree branch." },
+        { "order": 3, "imageAsset": "kancil_asks_bees", "captionEn": "Kancil politely asks the bees which path leads home." },
+        { "order": 4, "imageAsset": "kancil_walks_home", "captionEn": "The bees show him the way, and Kancil walks safely home." }
+      ]
+    },
+    {
+      "setId": "story04_kancil_share",
+      "title": { "en": "Kancil Shares His Fruit" },
+      "panels": [
+        { "order": 1, "imageAsset": "kancil_finds_big_fruit", "captionEn": "Kancil finds one large fruit but he cannot finish it alone." },
+        { "order": 2, "imageAsset": "kancil_calls_friends", "captionEn": "He calls his forest friends to come and see." },
+        { "order": 3, "imageAsset": "friends_share_fruit", "captionEn": "Kancil cuts the fruit and shares it with everyone." },
+        { "order": 4, "imageAsset": "friends_happy_together", "captionEn": "All the forest friends eat together and feel happy." }
+      ]
+    }
+  ],
+  "scoringLogic": {
+    "note": "PL dikira per storySet (4 panel disusun betul = pencapaian penuh). 4 storySets = 4 percubaan berasingan dalam satu sesi modul.",
+    "hintsUsed_to_PL": { "0": 6, "1": 5, "2": 4, "3": 3, "4": 2, "5+": 1 },
+    "passThreshold": 3
+  }
+}

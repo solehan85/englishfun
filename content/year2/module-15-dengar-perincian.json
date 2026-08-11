@@ -1,0 +1,84 @@
+{
+  "moduleId": "y2_knowledge_listening_dengar_perincian",
+  "title": { "bm": "Dengar & Perincian", "en": "Listen for Detail" },
+  "year": 2,
+  "world": "knowledge",
+  "skill": "listening",
+  "mechanicType": "audio_narrative_detail",
+  "hotsLevel": "analysis",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Keperluan DSKP Y2 Listening: 'understanding specific details in very simple phrases and narratives' — beralih daripada pengecaman fonem (Modul 1) kepada pemahaman naratif pendek. Kandungan bertema World of Knowledge (fakta sains ringkas & senario keselamatan).",
+  "instructions": { "en": "Listen to the short story. Answer the question about it." },
+  "feedback": {
+    "correct": ["You listened carefully!", "That's the right detail!"],
+    "incorrect": ["Listen to the story again."],
+    "hint": "Listen for the important word in the question."
+  },
+  "items": [
+    {
+      "id": "dp001", "difficultyTier": 1,
+      "narrativeAudioScript": "Plants need water and sunlight to grow. Ali waters his plant every morning.",
+      "questionEn": "When does Ali water his plant?",
+      "correctAnswer": "Every morning", "distractorAnswers": ["Every night", "Once a week"]
+    },
+    {
+      "id": "dp002", "difficultyTier": 1,
+      "narrativeAudioScript": "Siti found three seashells at the beach. She put them in a small blue bag.",
+      "questionEn": "How many seashells did Siti find?",
+      "correctAnswer": "Three", "distractorAnswers": ["Two", "Five"]
+    },
+    {
+      "id": "dp003", "difficultyTier": 1,
+      "narrativeAudioScript": "Before crossing the road, look left, look right, and look left again.",
+      "questionEn": "What should you do before crossing the road?",
+      "correctAnswer": "Look left and right", "distractorAnswers": ["Run quickly", "Close your eyes"]
+    },
+    {
+      "id": "dp004", "difficultyTier": 2,
+      "narrativeAudioScript": "The sun rises in the morning and sets in the evening. It gives us light and warmth all day.",
+      "questionEn": "What does the sun give us?",
+      "correctAnswer": "Light and warmth", "distractorAnswers": ["Rain and wind", "Snow and ice"]
+    },
+    {
+      "id": "dp005", "difficultyTier": 2,
+      "narrativeAudioScript": "Ravi recycles his plastic bottles. He puts them in the blue bin near his house.",
+      "questionEn": "What colour is the bin Ravi uses?",
+      "correctAnswer": "Blue", "distractorAnswers": ["Green", "Red"]
+    },
+    {
+      "id": "dp006", "difficultyTier": 2,
+      "narrativeAudioScript": "Bees fly from flower to flower. They help plants grow by carrying pollen.",
+      "questionEn": "How do bees help plants?",
+      "correctAnswer": "By carrying pollen", "distractorAnswers": ["By eating leaves", "By making rain"]
+    },
+    {
+      "id": "dp007", "difficultyTier": 2,
+      "narrativeAudioScript": "Mei Ling saves one coin every day. After ten days, she has ten coins in her jar.",
+      "questionEn": "How many coins does Mei Ling save each day?",
+      "correctAnswer": "One", "distractorAnswers": ["Ten", "Two"]
+    },
+    {
+      "id": "dp008", "difficultyTier": 3,
+      "narrativeAudioScript": "A caterpillar eats leaves for many days. Then it becomes a butterfly and flies away.",
+      "questionEn": "What does the caterpillar become?",
+      "correctAnswer": "A butterfly", "distractorAnswers": ["A bee", "A bird"]
+    },
+    {
+      "id": "dp009", "difficultyTier": 3,
+      "narrativeAudioScript": "Always wear a helmet when riding a bicycle. It keeps your head safe if you fall.",
+      "questionEn": "Why should you wear a helmet?",
+      "correctAnswer": "To keep your head safe", "distractorAnswers": ["To ride faster", "To look nice"]
+    },
+    {
+      "id": "dp010", "difficultyTier": 3,
+      "narrativeAudioScript": "Trees give us clean air to breathe. That is why we should plant more trees.",
+      "questionEn": "What do trees give us?",
+      "correctAnswer": "Clean air", "distractorAnswers": ["Clean water", "Clean soil"]
+    }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

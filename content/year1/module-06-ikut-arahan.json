@@ -1,0 +1,41 @@
+{
+  "moduleId": "y1_stories_listening_ikut_arahan",
+  "title": { "bm": "Ikut Arahan", "en": "Follow the Instruction" },
+  "year": 1,
+  "world": "stories",
+  "skill": "listening",
+  "mechanicType": "instruction_follow",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "narrativeAnchor": "Sang Kancil (Mousedeer) — kisah rakyat tempatan. Pelajar meneroka hutan bersama Kancil dan ikut arahannya untuk cari jalan merentasi hutan.",
+  "instructions": { "en": "Listen to Kancil. Tap the place he tells you to find." },
+  "feedback": {
+    "correct": ["Well done, you found it!", "Kancil says thank you!", "Great listening!"],
+    "incorrect": ["Listen to Kancil again.", "Not that one — try again."],
+    "hint": "Kancil will say the word again, slowly."
+  },
+  "sceneLocations": ["river", "tree", "cave", "bridge", "rock", "log", "bush", "path", "pond", "hill", "nest", "flower", "leaf", "stone", "fence", "well"],
+  "items": [
+    { "id": "ia001", "difficultyTier": 1, "npcLine": { "en": "Point to the river." }, "targetLocation": "river", "distractorLocations": ["tree", "cave"] },
+    { "id": "ia002", "difficultyTier": 1, "npcLine": { "en": "Point to the tree." }, "targetLocation": "tree", "distractorLocations": ["bush", "log"] },
+    { "id": "ia003", "difficultyTier": 1, "npcLine": { "en": "Find the cave." }, "targetLocation": "cave", "distractorLocations": ["hill", "well"] },
+    { "id": "ia004", "difficultyTier": 1, "npcLine": { "en": "Find the bridge." }, "targetLocation": "bridge", "distractorLocations": ["path", "fence"] },
+    { "id": "ia005", "difficultyTier": 2, "npcLine": { "en": "Look at the rock." }, "targetLocation": "rock", "distractorLocations": ["stone", "log"] },
+    { "id": "ia006", "difficultyTier": 2, "npcLine": { "en": "Look at the log." }, "targetLocation": "log", "distractorLocations": ["rock", "leaf"] },
+    { "id": "ia007", "difficultyTier": 2, "npcLine": { "en": "Touch the bush." }, "targetLocation": "bush", "distractorLocations": ["tree", "nest"] },
+    { "id": "ia008", "difficultyTier": 2, "npcLine": { "en": "Touch the flower." }, "targetLocation": "flower", "distractorLocations": ["leaf", "nest"] },
+    { "id": "ia009", "difficultyTier": 2, "npcLine": { "en": "Walk to the path." }, "targetLocation": "path", "distractorLocations": ["bridge", "fence"] },
+    { "id": "ia010", "difficultyTier": 2, "npcLine": { "en": "Walk to the pond." }, "targetLocation": "pond", "distractorLocations": ["river", "well"] },
+    { "id": "ia011", "difficultyTier": 3, "npcLine": { "en": "Find the hill." }, "targetLocation": "hill", "distractorLocations": ["cave", "stone"] },
+    { "id": "ia012", "difficultyTier": 3, "npcLine": { "en": "Find the nest." }, "targetLocation": "nest", "distractorLocations": ["bush", "flower"] },
+    { "id": "ia013", "difficultyTier": 3, "npcLine": { "en": "Point to the stone." }, "targetLocation": "stone", "distractorLocations": ["rock", "log"], "note": "Stone/rock near-synonym — sengaja mengelirukan (HOTS)" },
+    { "id": "ia014", "difficultyTier": 3, "npcLine": { "en": "Point to the fence." }, "targetLocation": "fence", "distractorLocations": ["bridge", "path"] },
+    { "id": "ia015", "difficultyTier": 3, "npcLine": { "en": "Look at the well." }, "targetLocation": "well", "distractorLocations": ["pond", "cave"] },
+    { "id": "ia016", "difficultyTier": 3, "npcLine": { "en": "Look at the leaf." }, "targetLocation": "leaf", "distractorLocations": ["flower", "nest"] }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

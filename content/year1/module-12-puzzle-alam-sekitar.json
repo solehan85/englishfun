@@ -1,0 +1,41 @@
+{
+  "moduleId": "y1_knowledge_languagearts_puzzle_alam_sekitar",
+  "title": { "bm": "Puzzle Alam Sekitar", "en": "Environment Puzzle" },
+  "year": 1,
+  "world": "knowledge",
+  "skill": "language_arts",
+  "mechanicType": "sort_match",
+  "hotsLevel": "analysis",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "designNote": "Keperluan DSKP: 'Environmental Puzzles (Global Sustainability)' wajib dalam World of Knowledge. Pelajar kategorikan sampah ke tong kitar semula yang betul — mekanik 'sorting' selaras HOTS Analysis.",
+  "instructions": { "en": "Look at the item. Drag it to the correct recycling bin." },
+  "feedback": {
+    "correct": ["Great sorting! You helped the Earth.", "That's the right bin!"],
+    "incorrect": ["Look again — what is this item made of?"],
+    "hint": "Is it paper, plastic, or food waste?"
+  },
+  "bins": ["bin_paper", "bin_plastic", "bin_organic"],
+  "items": [
+    { "id": "pa001", "difficultyTier": 1, "itemAsset": "newspaper", "correctBin": "bin_paper" },
+    { "id": "pa002", "difficultyTier": 1, "itemAsset": "cardboard_box", "correctBin": "bin_paper" },
+    { "id": "pa003", "difficultyTier": 1, "itemAsset": "paper_cup", "correctBin": "bin_paper" },
+    { "id": "pa004", "difficultyTier": 1, "itemAsset": "plastic_bottle", "correctBin": "bin_plastic" },
+    { "id": "pa005", "difficultyTier": 1, "itemAsset": "plastic_bag", "correctBin": "bin_plastic" },
+    { "id": "pa006", "difficultyTier": 1, "itemAsset": "banana_peel", "correctBin": "bin_organic" },
+    { "id": "pa007", "difficultyTier": 1, "itemAsset": "apple_core", "correctBin": "bin_organic" },
+    { "id": "pa008", "difficultyTier": 2, "itemAsset": "food_scrap", "correctBin": "bin_organic" },
+    { "id": "pa009", "difficultyTier": 2, "itemAsset": "glass_jar", "correctBin": "bin_plastic", "note": "Dipermudahkan untuk Tahun 1 — kaca dikategorikan bersama plastik dalam sistem 3-tong asas; pembezaan 'kaca' berasingan boleh diperkenalkan di tahun lebih tinggi" },
+    { "id": "pa010", "difficultyTier": 2, "itemAsset": "drink_can", "correctBin": "bin_plastic", "note": "Sama seperti pa009 — logam disatukan dengan plastik untuk sistem 3-tong asas Tahun 1" },
+    { "id": "pa011", "difficultyTier": 2, "itemAsset": "torn_book", "correctBin": "bin_paper" },
+    { "id": "pa012", "difficultyTier": 2, "itemAsset": "vegetable_scrap", "correctBin": "bin_organic" },
+    { "id": "pa013", "difficultyTier": 3, "itemAsset": "used_tissue", "correctBin": "bin_organic", "note": "Cabaran: kertas tapi bukan untuk kitar semula (dah kotor) — pembezaan konsep 'boleh kitar semula' vs 'jenis bahan' (HOTS Analysis)" },
+    { "id": "pa014", "difficultyTier": 3, "itemAsset": "wet_newspaper", "correctBin": "bin_organic", "note": "Cabaran: kertas basah tak boleh kitar semula — sama seperti pa013" },
+    { "id": "pa015", "difficultyTier": 3, "itemAsset": "egg_shell", "correctBin": "bin_organic" },
+    { "id": "pa016", "difficultyTier": 3, "itemAsset": "foil_wrapper", "correctBin": "bin_plastic" }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

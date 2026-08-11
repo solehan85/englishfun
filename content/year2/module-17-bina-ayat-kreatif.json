@@ -1,0 +1,37 @@
+{
+  "moduleId": "y2_knowledge_writing_bina_ayat_kreatif",
+  "title": { "bm": "Bina Ayat Kreatif", "en": "Build a Creative Sentence" },
+  "year": 2,
+  "world": "knowledge",
+  "skill": "writing",
+  "mechanicType": "sentence_builder",
+  "hotsLevel": "creation",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Sambungan Modul 5 (Bina Ayat Mini) ke tahap Tahun 2 — ayat lebih panjang (4-5 patah perkataan), termasuk kata hubung/deskriptif ringkas, kekal TANPA istilah tatabahasa eksplisit. Kandungan bertema World of Knowledge, konsisten dengan Modul 11-16.",
+  "instructions": { "en": "Drag the word tiles to build a longer sentence. Look at the picture for a clue." },
+  "feedback": {
+    "correct": ["Excellent sentence!", "You built a great sentence!"],
+    "incorrect": ["Look at the picture again — check the word order."],
+    "hint": "Every sentence starts with a capital letter word."
+  },
+  "items": [
+    { "id": "ak001", "difficultyTier": 1, "targetSentence": "I recycle paper and plastic.", "imageAsset": "bin_paper", "tiles": ["I", "recycle", "paper", "and", "plastic"], "distractorTiles": [] },
+    { "id": "ak002", "difficultyTier": 1, "targetSentence": "The sun gives us light.", "imageAsset": "sun_icon", "tiles": ["The", "sun", "gives", "us", "light"], "distractorTiles": [] },
+    { "id": "ak003", "difficultyTier": 1, "targetSentence": "Bees help plants grow.", "imageAsset": "bee_icon", "tiles": ["Bees", "help", "plants", "grow"], "distractorTiles": [] },
+    { "id": "ak004", "difficultyTier": 1, "targetSentence": "I save water every day.", "imageAsset": "water_drop_icon", "tiles": ["I", "save", "water", "every", "day"], "distractorTiles": [] },
+    { "id": "ak005", "difficultyTier": 2, "targetSentence": "I wear a helmet on my bike.", "imageAsset": "helmet_icon", "tiles": ["I", "wear", "a", "helmet", "on", "my", "bike"], "distractorTiles": ["hat"] },
+    { "id": "ak006", "difficultyTier": 2, "targetSentence": "We plant trees every year.", "imageAsset": "tree_sapling_icon", "tiles": ["We", "plant", "trees", "every", "year"], "distractorTiles": ["flowers"] },
+    { "id": "ak007", "difficultyTier": 2, "targetSentence": "I keep one coin in my jar.", "imageAsset": "coin_jar", "tiles": ["I", "keep", "one", "coin", "in", "my", "jar"], "distractorTiles": ["two"] },
+    { "id": "ak008", "difficultyTier": 2, "targetSentence": "Look left and right before crossing.", "imageAsset": "road_crossing", "tiles": ["Look", "left", "and", "right", "before", "crossing"], "distractorTiles": ["fast"] },
+    { "id": "ak009", "difficultyTier": 3, "targetSentence": "The caterpillar becomes a butterfly.", "imageAsset": "caterpillar_icon", "tiles": ["The", "caterpillar", "becomes", "a", "butterfly"], "distractorTiles": ["bee", "flower"] },
+    { "id": "ak010", "difficultyTier": 3, "targetSentence": "Trees give us clean air to breathe.", "imageAsset": "tree_icon", "tiles": ["Trees", "give", "us", "clean", "air", "to", "breathe"], "distractorTiles": ["water", "food"] },
+    { "id": "ak011", "difficultyTier": 3, "targetSentence": "I sort rubbish into the correct bin.", "imageAsset": "sorting_bins", "tiles": ["I", "sort", "rubbish", "into", "the", "correct", "bin"], "distractorTiles": ["wrong", "old"] },
+    { "id": "ak012", "difficultyTier": 3, "targetSentence": "The moon reflects light from the sun.", "imageAsset": "moon_icon", "tiles": ["The", "moon", "reflects", "light", "from", "the", "sun"], "distractorTiles": ["makes", "stars"] }
+  ],
+  "scoringLogic": {
+    "note": "Sama seperti Modul 5, untuk item bertier 2-3 pelajar mesti pilih jubin betul (abaikan distractorTiles) DAN susun mengikut turutan.",
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

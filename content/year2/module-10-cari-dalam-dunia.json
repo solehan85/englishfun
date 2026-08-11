@@ -1,0 +1,40 @@
+{
+  "moduleId": "y2_stories_reading_cari_dalam_dunia",
+  "title": { "bm": "Cari dalam Dunia", "en": "Find It in the World" },
+  "year": 2,
+  "world": "stories",
+  "skill": "reading",
+  "mechanicType": "scavenger_read",
+  "hotsLevel": "analysis",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Modul Tahun 2 — melengkapkan World of Stories. Guna semula 16 lokasi hutan yang SAMA daripada Modul 6 (Ikut Arahan) — kali ini pelajar BACA label bertulis pada papan tanda dalam scene (bukan dengar arahan) dan cari objek yang sepadan. Ini contoh kukuh keperluan DSKP: 'text must be embedded in the environment (e.g., signs, labels)'.",
+  "instructions": { "en": "Read the sign. Tap the matching place in Kancil's forest." },
+  "feedback": {
+    "correct": ["You read the sign correctly!", "Found it!"],
+    "incorrect": ["Read the sign again carefully."],
+    "hint": "Sound out the first letter of the word on the sign."
+  },
+  "items": [
+    { "id": "cd001", "difficultyTier": 1, "signLabel": "RIVER", "targetLocation": "river", "distractorLocations": ["pond", "well"] },
+    { "id": "cd002", "difficultyTier": 1, "signLabel": "CAVE", "targetLocation": "cave", "distractorLocations": ["hill", "well"] },
+    { "id": "cd003", "difficultyTier": 1, "signLabel": "BRIDGE", "targetLocation": "bridge", "distractorLocations": ["path", "fence"] },
+    { "id": "cd004", "difficultyTier": 1, "signLabel": "TREE", "targetLocation": "tree", "distractorLocations": ["bush", "log"] },
+    { "id": "cd005", "difficultyTier": 2, "signLabel": "ROCK", "targetLocation": "rock", "distractorLocations": ["stone", "log"] },
+    { "id": "cd006", "difficultyTier": 2, "signLabel": "BUSH", "targetLocation": "bush", "distractorLocations": ["tree", "nest"] },
+    { "id": "cd007", "difficultyTier": 2, "signLabel": "PATH", "targetLocation": "path", "distractorLocations": ["bridge", "fence"] },
+    { "id": "cd008", "difficultyTier": 2, "signLabel": "POND", "targetLocation": "pond", "distractorLocations": ["river", "well"] },
+    { "id": "cd009", "difficultyTier": 2, "signLabel": "HILL", "targetLocation": "hill", "distractorLocations": ["cave", "stone"] },
+    { "id": "cd010", "difficultyTier": 2, "signLabel": "NEST", "targetLocation": "nest", "distractorLocations": ["bush", "flower"] },
+    { "id": "cd011", "difficultyTier": 3, "signLabel": "STONE", "targetLocation": "stone", "distractorLocations": ["rock", "log"], "note": "Stone/rock — sama seperti Modul 6, kekal cabaran pembezaan (HOTS Analysis)" },
+    { "id": "cd012", "difficultyTier": 3, "signLabel": "FENCE", "targetLocation": "fence", "distractorLocations": ["bridge", "path"] },
+    { "id": "cd013", "difficultyTier": 3, "signLabel": "WELL", "targetLocation": "well", "distractorLocations": ["pond", "cave"] },
+    { "id": "cd014", "difficultyTier": 3, "signLabel": "LEAF", "targetLocation": "leaf", "distractorLocations": ["flower", "nest"] },
+    { "id": "cd015", "difficultyTier": 3, "signLabel": "LOG", "targetLocation": "log", "distractorLocations": ["rock", "leaf"] },
+    { "id": "cd016", "difficultyTier": 3, "signLabel": "FLOWER", "targetLocation": "flower", "distractorLocations": ["leaf", "nest"] }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

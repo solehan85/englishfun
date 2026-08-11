@@ -1,0 +1,40 @@
+{
+  "moduleId": "y2_knowledge_listening_bunyi_padan_lanjutan",
+  "title": { "bm": "Bunyi & Padan Lanjutan", "en": "Sound & Match: Blends" },
+  "year": 2,
+  "world": "knowledge",
+  "skill": "listening",
+  "mechanicType": "audio_match",
+  "hotsLevel": "application",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Modul TERAKHIR dalam senarai 18 MVP. Keperluan DSKP Y2 Listening: 'Recognising blends and digraphs.' Sambungan langsung daripada Modul 1 (fonem tunggal) — kini pelajar kenal pasti gabungan DUA huruf konsonan (blends: bl, cr, st...) dan digraf (sh, ch, th) pada awal perkataan. Kosa kata umum/alam, sesuai tema World of Knowledge penutup.",
+  "instructions": { "en": "Listen to the sound at the start of the word. Tap the letters that match." },
+  "feedback": {
+    "correct": ["Perfect blend!", "You matched it!"],
+    "incorrect": ["Listen again — two letters make one sound here."],
+    "hint": "Listen to the first two letters together, like one sound."
+  },
+  "items": [
+    { "id": "bl001", "difficultyTier": 1, "blendType": "digraph", "targetBlend": "sh", "contextWord": { "en": "Ship" }, "imageAsset": "ship_icon", "distractorBlends": ["ch", "st"] },
+    { "id": "bl002", "difficultyTier": 1, "blendType": "digraph", "targetBlend": "ch", "contextWord": { "en": "Chip" }, "imageAsset": "chip_icon", "distractorBlends": ["sh", "th"] },
+    { "id": "bl003", "difficultyTier": 1, "blendType": "digraph", "targetBlend": "th", "contextWord": { "en": "Thumb" }, "imageAsset": "thumb_icon", "distractorBlends": ["ch", "sh"] },
+    { "id": "bl004", "difficultyTier": 1, "blendType": "blend", "targetBlend": "bl", "contextWord": { "en": "Blue" }, "imageAsset": "blue_swatch", "distractorBlends": ["gr", "fl"] },
+    { "id": "bl005", "difficultyTier": 2, "blendType": "blend", "targetBlend": "cr", "contextWord": { "en": "Crab" }, "imageAsset": "crab_icon", "distractorBlends": ["gr", "dr"] },
+    { "id": "bl006", "difficultyTier": 2, "blendType": "blend", "targetBlend": "st", "contextWord": { "en": "Star" }, "imageAsset": "star_icon", "distractorBlends": ["sp", "sk"] },
+    { "id": "bl007", "difficultyTier": 2, "blendType": "blend", "targetBlend": "dr", "contextWord": { "en": "Drum" }, "imageAsset": "drum_icon", "distractorBlends": ["cr", "gr"] },
+    { "id": "bl008", "difficultyTier": 2, "blendType": "blend", "targetBlend": "gr", "contextWord": { "en": "Green" }, "imageAsset": "green_swatch", "distractorBlends": ["cr", "bl"] },
+    { "id": "bl009", "difficultyTier": 2, "blendType": "blend", "targetBlend": "pl", "contextWord": { "en": "Plant" }, "imageAsset": "plant_icon", "distractorBlends": ["fl", "cl"] },
+    { "id": "bl010", "difficultyTier": 2, "blendType": "blend", "targetBlend": "fl", "contextWord": { "en": "Flag" }, "imageAsset": "flag_icon", "distractorBlends": ["pl", "cl"] },
+    { "id": "bl011", "difficultyTier": 3, "blendType": "blend", "targetBlend": "sp", "contextWord": { "en": "Spoon" }, "imageAsset": "spoon_icon", "distractorBlends": ["st", "sk"] },
+    { "id": "bl012", "difficultyTier": 3, "blendType": "blend", "targetBlend": "sk", "contextWord": { "en": "Skip" }, "imageAsset": "kancil_hopping", "distractorBlends": ["sp", "st"], "note": "Reuse imej kancil_hopping daripada World of Stories — konteks 'melompat' sepadan makna 'skip'" },
+    { "id": "bl013", "difficultyTier": 3, "blendType": "blend", "targetBlend": "fr", "contextWord": { "en": "Frog" }, "imageAsset": "frog_icon", "distractorBlends": ["gr", "dr"] },
+    { "id": "bl014", "difficultyTier": 3, "blendType": "blend", "targetBlend": "sn", "contextWord": { "en": "Snail" }, "imageAsset": "snail_icon", "distractorBlends": ["sp", "sk"] },
+    { "id": "bl015", "difficultyTier": 3, "blendType": "blend", "targetBlend": "cl", "contextWord": { "en": "Clap" }, "imageAsset": "clap_hands_icon", "distractorBlends": ["pl", "fl"] },
+    { "id": "bl016", "difficultyTier": 3, "blendType": "blend", "targetBlend": "gl", "contextWord": { "en": "Glue" }, "imageAsset": "glue_icon", "distractorBlends": ["bl", "gr"], "note": "gl/bl konsonan permulaan hampir sama bunyi — cabaran akhir MVP (HOTS Application tertinggi)" }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

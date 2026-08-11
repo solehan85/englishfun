@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Name &amp; Describe — Eduverse English</title>
+<style>
+  :root{
+    --bg-1:#fff3e0; --bg-2:#e5f6ff;
+    --ink:#2b2b3d; --card:#ffffff;
+    --brand:#5b4bff; --brand-dark:#3f31c9;
+    --good:#2ecc71; --good-dark:#1f9e57;
+    --bad:#ff5d5d; --bad-dark:#d63f3f;
+    --hint:#ffb84d; --hint-dark:#e0952a;
+    --radius:22px;
+    --shadow:0 8px 0 rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    color:var(--ink);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100%;
+    padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+    overflow-x:hidden;
+  }
+  .screen{ width:100%; max-width:520px; display:flex; flex-direction:column; align-items:center; flex:1; padding:16px 0 32px; }
+  .hidden{ display:none !important; }
+
+  .topbar{ width:100%; max-width:520px; display:flex; align-items:center; gap:10px; padding:10px 4px; }
+  .icon-btn{
+    border:none; background:var(--card); box-shadow:var(--shadow); border-radius:16px;
+    width:44px; height:44px; font-size:20px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex:0 0 auto;
+  }
+  .icon-btn:active{ transform:translateY(4px); box-shadow:none; }
+  .progress-track{ flex:1; height:14px; background:#ffffffaa; border-radius:999px; overflow:hidden; box-shadow:inset 0 2px 4px rgba(0,0,0,.08); }
+  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--brand),#8a7dff); border-radius:999px; transition:width .35s ease; }
+
+  .card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:28px 22px; width:100%; text-align:center;
+  }
+  .title-en{ font-size:2rem; font-weight:800; margin:0; }
+  .title-bm{ font-size:1rem; color:#6a6a80; margin:4px 0 18px; font-weight:600; }
+  .instructions{ font-size:1.05rem; line-height:1.5; background:#f4f2ff; border-radius:14px; padding:14px 16px; margin-bottom:22px; }
+  .big-btn{
+    border:none; cursor:pointer; font-weight:800; font-size:1.15rem;
+    color:#fff; background:var(--brand); box-shadow:0 6px 0 var(--brand-dark);
+    padding:16px 28px; border-radius:18px; width:100%; max-width:320px;
+  }
+  .big-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .big-btn.secondary{ background:var(--good); box-shadow:0 6px 0 var(--good-dark); margin-top:14px; }
+
+  .stage{ width:100%; display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:8px;}
+  .scene{
+    width:100%; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:26px 18px 20px; display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .object-emoji{ font-size:4rem; line-height:1; }
+  .prompt-row{ display:flex; align-items:center; gap:10px; }
+  .prompt-question{ font-weight:800; color:var(--brand-dark); font-size:1.05rem; }
+  .speaker-btn{
+    border:none; cursor:pointer; border-radius:999px; width:48px; height:48px; font-size:1.3rem;
+    background:var(--brand); color:#fff; box-shadow:0 4px 0 var(--brand-dark);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .speaker-btn:active{ transform:translateY(4px); box-shadow:none; }
+  .speaker-btn.playing{ animation:pulse .5s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+  .prompt-text{ font-weight:700; color:#6a6a80; font-size:.9rem; text-align:center; }
+
+  .answers-list{ width:100%; display:flex; flex-direction:column; gap:12px; }
+  .answer-pill{
+    border:none; cursor:pointer; font-size:1rem; font-weight:700; text-align:left;
+    padding:16px 18px; border-radius:16px; background:#f0eeff; color:var(--brand-dark);
+    box-shadow:0 6px 0 #d8d4ff;
+  }
+  .answer-pill:active{ transform:translateY(6px); box-shadow:none; }
+  .answer-pill.correct{ background:var(--good); color:#fff; box-shadow:0 6px 0 var(--good-dark); animation:bounce .5s ease; }
+  .answer-pill.incorrect{ background:var(--bad); color:#fff; box-shadow:0 6px 0 var(--bad-dark); animation:shake .4s ease; }
+  .answer-pill.disabled{ opacity:.55; pointer-events:none; }
+  @keyframes bounce{ 0%{transform:scale(1);} 40%{transform:scale(1.05);} 100%{transform:scale(1);} }
+  @keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+
+  .feedback-banner{ width:100%; text-align:center; font-weight:800; font-size:1.05rem; min-height:1.5rem; color:var(--ink); }
+
+  .hint-row{ width:100%; display:flex; justify-content:center; }
+  .hint-btn{
+    border:none; cursor:pointer; background:var(--hint); color:#fff; font-weight:800;
+    padding:12px 20px; border-radius:16px; box-shadow:0 5px 0 var(--hint-dark); font-size:.95rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hint-btn:active{ transform:translateY(5px); box-shadow:none; }
+  .hint-btn.hint-pulse{ animation:pulse .6s ease-in-out infinite; }
+  .hint-panel{
+    width:100%; background:#fff7e8; border:2px dashed var(--hint); border-radius:14px;
+    padding:12px 14px; font-size:.95rem; text-align:center; color:#7a5b18;
+  }
+
+  .stars{ font-size:3rem; letter-spacing:6px; margin:10px 0 4px; }
+  .result-msg{ font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+  .result-sub{ color:#6a6a80; margin-bottom:24px; font-size:.95rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="icon-btn" id="backBtn" aria-label="Back" title="Back">←</button>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <button class="icon-btn" id="muteBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+</div>
+
+<!-- START SCREEN -->
+<section id="startScreen" class="screen">
+  <div class="card">
+    <p class="title-en" id="titleEn">Name &amp; Describe</p>
+    <p class="title-bm" id="titleBm">Nama &amp; Huraikan</p>
+    <p class="instructions" id="instructionsText">Look at the object. Tap the sentence that describes it best.</p>
+    <button class="big-btn" id="startBtn">▶ Start</button>
+  </div>
+</section>
+
+<!-- GAME SCREEN -->
+<section id="gameScreen" class="screen hidden">
+  <div class="stage">
+    <div class="scene">
+      <div class="object-emoji" id="objectEmoji">🍎</div>
+      <div class="prompt-row">
+        <div class="prompt-question" id="promptQuestion">What is this?</div>
+        <button class="speaker-btn" id="speakerBtn" aria-label="Play question">🔊</button>
+      </div>
+      <div class="prompt-text">Tap the sentence that best describes it.</div>
+    </div>
+
+    <div class="answers-list" id="answers"></div>
+
+    <div class="feedback-banner" id="feedbackBanner"></div>
+
+    <div class="hint-row">
+      <button class="hint-btn" id="hintBtn">💡 Hint</button>
+    </div>
+    <div class="hint-panel hidden" id="hintPanel"></div>
+  </div>
+</section>
+
+<!-- RESULTS SCREEN -->
+<section id="resultsScreen" class="screen hidden">
+  <div class="card">
+    <div class="stars" id="starsDisplay">⭐⭐⭐</div>
+    <div class="result-msg" id="resultMsg">Great job!</div>
+    <div class="result-sub" id="resultSub">You described every object perfectly.</div>
+    <button class="big-btn secondary" id="playAgainBtn">🔁 Play Again</button>
+    <button class="big-btn" id="doneBtn" style="margin-top:12px;background:#8a8aa3;box-shadow:0 6px 0 #6d6d85;">✓ Done</button>
+  </div>
+</section>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+  /* ============================================================
+     Firebase config — same object duplicated in login.html, hub.html
+     and every modules/*.html file (each screen is a self-contained
+     page with no shared JS import). The API key is a public client
+     identifier; access is controlled by Firestore security rules.
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtlViRgm26PuMPvNC9GoKA9hBwtYT-HEg",
+    authDomain: "english-dbcda.firebaseapp.com",
+    projectId: "english-dbcda",
+    storageBucket: "english-dbcda.firebasestorage.app",
+    messagingSenderId: "174382751098",
+    appId: "1:174382751098:web:7736264ea3153970cd8ac3"
+  };
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+
+  /* ============================================================
+     CONFIG — Year 2 content. Reuses the Module 11 (shop) and
+     Module 12 (recycling) object set per the asset brief, now in
+     descriptive-sentence production rather than selection/sorting.
+     ============================================================ */
+  const CONTENT_URL = "../content/year2/module-14-nama-huraikan.json";
+  const STUDENT_ID_KEY = "eduverse_student_id"; // set by login.html
+
+  const OBJECT_EMOJI = {
+    apple: "🍎", kite: "🪁", hat: "🎩", umbrella: "☂️", toy_car: "🚗",
+    book: "📖", ball: "⚽", plastic_bottle: "🧴", newspaper: "📰",
+    banana_peel: "🍌", glass_jar: "🫙", cardboard_box: "📦"
+  };
+  const DEFAULT_EMOJI = "🔎";
+
+  /* ============================================================
+     AUDIO ENGINE — speaks the short prompt question only, not the
+     longer answer sentences (which the student reads to select).
+     ============================================================ */
+  const AudioEngine = (function(){
+    let muted = false;
+    let ctx = null;
+    function getCtx(){
+      if (!ctx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) ctx = new AC();
+      }
+      return ctx;
+    }
+    function tone(freq, duration, type){
+      if (muted) return;
+      const c = getCtx();
+      if (!c) return;
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, c.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.25, c.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + duration);
+      osc.connect(gain).connect(c.destination);
+      osc.start();
+      osc.stop(c.currentTime + duration + 0.02);
+    }
+    function speak(text, onend){
+      if (muted) { if (onend) onend(); return; }
+      if (!("speechSynthesis" in window)) {
+        tone(440, 0.18, "square"); setTimeout(() => tone(523, 0.25, "sine"), 250);
+        if (onend) setTimeout(onend, 600);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-GB";
+      u.rate = 0.85;
+      u.onend = () => { if (onend) onend(); };
+      window.speechSynthesis.speak(u);
+    }
+    return {
+      speak,
+      playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
+      playIncorrect(){ tone(180, 0.28, "sawtooth"); },
+      playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
+      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      isMuted(){ return muted; }
+    };
+  })();
+
+  /* ============================================================
+     PL SCORING (reused unchanged).
+     ============================================================ */
+  function resolvePerformanceLevel(totalHints, table){
+    for (const key in table) {
+      if (key.endsWith("+")) {
+        const min = parseInt(key, 10);
+        if (totalHints >= min) return table[key];
+      } else if (key.includes("-")) {
+        const [min, max] = key.split("-").map(Number);
+        if (totalHints >= min && totalHints <= max) return table[key];
+      } else {
+        if (totalHints === parseInt(key, 10)) return table[key];
+      }
+    }
+    return 1;
+  }
+
+  async function saveProgress(record){
+    try {
+      await setDoc(doc(db, "progress", `${record.studentId}_${record.moduleId}`), record);
+    } catch (e) {
+      console.error("[progress] Firestore write failed", e);
+    }
+  }
+  function getStudentId(){
+    return localStorage.getItem(STUDENT_ID_KEY) || "guest_" + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* ============================================================
+     GAME STATE
+     ============================================================ */
+  const els = {
+    startScreen: document.getElementById("startScreen"),
+    gameScreen: document.getElementById("gameScreen"),
+    resultsScreen: document.getElementById("resultsScreen"),
+    titleEn: document.getElementById("titleEn"),
+    titleBm: document.getElementById("titleBm"),
+    instructionsText: document.getElementById("instructionsText"),
+    startBtn: document.getElementById("startBtn"),
+    backBtn: document.getElementById("backBtn"),
+    muteBtn: document.getElementById("muteBtn"),
+    progressFill: document.getElementById("progressFill"),
+    objectEmoji: document.getElementById("objectEmoji"),
+    promptQuestion: document.getElementById("promptQuestion"),
+    speakerBtn: document.getElementById("speakerBtn"),
+    answers: document.getElementById("answers"),
+    feedbackBanner: document.getElementById("feedbackBanner"),
+    hintBtn: document.getElementById("hintBtn"),
+    hintPanel: document.getElementById("hintPanel"),
+    starsDisplay: document.getElementById("starsDisplay"),
+    resultMsg: document.getElementById("resultMsg"),
+    resultSub: document.getElementById("resultSub"),
+    playAgainBtn: document.getElementById("playAgainBtn"),
+    doneBtn: document.getElementById("doneBtn"),
+  };
+
+  let moduleData = null;
+  let pool = { 1: [], 2: [], 3: [] };
+  let playedCount = 0;
+  let totalItems = 0;
+  let currentTier = 1;
+  let currentItem = null;
+  let itemHints = 0;
+  let itemWrongAttempts = 0;
+  let sessionHints = 0;
+  let sessionAttempts = 0;
+  let locked = false;
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function initPools(items){
+    pool = { 1: [], 2: [], 3: [] };
+    items.forEach(it => {
+      const tier = pool[it.difficultyTier] ? it.difficultyTier : 1;
+      pool[tier].push(it);
+    });
+    Object.keys(pool).forEach(t => { pool[t] = shuffle(pool[t]); });
+  }
+  function pickNextItem(){
+    const order = [currentTier, currentTier - 1, currentTier + 1, 1, 2, 3];
+    for (const t of order) {
+      if (pool[t] && pool[t].length) return pool[t].shift();
+    }
+    return null;
+  }
+
+  function loadModule(){
+    fetch(CONTENT_URL)
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => {
+        moduleData = data;
+        els.titleEn.textContent = data.title.en;
+        els.titleBm.textContent = data.title.bm;
+        els.instructionsText.textContent = data.instructions.en;
+        initPools(data.items);
+        totalItems = data.items.length;
+      })
+      .catch(err => {
+        els.instructionsText.textContent =
+          "Could not load module content (" + err.message + "). " +
+          "Serve this folder over http(s):// — opening the file directly " +
+          "blocks the fetch() to " + CONTENT_URL + ".";
+        els.startBtn.disabled = true;
+        els.startBtn.style.opacity = 0.5;
+      });
+  }
+
+  function showScreen(name){
+    els.startScreen.classList.toggle("hidden", name !== "start");
+    els.gameScreen.classList.toggle("hidden", name !== "game");
+    els.resultsScreen.classList.toggle("hidden", name !== "results");
+  }
+
+  function startSession(){
+    playedCount = 0;
+    sessionHints = 0;
+    sessionAttempts = 0;
+    currentTier = 1;
+    initPools(moduleData.items);
+    showScreen("game");
+    nextItem();
+  }
+
+  function updateProgressBar(){
+    const pct = totalItems ? Math.round((playedCount / totalItems) * 100) : 0;
+    els.progressFill.style.width = pct + "%";
+  }
+
+  function nextItem(){
+    updateProgressBar();
+    const item = pickNextItem();
+    if (!item) { endSession(); return; }
+    currentItem = item;
+    itemHints = 0;
+    itemWrongAttempts = 0;
+    locked = false;
+
+    els.objectEmoji.textContent = OBJECT_EMOJI[item.objectAsset] || DEFAULT_EMOJI;
+    els.promptQuestion.textContent = item.npcPrompt.en;
+    els.feedbackBanner.textContent = "";
+    els.hintPanel.classList.add("hidden");
+    els.hintBtn.disabled = false;
+    els.hintBtn.style.opacity = 1;
+    els.hintBtn.classList.remove("hint-pulse");
+
+    const options = shuffle([item.correctDescription, ...item.distractorDescriptions]);
+    els.answers.innerHTML = "";
+    options.forEach(text => {
+      const btn = document.createElement("button");
+      btn.className = "answer-pill";
+      btn.textContent = text;
+      btn.addEventListener("click", () => handleAnswer(text, btn));
+      els.answers.appendChild(btn);
+    });
+
+    playCurrentAudio();
+  }
+
+  function playCurrentAudio(){
+    els.speakerBtn.classList.add("playing");
+    AudioEngine.speak(currentItem.npcPrompt.en, () => {
+      els.speakerBtn.classList.remove("playing");
+    });
+  }
+
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function handleAnswer(text, btn){
+    if (locked) return;
+    sessionAttempts++;
+
+    if (text === currentItem.correctDescription) {
+      locked = true;
+      btn.classList.add("correct");
+      AudioEngine.playCorrect();
+      els.feedbackBanner.style.color = "var(--good-dark)";
+      els.feedbackBanner.textContent = pick(moduleData.feedback.correct);
+      Array.from(els.answers.children).forEach(b => { if (b !== btn) b.classList.add("disabled"); });
+      playedCount++;
+
+      if (itemHints > 0 || itemWrongAttempts > 0) {
+        currentTier = Math.max(1, currentTier - 1);
+      } else {
+        currentTier = Math.min(3, currentTier + 1);
+      }
+      setTimeout(nextItem, 1200);
+    } else {
+      itemWrongAttempts++;
+      btn.classList.add("incorrect");
+      setTimeout(() => btn.classList.remove("incorrect"), 400);
+      AudioEngine.playIncorrect();
+      els.feedbackBanner.style.color = "var(--bad-dark)";
+      els.feedbackBanner.textContent = pick(moduleData.feedback.incorrect);
+      btn.classList.add("disabled");
+
+      if (itemWrongAttempts >= 2 && els.hintPanel.classList.contains("hidden")) {
+        els.hintBtn.classList.add("hint-pulse");
+      }
+    }
+  }
+
+  function useHint(){
+    if (locked) return;
+    itemHints++;
+    sessionHints++;
+    els.hintPanel.textContent = moduleData.feedback.hint;
+    els.hintPanel.classList.remove("hidden");
+    els.hintBtn.classList.remove("hint-pulse");
+    playCurrentAudio();
+  }
+
+  function endSession(){
+    const pl = resolvePerformanceLevel(sessionHints, moduleData.scoringLogic.hintsUsed_to_PL);
+    const masteryAchieved = pl >= moduleData.scoringLogic.passThreshold;
+
+    saveProgress({
+      studentId: getStudentId(),
+      moduleId: moduleData.moduleId,
+      performanceLevel: pl,      // internal only — never shown as a grade/number
+      hintsUsed: sessionHints,
+      attempts: sessionAttempts,
+      masteryAchieved,
+      lastPlayed: new Date().toISOString()
+    });
+
+    renderResults(pl, masteryAchieved);
+    showScreen("results");
+  }
+
+  function renderResults(pl, masteryAchieved){
+    let stars = 1, msg = "Good try!", sub = "Let's describe more objects next time.";
+    if (pl >= 5) { stars = 3; msg = "Amazing describing!"; sub = "You named every object perfectly!"; }
+    else if (pl >= 3) { stars = 2; msg = "Well done!"; sub = "You described most objects correctly!"; }
+    else { stars = 1; msg = "Nice try!"; sub = "Keep practising — you're learning!"; }
+
+    els.starsDisplay.textContent = "⭐".repeat(stars) + "☆".repeat(3 - stars);
+    els.resultMsg.textContent = msg;
+    els.resultSub.textContent = sub + (masteryAchieved ? "" : " Play again to master this set.");
+    if (masteryAchieved) AudioEngine.playComplete();
+  }
+
+  /* ============================================================
+     EVENTS
+     ============================================================ */
+  els.startBtn.addEventListener("click", startSession);
+  els.speakerBtn.addEventListener("click", playCurrentAudio);
+  els.hintBtn.addEventListener("click", useHint);
+  els.playAgainBtn.addEventListener("click", startSession);
+  els.backBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.doneBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.muteBtn.addEventListener("click", () => {
+    const next = !AudioEngine.isMuted();
+    AudioEngine.setMuted(next);
+    els.muteBtn.textContent = next ? "🔇" : "🔊";
+  });
+
+  loadModule();
+</script>
+</body>
+</html>

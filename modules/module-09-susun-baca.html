@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Blend &amp; Read — Eduverse English</title>
+<style>
+  :root{
+    --bg-1:#eafbea; --bg-2:#e5f6ff;
+    --ink:#2b2b3d; --card:#ffffff;
+    --brand:#2f9e58; --brand-dark:#1f7a41;
+    --good:#2ecc71; --good-dark:#1f9e57;
+    --bad:#ff5d5d; --bad-dark:#d63f3f;
+    --hint:#ffb84d; --hint-dark:#e0952a;
+    --radius:22px;
+    --shadow:0 8px 0 rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    color:var(--ink);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100%;
+    padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+    overflow-x:hidden;
+  }
+  .screen{ width:100%; max-width:520px; display:flex; flex-direction:column; align-items:center; flex:1; padding:16px 0 32px; }
+  .hidden{ display:none !important; }
+
+  .topbar{ width:100%; max-width:520px; display:flex; align-items:center; gap:10px; padding:10px 4px; }
+  .icon-btn{
+    border:none; background:var(--card); box-shadow:var(--shadow); border-radius:16px;
+    width:44px; height:44px; font-size:20px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex:0 0 auto;
+  }
+  .icon-btn:active{ transform:translateY(4px); box-shadow:none; }
+  .progress-track{ flex:1; height:14px; background:#ffffffaa; border-radius:999px; overflow:hidden; box-shadow:inset 0 2px 4px rgba(0,0,0,.08); }
+  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--brand),#6fcf8f); border-radius:999px; transition:width .35s ease; }
+
+  .card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:28px 22px; width:100%; text-align:center;
+  }
+  .title-en{ font-size:2rem; font-weight:800; margin:0; }
+  .title-bm{ font-size:1.1rem; color:#6a6a80; margin:4px 0 18px; font-weight:600; }
+  .instructions{ font-size:1.05rem; line-height:1.5; background:#eafbea; border-radius:14px; padding:14px 16px; margin-bottom:22px; }
+  .big-btn{
+    border:none; cursor:pointer; font-weight:800; font-size:1.15rem;
+    color:#fff; background:var(--brand); box-shadow:0 6px 0 var(--brand-dark);
+    padding:16px 28px; border-radius:18px; width:100%; max-width:320px;
+  }
+  .big-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .big-btn.secondary{ background:var(--good); box-shadow:0 6px 0 var(--good-dark); margin-top:14px; }
+
+  .stage{ width:100%; display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:8px;}
+  .scene{
+    width:100%; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:22px 16px 20px; display:flex; flex-direction:column; align-items:center; gap:12px;
+  }
+  .scene-emoji{ font-size:3.6rem; line-height:1; }
+  .speaker-btn{
+    border:none; cursor:pointer; border-radius:999px; width:68px; height:68px; font-size:1.9rem;
+    background:var(--brand); color:#fff; box-shadow:0 6px 0 var(--brand-dark);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .speaker-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .speaker-btn.playing{ animation:pulse .5s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+  .prompt-text{ font-weight:700; color:#6a6a80; font-size:.9rem; text-align:center; }
+
+  .sentence-row{ width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .slot{
+    min-width:56px; height:56px; border:3px dashed #cdeecd; border-radius:14px;
+    display:flex; align-items:center; justify-content:center; padding:0 8px;
+    font-weight:800; font-size:1.4rem; color:var(--brand-dark); background:#f4fbf4;
+    cursor:default; transition:transform .15s ease;
+  }
+  .slot.filled{ border-style:solid; border-color:var(--brand); background:#eafbea; cursor:pointer; }
+  .slot.filled:active{ transform:scale(.94); }
+  .slot.correct{ border-color:var(--good); background:var(--good); color:#fff; animation:bounce .5s ease; }
+  .slot.incorrect{ border-color:var(--bad); background:var(--bad); color:#fff; animation:shake .4s ease; }
+  @keyframes bounce{ 0%{transform:scale(1);} 40%{transform:scale(1.15);} 100%{transform:scale(1);} }
+  @keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+
+  .word-reveal{ font-size:1.3rem; font-weight:800; color:var(--good-dark); min-height:1.6rem; }
+
+  .tile-pool{ width:100%; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; min-height:56px; }
+  .tile{
+    border:none; cursor:pointer; font-weight:800; font-size:1.2rem;
+    padding:13px 18px; border-radius:14px; background:#eafbea; color:var(--brand-dark);
+    box-shadow:0 5px 0 #cdeecd; transition:transform .15s ease, opacity .15s ease;
+  }
+  .tile:active{ transform:translateY(5px); box-shadow:none; }
+  .tile.used{ opacity:0; transform:scale(.5); pointer-events:none; }
+
+  .feedback-banner{ width:100%; text-align:center; font-weight:800; font-size:1.05rem; min-height:1.5rem; color:var(--ink); }
+
+  .hint-row{ width:100%; display:flex; justify-content:center; }
+  .hint-btn{
+    border:none; cursor:pointer; background:var(--hint); color:#fff; font-weight:800;
+    padding:12px 20px; border-radius:16px; box-shadow:0 5px 0 var(--hint-dark); font-size:.95rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hint-btn:active{ transform:translateY(5px); box-shadow:none; }
+  .hint-btn.hint-pulse{ animation:pulse .6s ease-in-out infinite; }
+  .hint-panel{
+    width:100%; background:#fff7e8; border:2px dashed var(--hint); border-radius:14px;
+    padding:12px 14px; font-size:.95rem; text-align:center; color:#7a5b18;
+  }
+
+  .stars{ font-size:3rem; letter-spacing:6px; margin:10px 0 4px; }
+  .result-msg{ font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+  .result-sub{ color:#6a6a80; margin-bottom:24px; font-size:.95rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="icon-btn" id="backBtn" aria-label="Back" title="Back">←</button>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <button class="icon-btn" id="muteBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+</div>
+
+<!-- START SCREEN -->
+<section id="startScreen" class="screen">
+  <div class="card">
+    <p class="title-en" id="titleEn">Blend &amp; Read</p>
+    <p class="title-bm" id="titleBm">Susun &amp; Baca</p>
+    <p class="instructions" id="instructionsText">Listen to each sound. Tap the letters in order to build the word.</p>
+    <button class="big-btn" id="startBtn">▶ Start</button>
+  </div>
+</section>
+
+<!-- GAME SCREEN -->
+<section id="gameScreen" class="screen hidden">
+  <div class="stage">
+    <div class="scene">
+      <div class="scene-emoji" id="sceneEmoji">🐱</div>
+      <button class="speaker-btn" id="speakerBtn" aria-label="Play sounds">🔊</button>
+      <div class="prompt-text">Tap the speaker to listen, then tap the letters in order.</div>
+      <div class="sentence-row" id="sentenceRow"></div>
+      <div class="word-reveal" id="wordReveal"></div>
+    </div>
+
+    <div class="tile-pool" id="tilePool"></div>
+
+    <div class="feedback-banner" id="feedbackBanner"></div>
+
+    <div class="hint-row">
+      <button class="hint-btn" id="hintBtn">💡 Hint</button>
+    </div>
+    <div class="hint-panel hidden" id="hintPanel"></div>
+  </div>
+</section>
+
+<!-- RESULTS SCREEN -->
+<section id="resultsScreen" class="screen hidden">
+  <div class="card">
+    <div class="stars" id="starsDisplay">⭐⭐⭐</div>
+    <div class="result-msg" id="resultMsg">Great job!</div>
+    <div class="result-sub" id="resultSub">You blended every word.</div>
+    <button class="big-btn secondary" id="playAgainBtn">🔁 Play Again</button>
+    <button class="big-btn" id="doneBtn" style="margin-top:12px;background:#8a8aa3;box-shadow:0 6px 0 #6d6d85;">✓ Done</button>
+  </div>
+</section>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+  /* ============================================================
+     Firebase config — same object duplicated in login.html, hub.html
+     and every modules/*.html file (each screen is a self-contained
+     page with no shared JS import). The API key is a public client
+     identifier; access is controlled by Firestore security rules.
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtlViRgm26PuMPvNC9GoKA9hBwtYT-HEg",
+    authDomain: "english-dbcda.firebaseapp.com",
+    projectId: "english-dbcda",
+    storageBucket: "english-dbcda.firebasestorage.app",
+    messagingSenderId: "174382751098",
+    appId: "1:174382751098:web:7736264ea3153970cd8ac3"
+  };
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+
+  /* ============================================================
+     CONFIG
+     ============================================================ */
+  const CONTENT_URL = "../content/year1/module-09-susun-baca.json";
+  const STUDENT_ID_KEY = "eduverse_student_id"; // set by login.html
+
+  /* ============================================================
+     Forest-animal placeholders — unique to this module's CVC word
+     set (see world-of-stories-asset-brief.md's "Aset Haiwan Hutan").
+     kancil_running/kancil_hopping reuse the Kancil motif from
+     Modules 6/8's narrative rather than a new character.
+     ============================================================ */
+  const IMAGE_PLACEHOLDERS = {
+    forest_cat: "🐱", forest_hen: "🐔", forest_pig: "🐷", forest_fox: "🦊",
+    forest_bat: "🦇", forest_sun: "☀️", forest_log: "🪵", forest_jar: "🫙",
+    forest_map: "🗺️", forest_bag: "🎒", kancil_running: "🦌💨",
+    kancil_hopping: "🦌⤴️", forest_mud: "🟤", forest_web: "🕸️",
+    forest_fish: "🐟", forest_den: "🕳️"
+  };
+  const DEFAULT_EMOJI = "🔤";
+
+  /* ============================================================
+     AUDIO ENGINE — speaks each phoneme segment separately with a
+     pause, then the blended word, mirroring Module 1's placeholder
+     approach (TTS letter-names stand in for real phoneme audio
+     until that asset decision is made — see CLAUDE.md).
+     ============================================================ */
+  const AudioEngine = (function(){
+    let muted = false;
+    let ctx = null;
+    function getCtx(){
+      if (!ctx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) ctx = new AC();
+      }
+      return ctx;
+    }
+    function tone(freq, duration, type){
+      if (muted) return;
+      const c = getCtx();
+      if (!c) return;
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, c.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.25, c.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + duration);
+      osc.connect(gain).connect(c.destination);
+      osc.start();
+      osc.stop(c.currentTime + duration + 0.02);
+    }
+    function speakBlend(segments, word, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (!("speechSynthesis" in window)) {
+        tone(440, 0.15, "square"); setTimeout(() => tone(523, 0.2, "sine"), 220);
+        if (onend) setTimeout(onend, 500);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const parts = [...segments, word];
+      let i = 0;
+      function speakNext(){
+        if (i >= parts.length) { if (onend) onend(); return; }
+        const u = new SpeechSynthesisUtterance(parts[i]);
+        u.lang = "en-GB";
+        u.rate = opts.slow ? 0.5 : 0.7;
+        u.pitch = 1.05;
+        u.onend = () => { i++; setTimeout(speakNext, 220); };
+        window.speechSynthesis.speak(u);
+      }
+      speakNext();
+    }
+    return {
+      speakBlend,
+      playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
+      playIncorrect(){ tone(180, 0.28, "sawtooth"); },
+      playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
+      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      isMuted(){ return muted; }
+    };
+  })();
+
+  /* ============================================================
+     PL SCORING (reused unchanged).
+     ============================================================ */
+  function resolvePerformanceLevel(totalHints, table){
+    for (const key in table) {
+      if (key.endsWith("+")) {
+        const min = parseInt(key, 10);
+        if (totalHints >= min) return table[key];
+      } else if (key.includes("-")) {
+        const [min, max] = key.split("-").map(Number);
+        if (totalHints >= min && totalHints <= max) return table[key];
+      } else {
+        if (totalHints === parseInt(key, 10)) return table[key];
+      }
+    }
+    return 1;
+  }
+
+  async function saveProgress(record){
+    try {
+      await setDoc(doc(db, "progress", `${record.studentId}_${record.moduleId}`), record);
+    } catch (e) {
+      console.error("[progress] Firestore write failed", e);
+    }
+  }
+  function getStudentId(){
+    return localStorage.getItem(STUDENT_ID_KEY) || "guest_" + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* ============================================================
+     GAME STATE
+     ============================================================ */
+  const els = {
+    startScreen: document.getElementById("startScreen"),
+    gameScreen: document.getElementById("gameScreen"),
+    resultsScreen: document.getElementById("resultsScreen"),
+    titleBm: document.getElementById("titleBm"),
+    titleEn: document.getElementById("titleEn"),
+    instructionsText: document.getElementById("instructionsText"),
+    startBtn: document.getElementById("startBtn"),
+    backBtn: document.getElementById("backBtn"),
+    muteBtn: document.getElementById("muteBtn"),
+    progressFill: document.getElementById("progressFill"),
+    sceneEmoji: document.getElementById("sceneEmoji"),
+    speakerBtn: document.getElementById("speakerBtn"),
+    sentenceRow: document.getElementById("sentenceRow"),
+    wordReveal: document.getElementById("wordReveal"),
+    tilePool: document.getElementById("tilePool"),
+    feedbackBanner: document.getElementById("feedbackBanner"),
+    hintBtn: document.getElementById("hintBtn"),
+    hintPanel: document.getElementById("hintPanel"),
+    starsDisplay: document.getElementById("starsDisplay"),
+    resultMsg: document.getElementById("resultMsg"),
+    resultSub: document.getElementById("resultSub"),
+    playAgainBtn: document.getElementById("playAgainBtn"),
+    doneBtn: document.getElementById("doneBtn"),
+  };
+
+  let moduleData = null;
+  let pool = { 1: [], 2: [], 3: [] };
+  let playedCount = 0;
+  let totalItems = 0;
+  let currentTier = 1;
+  let currentItem = null;
+  let itemHints = 0;
+  let itemWrongAttempts = 0;
+  let sessionHints = 0;
+  let sessionAttempts = 0;
+  let locked = false;
+
+  let slots = [null, null, null];
+  let tileButtons = [];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function initPools(items){
+    pool = { 1: [], 2: [], 3: [] };
+    items.forEach(it => {
+      const tier = pool[it.difficultyTier] ? it.difficultyTier : 1;
+      pool[tier].push(it);
+    });
+    Object.keys(pool).forEach(t => { pool[t] = shuffle(pool[t]); });
+  }
+  function pickNextItem(){
+    const order = [currentTier, currentTier - 1, currentTier + 1, 1, 2, 3];
+    for (const t of order) {
+      if (pool[t] && pool[t].length) return pool[t].shift();
+    }
+    return null;
+  }
+
+  function loadModule(){
+    fetch(CONTENT_URL)
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => {
+        moduleData = data;
+        els.titleBm.textContent = data.title.bm;
+        els.titleEn.textContent = data.title.en;
+        els.instructionsText.textContent = data.instructions.en;
+        initPools(data.items);
+        totalItems = data.items.length;
+      })
+      .catch(err => {
+        els.instructionsText.textContent =
+          "Could not load module content (" + err.message + "). " +
+          "Serve this folder over http(s):// — opening the file directly " +
+          "blocks the fetch() to " + CONTENT_URL + ".";
+        els.startBtn.disabled = true;
+        els.startBtn.style.opacity = 0.5;
+      });
+  }
+
+  function showScreen(name){
+    els.startScreen.classList.toggle("hidden", name !== "start");
+    els.gameScreen.classList.toggle("hidden", name !== "game");
+    els.resultsScreen.classList.toggle("hidden", name !== "results");
+  }
+
+  function startSession(){
+    playedCount = 0;
+    sessionHints = 0;
+    sessionAttempts = 0;
+    currentTier = 1;
+    initPools(moduleData.items);
+    showScreen("game");
+    nextItem();
+  }
+
+  function updateProgressBar(){
+    const pct = totalItems ? Math.round((playedCount / totalItems) * 100) : 0;
+    els.progressFill.style.width = pct + "%";
+  }
+
+  function renderSlots(){
+    els.sentenceRow.innerHTML = "";
+    slots.forEach((tileEl, i) => {
+      const slot = document.createElement("div");
+      slot.className = "slot" + (tileEl ? " filled" : "");
+      slot.textContent = tileEl ? tileEl.dataset.seg : "";
+      if (tileEl) slot.addEventListener("click", () => removeFromSlot(i));
+      els.sentenceRow.appendChild(slot);
+    });
+  }
+
+  function nextItem(){
+    updateProgressBar();
+    const item = pickNextItem();
+    if (!item) { endSession(); return; }
+    currentItem = item;
+    itemHints = 0;
+    itemWrongAttempts = 0;
+    locked = false;
+    slots = [null, null, null];
+
+    els.sceneEmoji.textContent = IMAGE_PLACEHOLDERS[item.imageAsset] || DEFAULT_EMOJI;
+    els.wordReveal.textContent = "";
+    els.feedbackBanner.textContent = "";
+    els.hintPanel.classList.add("hidden");
+    els.hintBtn.disabled = false;
+    els.hintBtn.style.opacity = 1;
+    els.hintBtn.classList.remove("hint-pulse");
+
+    const segs = shuffle([...item.phonemeSegments, ...item.distractorLetters]);
+    els.tilePool.innerHTML = "";
+    tileButtons = segs.map(seg => {
+      const btn = document.createElement("button");
+      btn.className = "tile";
+      btn.textContent = seg;
+      btn.dataset.seg = seg;
+      btn.addEventListener("click", () => placeTile(btn));
+      els.tilePool.appendChild(btn);
+      return btn;
+    });
+
+    renderSlots();
+    playCurrentAudio(false);
+  }
+
+  function playCurrentAudio(slow){
+    els.speakerBtn.classList.add("playing");
+    AudioEngine.speakBlend(currentItem.phonemeSegments, currentItem.targetWord, { slow: !!slow }, () => {
+      els.speakerBtn.classList.remove("playing");
+    });
+  }
+
+  function placeTile(btn){
+    if (locked || btn.classList.contains("used")) return;
+    const emptyIndex = slots.findIndex(s => s === null);
+    if (emptyIndex === -1) return;
+    slots[emptyIndex] = btn;
+    btn.classList.add("used");
+    renderSlots();
+    if (slots.every(s => s !== null)) checkWord();
+  }
+
+  function removeFromSlot(index){
+    if (locked) return;
+    for (let i = index; i < slots.length; i++) {
+      if (slots[i]) {
+        slots[i].classList.remove("used");
+        slots[i] = null;
+      }
+    }
+    renderSlots();
+  }
+
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function checkWord(){
+    sessionAttempts++;
+    const built = slots.map(s => s.dataset.seg);
+    const isCorrect = built.length === currentItem.phonemeSegments.length &&
+      built.every((seg, i) => seg === currentItem.phonemeSegments[i]);
+
+    if (isCorrect) {
+      locked = true;
+      Array.from(els.sentenceRow.querySelectorAll(".slot")).forEach(s => s.classList.add("correct"));
+      AudioEngine.playCorrect();
+      els.feedbackBanner.style.color = "var(--good-dark)";
+      els.feedbackBanner.textContent = pick(moduleData.feedback.correct);
+      els.wordReveal.textContent = currentItem.targetWord;
+      playedCount++;
+
+      if (itemHints > 0 || itemWrongAttempts > 0) {
+        currentTier = Math.max(1, currentTier - 1);
+      } else {
+        currentTier = Math.min(3, currentTier + 1);
+      }
+      setTimeout(nextItem, 1100);
+    } else {
+      itemWrongAttempts++;
+      Array.from(els.sentenceRow.querySelectorAll(".slot")).forEach(s => s.classList.add("incorrect"));
+      AudioEngine.playIncorrect();
+      els.feedbackBanner.style.color = "var(--bad-dark)";
+      els.feedbackBanner.textContent = pick(moduleData.feedback.incorrect);
+
+      if (itemWrongAttempts >= 2 && els.hintPanel.classList.contains("hidden")) {
+        els.hintBtn.classList.add("hint-pulse");
+      }
+
+      setTimeout(() => {
+        tileButtons.forEach(b => b.classList.remove("used"));
+        slots = [null, null, null];
+        renderSlots();
+      }, 900);
+    }
+  }
+
+  function useHint(){
+    if (locked) return;
+    itemHints++;
+    sessionHints++;
+    els.hintPanel.textContent = moduleData.feedback.hint;
+    els.hintPanel.classList.remove("hidden");
+    els.hintBtn.classList.remove("hint-pulse");
+    playCurrentAudio(true);
+  }
+
+  function endSession(){
+    const pl = resolvePerformanceLevel(sessionHints, moduleData.scoringLogic.hintsUsed_to_PL);
+    const masteryAchieved = pl >= moduleData.scoringLogic.passThreshold;
+
+    saveProgress({
+      studentId: getStudentId(),
+      moduleId: moduleData.moduleId,
+      performanceLevel: pl,      // internal only — never shown as a grade/number
+      hintsUsed: sessionHints,
+      attempts: sessionAttempts,
+      masteryAchieved,
+      lastPlayed: new Date().toISOString()
+    });
+
+    renderResults(pl, masteryAchieved);
+    showScreen("results");
+  }
+
+  function renderResults(pl, masteryAchieved){
+    let stars = 1, msg = "Good try!", sub = "Let's blend more words next time.";
+    if (pl >= 5) { stars = 3; msg = "Amazing blending!"; sub = "You read every word brilliantly!"; }
+    else if (pl >= 3) { stars = 2; msg = "Well done!"; sub = "You blended most of the words!"; }
+    else { stars = 1; msg = "Nice try!"; sub = "Keep practising — you're learning!"; }
+
+    els.starsDisplay.textContent = "⭐".repeat(stars) + "☆".repeat(3 - stars);
+    els.resultMsg.textContent = msg;
+    els.resultSub.textContent = sub + (masteryAchieved ? "" : " Play again to master this set.");
+    if (masteryAchieved) AudioEngine.playComplete();
+  }
+
+  /* ============================================================
+     EVENTS
+     ============================================================ */
+  els.startBtn.addEventListener("click", startSession);
+  els.speakerBtn.addEventListener("click", () => playCurrentAudio(false));
+  els.hintBtn.addEventListener("click", useHint);
+  els.playAgainBtn.addEventListener("click", startSession);
+  els.backBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.doneBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.muteBtn.addEventListener("click", () => {
+    const next = !AudioEngine.isMuted();
+    AudioEngine.setMuted(next);
+    els.muteBtn.textContent = next ? "🔇" : "🔊";
+  });
+
+  loadModule();
+</script>
+</body>
+</html>

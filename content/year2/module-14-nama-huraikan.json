@@ -1,0 +1,36 @@
+{
+  "moduleId": "y2_knowledge_speaking_nama_huraikan",
+  "title": { "bm": "Nama & Huraikan", "en": "Name & Describe" },
+  "year": 2,
+  "world": "knowledge",
+  "skill": "speaking",
+  "mechanicType": "selection_dialogue",
+  "hotsLevel": "application",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Keperluan DSKP Y2 Speaking (Production): 'Naming and describing objects/assets clearly.' Guna objek daripada Modul 11 & 12 (kedai & kitar semula) supaya pelajar amalkan kosa kata yang dah dikenali dalam ayat deskriptif ringkas (adjektif + objek).",
+  "instructions": { "en": "Look at the object. Tap the sentence that describes it best." },
+  "feedback": {
+    "correct": ["Great description!", "That's exactly right!"],
+    "incorrect": ["Look at the object again — check the colour and size."],
+    "hint": "Think about colour, size, or shape."
+  },
+  "items": [
+    { "id": "nh001", "difficultyTier": 1, "objectAsset": "apple", "npcPrompt": { "en": "What is this?" }, "correctDescription": "This is a red apple.", "distractorDescriptions": ["This is a big kite.", "This is a blue hat."] },
+    { "id": "nh002", "difficultyTier": 1, "objectAsset": "kite", "npcPrompt": { "en": "What is this?" }, "correctDescription": "This is a big kite.", "distractorDescriptions": ["This is a small apple.", "This is a red ball."] },
+    { "id": "nh003", "difficultyTier": 1, "objectAsset": "hat", "npcPrompt": { "en": "What is this?" }, "correctDescription": "This is a blue hat.", "distractorDescriptions": ["This is a round ball.", "This is a green book."] },
+    { "id": "nh004", "difficultyTier": 1, "objectAsset": "umbrella", "npcPrompt": { "en": "What is this?" }, "correctDescription": "This is a yellow umbrella.", "distractorDescriptions": ["This is a small toy car.", "This is a red apple."] },
+    { "id": "nh005", "difficultyTier": 2, "objectAsset": "plastic_bottle", "npcPrompt": { "en": "What is this? Where does it go?" }, "correctDescription": "This is a plastic bottle. It goes in the plastic bin.", "distractorDescriptions": ["This is a paper box. It goes in the paper bin.", "This is a banana peel. It goes in the organic bin."] },
+    { "id": "nh006", "difficultyTier": 2, "objectAsset": "newspaper", "npcPrompt": { "en": "What is this? Where does it go?" }, "correctDescription": "This is a newspaper. It goes in the paper bin.", "distractorDescriptions": ["This is a plastic bag. It goes in the plastic bin.", "This is an apple core. It goes in the organic bin."] },
+    { "id": "nh007", "difficultyTier": 2, "objectAsset": "banana_peel", "npcPrompt": { "en": "What is this? Where does it go?" }, "correctDescription": "This is a banana peel. It goes in the organic bin.", "distractorDescriptions": ["This is a plastic bottle. It goes in the plastic bin.", "This is a newspaper. It goes in the paper bin."] },
+    { "id": "nh008", "difficultyTier": 2, "objectAsset": "toy_car", "npcPrompt": { "en": "What is this?" }, "correctDescription": "This is a small toy car.", "distractorDescriptions": ["This is a big umbrella.", "This is a yellow banana."] },
+    { "id": "nh009", "difficultyTier": 3, "objectAsset": "book", "npcPrompt": { "en": "What is this? Describe it." }, "correctDescription": "This is a thick book with a green cover.", "distractorDescriptions": ["This is a thin hat with a red cover.", "This is a round ball with a blue cover."] },
+    { "id": "nh010", "difficultyTier": 3, "objectAsset": "ball", "npcPrompt": { "en": "What is this? Describe it." }, "correctDescription": "This is a round, red ball.", "distractorDescriptions": ["This is a square, blue box.", "This is a long, green kite."] },
+    { "id": "nh011", "difficultyTier": 3, "objectAsset": "glass_jar", "npcPrompt": { "en": "What is this? Describe it." }, "correctDescription": "This is a clear, empty jar.", "distractorDescriptions": ["This is a dark, full bottle.", "This is a soft, small toy."] },
+    { "id": "nh012", "difficultyTier": 3, "objectAsset": "cardboard_box", "npcPrompt": { "en": "What is this? Describe it." }, "correctDescription": "This is a big, brown box.", "distractorDescriptions": ["This is a tiny, white cup.", "This is a shiny, silver can."] }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

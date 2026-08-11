@@ -1,0 +1,34 @@
+{
+  "moduleId": "y2_knowledge_reading_faham_perincian",
+  "title": { "bm": "Faham Perincian", "en": "Understand the Detail" },
+  "year": 2,
+  "world": "knowledge",
+  "skill": "reading",
+  "mechanicType": "reading_detail",
+  "hotsLevel": "analysis",
+  "cefrLevel": "A1_low",
+  "passThreshold": 3,
+  "designNote": "Pasangan mekanik untuk Modul 15 (versi BACA, bukan DENGAR) — keperluan DSKP Y2 Reading: 'identifying specific details in simple texts'. Petikan pendek (1-2 ayat) supaya sesuai UI skrin tanpa scroll (kelonggaran berbanding keperluan multi-paragraph Tahun 5).",
+  "instructions": { "en": "Read the short passage. Tap the correct answer." },
+  "feedback": {
+    "correct": ["Great reading!", "You found the detail!"],
+    "incorrect": ["Read the passage again carefully."],
+    "hint": "Look for the key word from the question in the passage."
+  },
+  "items": [
+    { "id": "fp001", "difficultyTier": 1, "passageEn": "Ahmad has two rabbits. Their names are Fluffy and Snowy.", "questionEn": "How many rabbits does Ahmad have?", "correctAnswer": "Two", "distractorAnswers": ["One", "Three"] },
+    { "id": "fp002", "difficultyTier": 1, "passageEn": "The library opens at nine in the morning.", "questionEn": "When does the library open?", "correctAnswer": "Nine in the morning", "distractorAnswers": ["Nine at night", "Ten in the morning"] },
+    { "id": "fp003", "difficultyTier": 1, "passageEn": "Water boils when it becomes very hot.", "questionEn": "When does water boil?", "correctAnswer": "When it becomes very hot", "distractorAnswers": ["When it becomes very cold", "When it becomes still"] },
+    { "id": "fp004", "difficultyTier": 2, "passageEn": "A rainbow has seven colours. It appears after the rain.", "questionEn": "How many colours does a rainbow have?", "correctAnswer": "Seven", "distractorAnswers": ["Five", "Nine"] },
+    { "id": "fp005", "difficultyTier": 2, "passageEn": "Farmers plant rice in the field. It needs a lot of water to grow.", "questionEn": "What does rice need to grow?", "correctAnswer": "A lot of water", "distractorAnswers": ["A lot of sunlight only", "A lot of sand"] },
+    { "id": "fp006", "difficultyTier": 2, "passageEn": "Fatimah packs her school bag every night before bed.", "questionEn": "When does Fatimah pack her school bag?", "correctAnswer": "Every night before bed", "distractorAnswers": ["Every morning", "Every weekend"] },
+    { "id": "fp007", "difficultyTier": 2, "passageEn": "The recycling truck comes on Monday. Everyone puts their bins outside.", "questionEn": "Which day does the recycling truck come?", "correctAnswer": "Monday", "distractorAnswers": ["Sunday", "Friday"] },
+    { "id": "fp008", "difficultyTier": 3, "passageEn": "Coral reefs are home to many colourful fish. They grow slowly over many years.", "questionEn": "What lives in coral reefs?", "correctAnswer": "Many colourful fish", "distractorAnswers": ["Many small birds", "Many green plants"] },
+    { "id": "fp009", "difficultyTier": 3, "passageEn": "A doctor helps sick people feel better. She checks their temperature first.", "questionEn": "What does the doctor check first?", "correctAnswer": "Temperature", "distractorAnswers": ["Height", "Weight"] },
+    { "id": "fp010", "difficultyTier": 3, "passageEn": "The moon does not make its own light. It reflects light from the sun.", "questionEn": "Where does the moon's light come from?", "correctAnswer": "The sun", "distractorAnswers": ["The stars", "The Earth"] }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

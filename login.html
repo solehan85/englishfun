@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Log In — Eduverse English</title>
+<style>
+  :root{
+    --bg-1:#fff6e5; --bg-2:#e5f6ff;
+    --ink:#2b2b3d; --card:#ffffff;
+    --brand:#5b4bff; --brand-dark:#3f31c9;
+    --good:#2ecc71; --good-dark:#1f9e57;
+    --bad:#ff5d5d; --bad-dark:#d63f3f;
+    --muted:#8a8aa3; --muted-dark:#6d6d85;
+    --radius:22px; --shadow:0 8px 0 rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    color:var(--ink); display:flex; flex-direction:column; align-items:center;
+    min-height:100%; padding:24px 12px 40px;
+  }
+  .wrap{ width:100%; max-width:420px; }
+  .logo{ text-align:center; margin-bottom:18px; }
+  .logo-title{ font-size:1.6rem; font-weight:800; margin:0; }
+  .logo-sub{ color:#6a6a80; font-weight:600; margin:2px 0 0; font-size:.95rem; }
+
+  .tabs{ display:flex; gap:8px; margin-bottom:16px; }
+  .tab-btn{
+    flex:1; border:none; cursor:pointer; padding:12px 0; border-radius:16px;
+    font-weight:800; font-size:1rem; background:#ffffffaa; color:#6a6a80;
+  }
+  .tab-btn.active{ background:var(--brand); color:#fff; box-shadow:0 5px 0 var(--brand-dark); }
+
+  .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px 20px; }
+  .hidden{ display:none !important; }
+
+  label{ display:block; font-weight:700; font-size:.9rem; margin:0 0 6px; color:#555; }
+  .field{ margin-bottom:16px; }
+  input[type="text"]{
+    width:100%; padding:14px 14px; border-radius:14px; border:2px solid #e6e4f5;
+    font-size:1.05rem; background:#faf9ff; color:var(--ink);
+  }
+  input[type="text"]:focus{ outline:none; border-color:var(--brand); }
+
+  .year-row{ display:flex; gap:10px; }
+  .year-btn{
+    flex:1; border:none; cursor:pointer; padding:14px 0; border-radius:14px;
+    font-weight:800; background:#f0eeff; color:var(--brand-dark); font-size:1rem;
+  }
+  .year-btn.selected{ background:var(--brand); color:#fff; box-shadow:0 5px 0 var(--brand-dark); }
+
+  .pin-stage-label{ text-align:center; font-weight:700; color:#6a6a80; margin-bottom:8px; font-size:.9rem; }
+  .pin-dots{ display:flex; justify-content:center; gap:14px; margin-bottom:18px; }
+  .pin-dot{
+    width:20px; height:20px; border-radius:50%; border:2px solid var(--brand);
+    background:transparent;
+  }
+  .pin-dot.filled{ background:var(--brand); }
+  .keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
+  .key-btn{
+    border:none; cursor:pointer; padding:16px 0; border-radius:14px; font-size:1.3rem; font-weight:800;
+    background:#f0eeff; color:var(--brand-dark); box-shadow:0 5px 0 #d8d4ff;
+  }
+  .key-btn:active{ transform:translateY(5px); box-shadow:none; }
+  .key-btn.wide{ font-size:1rem; }
+
+  .error-text{ color:var(--bad-dark); font-weight:700; text-align:center; min-height:1.4rem; margin-bottom:10px; font-size:.92rem; }
+
+  .big-btn{
+    border:none; cursor:pointer; font-weight:800; font-size:1.1rem; color:#fff;
+    background:var(--brand); box-shadow:0 6px 0 var(--brand-dark);
+    padding:15px 0; border-radius:18px; width:100%;
+  }
+  .big-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .big-btn:disabled{ background:var(--muted); box-shadow:0 6px 0 var(--muted-dark); cursor:not-allowed; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <p class="logo-title">🦉 Eduverse English</p>
+    <p class="logo-sub">Let's learn English!</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="loginTab">Log In</button>
+    <button class="tab-btn" id="registerTab">New Student</button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <div class="card" id="loginCard">
+    <div class="field">
+      <label for="loginName">Name</label>
+      <input type="text" id="loginName" placeholder="Your name">
+    </div>
+    <div class="field">
+      <label for="loginKelas">Class</label>
+      <input type="text" id="loginKelas" placeholder="e.g. 1 Rose">
+    </div>
+    <div class="pin-stage-label">Enter your 4-digit PIN</div>
+    <div class="pin-dots" id="loginPinDots"></div>
+    <div class="error-text" id="loginError"></div>
+    <div class="keypad" id="loginKeypad"></div>
+    <button class="big-btn" id="loginSubmitBtn">Log In</button>
+  </div>
+
+  <!-- REGISTER FORM -->
+  <div class="card hidden" id="registerCard">
+    <div class="field">
+      <label for="regName">Name</label>
+      <input type="text" id="regName" placeholder="Your name">
+    </div>
+    <div class="field">
+      <label for="regKelas">Class</label>
+      <input type="text" id="regKelas" placeholder="e.g. 1 Rose">
+    </div>
+    <div class="field">
+      <label>Year</label>
+      <div class="year-row">
+        <button class="year-btn selected" id="year1Btn" data-year="1">Year 1</button>
+        <button class="year-btn" id="year2Btn" data-year="2">Year 2</button>
+      </div>
+    </div>
+    <div class="pin-stage-label" id="regStageLabel">Create a 4-digit PIN</div>
+    <div class="pin-dots" id="regPinDots"></div>
+    <div class="error-text" id="regError"></div>
+    <div class="keypad" id="regKeypad"></div>
+    <button class="big-btn" id="regSubmitBtn" disabled>Register &amp; Start</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+  import {
+    getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+  /* ============================================================
+     Firebase config — same object duplicated in hub.html and every
+     modules/*.html file, since each screen is a self-contained page
+     with no shared JS import (tech-stack constraint). The API key
+     here is a public client identifier, not a secret; access is
+     controlled by Firestore security rules, not by hiding this.
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtlViRgm26PuMPvNC9GoKA9hBwtYT-HEg",
+    authDomain: "english-dbcda.firebaseapp.com",
+    projectId: "english-dbcda",
+    storageBucket: "english-dbcda.firebasestorage.app",
+    messagingSenderId: "174382751098",
+    appId: "1:174382751098:web:7736264ea3153970cd8ac3"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Active-session pointer only — the actual student record lives in Firestore.
+  const STUDENT_ID_KEY = "eduverse_student_id";
+
+  async function findStudent(name, kelas){
+    const q = query(
+      collection(db, "students"),
+      where("nameLower", "==", normalise(name)),
+      where("kelasLower", "==", normalise(kelas))
+    );
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    const d = snap.docs[0];
+    return { studentId: d.id, ...d.data() };
+  }
+
+  async function createStudent(record){
+    await setDoc(doc(db, "students", record.studentId), {
+      name: record.name,
+      kelas: record.kelas,
+      nameLower: normalise(record.name),
+      kelasLower: normalise(record.kelas),
+      pinHash: record.pinHash,
+      year: record.year,
+      createdAt: serverTimestamp()
+    });
+  }
+
+  async function sha256Hex(text){
+    const data = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  function slugify(s){
+    return s.trim().toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 16) || "student";
+  }
+
+  function normalise(s){ return s.trim().toLowerCase().replace(/\s+/g, " "); }
+
+  /* ============================================================
+     PIN keypad — small reusable widget bound to a digits array.
+     ============================================================ */
+  function buildKeypad(container, onKey){
+    container.innerHTML = "";
+    const layout = ["1","2","3","4","5","6","7","8","9","⌫","0","OK"];
+    layout.forEach(label => {
+      const btn = document.createElement("button");
+      btn.className = "key-btn" + (label === "⌫" || label === "OK" ? " wide" : "");
+      btn.textContent = label;
+      btn.type = "button";
+      btn.addEventListener("click", () => onKey(label));
+      container.appendChild(btn);
+    });
+  }
+  function renderDots(container, digits, max){
+    container.innerHTML = "";
+    for (let i = 0; i < max; i++) {
+      const dot = document.createElement("div");
+      dot.className = "pin-dot" + (i < digits.length ? " filled" : "");
+      container.appendChild(dot);
+    }
+  }
+
+  /* ============================================================
+     LOGIN FORM
+     ============================================================ */
+  const loginTab = document.getElementById("loginTab");
+  const registerTab = document.getElementById("registerTab");
+  const loginCard = document.getElementById("loginCard");
+  const registerCard = document.getElementById("registerCard");
+
+  loginTab.addEventListener("click", () => switchTab("login"));
+  registerTab.addEventListener("click", () => switchTab("register"));
+  function switchTab(which){
+    loginTab.classList.toggle("active", which === "login");
+    registerTab.classList.toggle("active", which === "register");
+    loginCard.classList.toggle("hidden", which !== "login");
+    registerCard.classList.toggle("hidden", which !== "register");
+  }
+
+  let loginPin = [];
+  const loginPinDots = document.getElementById("loginPinDots");
+  const loginError = document.getElementById("loginError");
+  renderDots(loginPinDots, loginPin, 4);
+  buildKeypad(document.getElementById("loginKeypad"), (label) => {
+    loginError.textContent = "";
+    if (label === "⌫") loginPin.pop();
+    else if (label === "OK") { attemptLogin(); return; }
+    else if (loginPin.length < 4) loginPin.push(label);
+    renderDots(loginPinDots, loginPin, 4);
+  });
+
+  document.getElementById("loginSubmitBtn").addEventListener("click", attemptLogin);
+
+  async function attemptLogin(){
+    const name = document.getElementById("loginName").value;
+    const kelas = document.getElementById("loginKelas").value;
+    if (!name.trim() || !kelas.trim()) {
+      loginError.textContent = "Please fill in your name and class first.";
+      return;
+    }
+    if (loginPin.length !== 4) {
+      loginError.textContent = "Enter your 4-digit PIN.";
+      return;
+    }
+    loginError.textContent = "Checking...";
+    let match;
+    try {
+      match = await findStudent(name, kelas);
+    } catch (e) {
+      loginError.textContent = "Connection error. Try again.";
+      return;
+    }
+    if (!match) {
+      loginError.textContent = "Student not found. Try registering first.";
+      return;
+    }
+    const pinHash = await sha256Hex(loginPin.join(""));
+    if (pinHash !== match.pinHash) {
+      loginError.textContent = "PIN doesn't match. Try again.";
+      loginPin = [];
+      renderDots(loginPinDots, loginPin, 4);
+      return;
+    }
+    localStorage.setItem(STUDENT_ID_KEY, match.studentId);
+    window.location.href = "hub.html";
+  }
+
+  /* ============================================================
+     REGISTER FORM
+     ============================================================ */
+  let regYear = 1;
+  document.getElementById("year1Btn").addEventListener("click", () => selectYear(1));
+  document.getElementById("year2Btn").addEventListener("click", () => selectYear(2));
+  function selectYear(y){
+    regYear = y;
+    document.getElementById("year1Btn").classList.toggle("selected", y === 1);
+    document.getElementById("year2Btn").classList.toggle("selected", y === 2);
+  }
+
+  let regStage = "pin"; // "pin" -> "confirm"
+  let regPin = [];
+  let regConfirmPin = [];
+  const regPinDots = document.getElementById("regPinDots");
+  const regStageLabel = document.getElementById("regStageLabel");
+  const regError = document.getElementById("regError");
+  const regSubmitBtn = document.getElementById("regSubmitBtn");
+  renderDots(regPinDots, regPin, 4);
+
+  buildKeypad(document.getElementById("regKeypad"), (label) => {
+    regError.textContent = "";
+    const active = regStage === "pin" ? regPin : regConfirmPin;
+
+    if (label === "⌫") { active.pop(); }
+    else if (label === "OK") { tryAdvanceRegister(); return; }
+    else if (active.length < 4) { active.push(label); }
+
+    renderDots(regPinDots, active, 4);
+
+    if (active.length === 4) tryAdvanceRegister();
+  });
+
+  function tryAdvanceRegister(){
+    if (regStage === "pin") {
+      if (regPin.length !== 4) { regError.textContent = "Enter a 4-digit PIN."; return; }
+      regStage = "confirm";
+      regStageLabel.textContent = "Enter that PIN again";
+      renderDots(regPinDots, regConfirmPin, 4);
+    } else {
+      if (regConfirmPin.length !== 4) { regError.textContent = "Enter that PIN again."; return; }
+      if (regConfirmPin.join("") !== regPin.join("")) {
+        regError.textContent = "PINs don't match. Try again.";
+        regStage = "pin"; regPin = []; regConfirmPin = [];
+        regStageLabel.textContent = "Create a 4-digit PIN";
+        renderDots(regPinDots, regPin, 4);
+        regSubmitBtn.disabled = true;
+        return;
+      }
+      regSubmitBtn.disabled = false;
+    }
+  }
+
+  regSubmitBtn.addEventListener("click", async () => {
+    const name = document.getElementById("regName").value;
+    const kelas = document.getElementById("regKelas").value;
+    if (!name.trim() || !kelas.trim()) {
+      regError.textContent = "Please fill in your name and class first.";
+      return;
+    }
+    regError.textContent = "Checking...";
+    regSubmitBtn.disabled = true;
+    let existing;
+    try {
+      existing = await findStudent(name, kelas);
+    } catch (e) {
+      regError.textContent = "Connection error. Try again.";
+      regSubmitBtn.disabled = false;
+      return;
+    }
+    if (existing) {
+      regError.textContent = "This name is already registered in this class. Try logging in instead.";
+      regSubmitBtn.disabled = false;
+      return;
+    }
+    const pinHash = await sha256Hex(regPin.join(""));
+    const studentId = slugify(name) + "_" + slugify(kelas) + "_" + Math.random().toString(36).slice(2, 6);
+    try {
+      await createStudent({ studentId, name: name.trim(), kelas: kelas.trim(), pinHash, year: regYear });
+    } catch (e) {
+      regError.textContent = "Save error. Try again.";
+      regSubmitBtn.disabled = false;
+      return;
+    }
+    localStorage.setItem(STUDENT_ID_KEY, studentId);
+    window.location.href = "hub.html";
+  });
+
+  // If already logged in, skip straight to the hub.
+  const activeId = localStorage.getItem(STUDENT_ID_KEY);
+  if (activeId) {
+    const existingSnap = await getDoc(doc(db, "students", activeId));
+    if (existingSnap.exists()) window.location.href = "hub.html";
+  }
+</script>
+</body>
+</html>

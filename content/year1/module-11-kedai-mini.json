@@ -1,0 +1,43 @@
+{
+  "moduleId": "y1_knowledge_languagearts_kedai_mini",
+  "title": { "bm": "Kedai Mini", "en": "Mini Shop" },
+  "year": 1,
+  "world": "knowledge",
+  "skill": "language_arts",
+  "mechanicType": "virtual_shop",
+  "hotsLevel": "evaluation",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "designNote": "Keperluan DSKP: 'Virtual Economy system (Financial Literacy)' wajib dalam World of Knowledge. Fokus bahasa: kosa kata nombor/harga & frasa fungsian ('I have... coins', 'I want to buy...'), BUKAN pengiraan matematik kompleks (baki/tukar wang bukan skop modul ni).",
+  "instructions": { "en": "Look at your coins. Tap the item you have enough coins to buy." },
+  "feedback": {
+    "correct": ["Well spent!", "You can afford that!", "Good choice!"],
+    "incorrect": ["Count your coins again — is that too expensive?"],
+    "hint": "Compare the number on your coins with the price tag."
+  },
+  "shopCatalogue": {
+    "apple": 2, "banana": 1, "hat": 3, "book": 4, "ball": 5, "kite": 6, "umbrella": 7, "toy_car": 8
+  },
+  "items": [
+    { "id": "km001", "difficultyTier": 1, "coinsGiven": 2, "optionItems": ["apple", "book", "kite"], "correctItem": "apple" },
+    { "id": "km002", "difficultyTier": 1, "coinsGiven": 1, "optionItems": ["banana", "hat", "ball"], "correctItem": "banana" },
+    { "id": "km003", "difficultyTier": 1, "coinsGiven": 3, "optionItems": ["hat", "umbrella", "toy_car"], "correctItem": "hat" },
+    { "id": "km004", "difficultyTier": 1, "coinsGiven": 4, "optionItems": ["book", "kite", "toy_car"], "correctItem": "book" },
+    { "id": "km005", "difficultyTier": 2, "coinsGiven": 5, "optionItems": ["ball", "umbrella", "toy_car"], "correctItem": "ball" },
+    { "id": "km006", "difficultyTier": 2, "coinsGiven": 6, "optionItems": ["kite", "toy_car", "umbrella"], "correctItem": "kite" },
+    { "id": "km007", "difficultyTier": 2, "coinsGiven": 7, "optionItems": ["umbrella", "toy_car", "kite"], "correctItem": "umbrella" },
+    { "id": "km008", "difficultyTier": 2, "coinsGiven": 8, "optionItems": ["toy_car", "umbrella", "kite"], "correctItem": "toy_car" },
+    { "id": "km009", "difficultyTier": 2, "coinsGiven": 2, "optionItems": ["banana", "hat", "book"], "correctItem": "banana" },
+    { "id": "km010", "difficultyTier": 2, "coinsGiven": 3, "optionItems": ["apple", "hat", "ball"], "correctItem": "hat" },
+    { "id": "km011", "difficultyTier": 3, "coinsGiven": 4, "optionItems": ["hat", "book", "ball"], "correctItem": "book", "note": "Hat (3) juga mampu dibeli tetapi Book (4) ialah pilihan sasaran — uji ketelitian bandingkan harga, bukan sekadar 'boleh beli'" },
+    { "id": "km012", "difficultyTier": 3, "coinsGiven": 5, "optionItems": ["ball", "book", "kite"], "correctItem": "ball" },
+    { "id": "km013", "difficultyTier": 3, "coinsGiven": 6, "optionItems": ["kite", "ball", "umbrella"], "correctItem": "kite" },
+    { "id": "km014", "difficultyTier": 3, "coinsGiven": 1, "optionItems": ["banana", "apple", "hat"], "correctItem": "banana" },
+    { "id": "km015", "difficultyTier": 3, "coinsGiven": 7, "optionItems": ["umbrella", "kite", "toy_car"], "correctItem": "umbrella" },
+    { "id": "km016", "difficultyTier": 3, "coinsGiven": 8, "optionItems": ["toy_car", "umbrella", "kite"], "correctItem": "toy_car" }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

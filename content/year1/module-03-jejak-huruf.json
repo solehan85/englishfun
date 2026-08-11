@@ -1,0 +1,132 @@
+{
+  "moduleId": "y1_sfaf_writing_jejak_huruf",
+  "title": {
+    "bm": "Jejak Huruf",
+    "en": "Trace the Letter"
+  },
+  "year": 1,
+  "world": "self_family_friends",
+  "skill": "writing",
+  "mechanicType": "trace_letter",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "instructions": {
+    "en": "Use your finger to trace the letter. Follow the arrow from start to finish."
+  },
+  "feedback": {
+    "correct": ["Neat writing!", "Well traced!", "Lovely letter!"],
+    "incorrect": ["Try to follow the line more closely.", "Almost — trace it again."],
+    "hint": "Start at the green dot and follow the grey path."
+  },
+  "designNote": "Modul ini sengaja guna huruf & perkataan konteks yang SAMA seperti Modul 1 (Bunyi & Padan) di mana boleh — supaya wujud lingkaran pembelajaran: dengar bunyi -> kenal huruf -> tulis huruf, dan imageAsset terus reuse daripada Modul 1. SATU huruf baharu ditambah ('e' - Eye) untuk lengkapkan asas konsonan-vokal; imageAsset 'eye_icon' perlu ditambah (rujuk asset brief).",
+  "items": [
+    {
+      "id": "jh001", "difficultyTier": 1,
+      "targetGrapheme": "l", "letterCase": "lowercase",
+      "contextWord": { "en": "Love" }, "imageAsset": "heart_hug",
+      "strokeHint": "Start at the top. Draw a straight line straight down."
+    },
+    {
+      "id": "jh002", "difficultyTier": 1,
+      "targetGrapheme": "t", "letterCase": "lowercase",
+      "contextWord": { "en": "Teeth" }, "imageAsset": "teeth_icon",
+      "strokeHint": "Start at the top. Straight line down, then a short line across the middle."
+    },
+    {
+      "id": "jh003", "difficultyTier": 1,
+      "targetGrapheme": "f", "letterCase": "lowercase",
+      "contextWord": { "en": "Family" }, "imageAsset": "family_group",
+      "strokeHint": "Curve at the top, straight line down, then a short line across the middle."
+    },
+    {
+      "id": "jh004", "difficultyTier": 1,
+      "targetGrapheme": "h", "letterCase": "lowercase",
+      "contextWord": { "en": "Hand" }, "imageAsset": "hand_icon",
+      "strokeHint": "Tall line down, then a hump over to the right without lifting your finger."
+    },
+    {
+      "id": "jh005", "difficultyTier": 1,
+      "targetGrapheme": "n", "letterCase": "lowercase",
+      "contextWord": { "en": "Nose" }, "imageAsset": "nose_icon",
+      "strokeHint": "Short line down, then a small hump over to the right."
+    },
+    {
+      "id": "jh006", "difficultyTier": 1,
+      "targetGrapheme": "w", "letterCase": "lowercase",
+      "contextWord": { "en": "Wash" }, "imageAsset": "washing_hands",
+      "strokeHint": "Zigzag down-up-down-up, like two small V shapes joined."
+    },
+    {
+      "id": "jh007", "difficultyTier": 2,
+      "targetGrapheme": "m", "letterCase": "lowercase",
+      "contextWord": { "en": "Mum" }, "imageAsset": "mother_figure",
+      "strokeHint": "Short line down, then two humps over to the right, one after another."
+    },
+    {
+      "id": "jh008", "difficultyTier": 2,
+      "targetGrapheme": "d", "letterCase": "lowercase",
+      "contextWord": { "en": "Dad" }, "imageAsset": "father_figure",
+      "strokeHint": "Draw a circle first, then a tall straight line down on the right side."
+    },
+    {
+      "id": "jh009", "difficultyTier": 2,
+      "targetGrapheme": "b", "letterCase": "lowercase",
+      "contextWord": { "en": "Brother" }, "imageAsset": "brother_figure",
+      "strokeHint": "Tall straight line down first, then a curve to make a circle at the bottom."
+    },
+    {
+      "id": "jh010", "difficultyTier": 2,
+      "targetGrapheme": "p", "letterCase": "lowercase",
+      "contextWord": { "en": "Pet" }, "imageAsset": "pet_dog",
+      "strokeHint": "Line down below the baseline first, then a curve to make a circle at the top."
+    },
+    {
+      "id": "jh011", "difficultyTier": 2,
+      "targetGrapheme": "r", "letterCase": "lowercase",
+      "contextWord": { "en": "Run" }, "imageAsset": "child_running",
+      "strokeHint": "Short line down, then a small curve at the top only, like a little flag."
+    },
+    {
+      "id": "jh012", "difficultyTier": 3,
+      "targetGrapheme": "s", "letterCase": "lowercase",
+      "contextWord": { "en": "Sister" }, "imageAsset": "sister_figure",
+      "strokeHint": "One smooth curvy line — curve left, then curve right, like a snake."
+    },
+    {
+      "id": "jh013", "difficultyTier": 3,
+      "targetGrapheme": "c", "letterCase": "lowercase",
+      "contextWord": { "en": "Cat" }, "imageAsset": "family_cat",
+      "strokeHint": "Start near the top and curve all the way around, like a backwards C — don't close the circle."
+    },
+    {
+      "id": "jh014", "difficultyTier": 3,
+      "targetGrapheme": "o", "letterCase": "lowercase",
+      "contextWord": { "en": "Orange" }, "imageAsset": "orange_fruit",
+      "strokeHint": "One smooth circle, start at the top and come all the way back round."
+    },
+    {
+      "id": "jh015", "difficultyTier": 3,
+      "targetGrapheme": "e", "letterCase": "lowercase",
+      "contextWord": { "en": "Eye" }, "imageAsset": "eye_icon",
+      "strokeHint": "Start in the middle, small line across, then curve around like an almost-circle."
+    },
+    {
+      "id": "jh016", "difficultyTier": 3,
+      "targetGrapheme": "g", "letterCase": "lowercase",
+      "contextWord": { "en": "Girl" }, "imageAsset": "girl_figure",
+      "strokeHint": "Draw a circle first, then a curved tail that dips below the baseline."
+    }
+  ],
+  "validationLogic": {
+    "note": "Kesukaran teknikal utama modul ini bukan 'betul/salah' seperti Modul 1-2, tetapi ACCURACY SCORE (peratus lintasan yang menepati laluan huruf).",
+    "accuracyThresholds": {
+      "pass": "≥70% lintasan menepati laluan (garis panduan longgar, bukan ketat, sesuai motor skill Tahun 1)",
+      "hintTrigger": "Jika 2 percubaan berturut-turut <50%, tunjuk animasi 'contoh tulisan' sekali sebelum percubaan seterusnya"
+    },
+    "hintsUsed_to_PL": {
+      "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1
+    },
+    "passThreshold": 3
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "moduleId": "y1_sfaf_speaking_sapa_balas",
+  "title": {
+    "bm": "Sapa & Balas",
+    "en": "Greet & Respond"
+  },
+  "year": 1,
+  "world": "self_family_friends",
+  "skill": "speaking",
+  "mechanicType": "selection_dialogue",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "instructions": {
+    "en": "Listen to what the character says. Tap the best reply."
+  },
+  "feedback": {
+    "correct": ["Perfect reply!", "That's exactly right!", "Great talking!"],
+    "incorrect": ["Hmm, that doesn't quite fit. Try again.", "Not quite — listen again."],
+    "hint": "Think about what you say when someone says this to you."
+  },
+  "items": [
+    {
+      "id": "sb001", "difficultyTier": 1, "functionCategory": "greeting",
+      "npcCharacter": "friend_amir",
+      "npcLine": { "en": "Hello! My name is Amir." },
+      "audioScript": "Hello! My name is Amir.",
+      "correctResponse": { "en": "Hello! My name is..." },
+      "distractorResponses": [
+        { "en": "Goodbye!" },
+        { "en": "Thank you!" }
+      ]
+    },
+    {
+      "id": "sb002", "difficultyTier": 1, "functionCategory": "farewell",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "It's time to go home. Goodbye!" },
+      "audioScript": "It's time to go home. Goodbye!",
+      "correctResponse": { "en": "Goodbye!" },
+      "distractorResponses": [
+        { "en": "Hello!" },
+        { "en": "Sorry!" }
+      ]
+    },
+    {
+      "id": "sb003", "difficultyTier": 1, "functionCategory": "gratitude",
+      "npcCharacter": "mum",
+      "npcLine": { "en": "Here is your favourite toy." },
+      "audioScript": "Here is your favourite toy.",
+      "correctResponse": { "en": "Thank you!" },
+      "distractorResponses": [
+        { "en": "Goodbye!" },
+        { "en": "My name is..." }
+      ]
+    },
+    {
+      "id": "sb004", "difficultyTier": 2, "functionCategory": "personal_info_name",
+      "npcCharacter": "friend_amir",
+      "npcLine": { "en": "What is your name?" },
+      "audioScript": "What is your name?",
+      "correctResponse": { "en": "My name is..." },
+      "distractorResponses": [
+        { "en": "I am seven." },
+        { "en": "I like cats." }
+      ]
+    },
+    {
+      "id": "sb005", "difficultyTier": 2, "functionCategory": "personal_info_age",
+      "npcCharacter": "friend_siti",
+      "npcLine": { "en": "How old are you?" },
+      "audioScript": "How old are you?",
+      "correctResponse": { "en": "I am seven years old." },
+      "distractorResponses": [
+        { "en": "My name is..." },
+        { "en": "Goodbye!" }
+      ]
+    },
+    {
+      "id": "sb006", "difficultyTier": 2, "functionCategory": "preference_binary",
+      "npcCharacter": "sister",
+      "npcLine": { "en": "Do you like ice cream?" },
+      "audioScript": "Do you like ice cream?",
+      "correctResponse": { "en": "Yes, I like it!" },
+      "distractorResponses": [
+        { "en": "No, I don't like it." }
+      ],
+      "note": "Binary preference — both options valid; system accepts either as correct interaction, tracks choice for personalisation only."
+    },
+    {
+      "id": "sb007", "difficultyTier": 2, "functionCategory": "preference_binary",
+      "npcCharacter": "dad",
+      "npcLine": { "en": "Do you like spinach?" },
+      "audioScript": "Do you like spinach?",
+      "correctResponse": { "en": "No, I don't like it." },
+      "distractorResponses": [
+        { "en": "Yes, I like it!" }
+      ],
+      "note": "Binary preference — both options valid; system accepts either as correct interaction, tracks choice for personalisation only."
+    },
+    {
+      "id": "sb008", "difficultyTier": 3, "functionCategory": "help_seeking",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "[Player looks lost and cannot find a pencil]" },
+      "audioScript": "(no NPC line — player must initiate)",
+      "correctResponse": { "en": "Can you help me?" },
+      "distractorResponses": [
+        { "en": "Thank you!" },
+        { "en": "Hello!" }
+      ]
+    },
+    {
+      "id": "sb009", "difficultyTier": 3, "functionCategory": "help_seeking",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "Please open your book to page five." },
+      "audioScript": "Please open your book to page five.",
+      "correctResponse": { "en": "Can you repeat that, please?" },
+      "distractorResponses": [
+        { "en": "Goodbye!" },
+        { "en": "I like it!" }
+      ],
+      "note": "Scenario: player didn't hear clearly — practises polite repetition request."
+    },
+    {
+      "id": "sb010", "difficultyTier": 1, "functionCategory": "greeting",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "Good morning, class!" },
+      "audioScript": "Good morning, class!",
+      "correctResponse": { "en": "Good morning!" },
+      "distractorResponses": [
+        { "en": "Good night!" },
+        { "en": "Thank you!" }
+      ]
+    },
+    {
+      "id": "sb011", "difficultyTier": 2, "functionCategory": "social_introduction",
+      "npcCharacter": "friend_siti",
+      "npcLine": { "en": "This is my sister, Aina." },
+      "audioScript": "This is my sister, Aina.",
+      "correctResponse": { "en": "Nice to meet you!" },
+      "distractorResponses": [
+        { "en": "I am seven." },
+        { "en": "Can you help me?" }
+      ]
+    },
+    {
+      "id": "sb012", "difficultyTier": 3, "functionCategory": "personal_info_production",
+      "npcCharacter": "friend_amir",
+      "npcLine": { "en": "Who is this in your photo?" },
+      "audioScript": "Who is this in your photo?",
+      "correctResponse": { "en": "This is my brother." },
+      "distractorResponses": [
+        { "en": "This is my school." },
+        { "en": "I am seven." }
+      ]
+    },
+    {
+      "id": "sb013", "difficultyTier": 2, "functionCategory": "preference_binary",
+      "npcCharacter": "friend_amir",
+      "npcLine": { "en": "Do you like playing football?" },
+      "audioScript": "Do you like playing football?",
+      "correctResponse": { "en": "Yes, I like it!" },
+      "distractorResponses": [
+        { "en": "No, I don't like it." }
+      ],
+      "note": "Binary preference — both options valid; system accepts either."
+    },
+    {
+      "id": "sb014", "difficultyTier": 1, "functionCategory": "farewell",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "See you tomorrow!" },
+      "audioScript": "See you tomorrow!",
+      "correctResponse": { "en": "See you tomorrow!" },
+      "distractorResponses": [
+        { "en": "Nice to meet you!" },
+        { "en": "Can you help me?" }
+      ]
+    },
+    {
+      "id": "sb015", "difficultyTier": 3, "functionCategory": "help_seeking",
+      "npcCharacter": "mum",
+      "npcLine": { "en": "Do you need help with your shoes?" },
+      "audioScript": "Do you need help with your shoes?",
+      "correctResponse": { "en": "Yes, please." },
+      "distractorResponses": [
+        { "en": "No, thank you." }
+      ],
+      "note": "Binary politeness — both options valid; system accepts either."
+    },
+    {
+      "id": "sb016", "difficultyTier": 1, "functionCategory": "gratitude",
+      "npcCharacter": "teacher",
+      "npcLine": { "en": "Thank you for playing today!" },
+      "audioScript": "Thank you for playing today!",
+      "correctResponse": { "en": "You're welcome!" },
+      "distractorResponses": [
+        { "en": "Hello!" },
+        { "en": "My name is..." }
+      ]
+    }
+  ],
+  "scoringLogic": {
+    "note": "performanceLevel dikira per sesi (16 item). Untuk item 'binary preference/politeness' (sb006, sb007, sb013, sb015), kedua-dua pilihan dikira BETUL — objektif DSKP adalah pertukaran maklumat yang sesuai, bukan jawapan 'betul' tunggal.",
+    "hintsUsed_to_PL": {
+      "0": 6,
+      "1-2": 5,
+      "3-4": 4,
+      "5-7": 3,
+      "8-10": 2,
+      "11+": 1
+    },
+    "passThreshold": 3
+  }
+}

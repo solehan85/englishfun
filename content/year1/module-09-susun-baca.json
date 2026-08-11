@@ -1,0 +1,40 @@
+{
+  "moduleId": "y1_stories_reading_susun_baca",
+  "title": { "bm": "Susun & Baca", "en": "Blend & Read" },
+  "year": 1,
+  "world": "stories",
+  "skill": "reading",
+  "mechanicType": "phonics_blend",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": 3,
+  "designNote": "Phonics-first decoding — pelajar susun bunyi fonem berasingan menjadi perkataan CVC (Consonant-Vowel-Consonant) penuh. Semua perkataan bertema hutan/haiwan, selaras World of Stories. Membina terus daripada kemahiran Modul 1 & 3 (pengecaman fonem & huruf) kepada gabungan fonem penuh.",
+  "instructions": { "en": "Listen to each sound. Tap the letters in order to build the word." },
+  "feedback": {
+    "correct": ["You blended it perfectly!", "That's the word!"],
+    "incorrect": ["Listen to the sounds again, one at a time.", "Try blending slower."],
+    "hint": "Say the first sound out loud, then the next."
+  },
+  "items": [
+    { "id": "sb001", "difficultyTier": 1, "targetWord": "cat", "phonemeSegments": ["c", "a", "t"], "imageAsset": "forest_cat", "distractorLetters": ["s", "o"] },
+    { "id": "sb002", "difficultyTier": 1, "targetWord": "hen", "phonemeSegments": ["h", "e", "n"], "imageAsset": "forest_hen", "distractorLetters": ["m", "i"] },
+    { "id": "sb003", "difficultyTier": 1, "targetWord": "pig", "phonemeSegments": ["p", "i", "g"], "imageAsset": "forest_pig", "distractorLetters": ["b", "e"] },
+    { "id": "sb004", "difficultyTier": 1, "targetWord": "fox", "phonemeSegments": ["f", "o", "x"], "imageAsset": "forest_fox", "distractorLetters": ["v", "u"] },
+    { "id": "sb005", "difficultyTier": 1, "targetWord": "bat", "phonemeSegments": ["b", "a", "t"], "imageAsset": "forest_bat", "distractorLetters": ["d", "o"] },
+    { "id": "sb006", "difficultyTier": 2, "targetWord": "sun", "phonemeSegments": ["s", "u", "n"], "imageAsset": "forest_sun", "distractorLetters": ["z", "a"] },
+    { "id": "sb007", "difficultyTier": 2, "targetWord": "log", "phonemeSegments": ["l", "o", "g"], "imageAsset": "forest_log", "distractorLetters": ["r", "i"] },
+    { "id": "sb008", "difficultyTier": 2, "targetWord": "jar", "phonemeSegments": ["j", "a", "r"], "imageAsset": "forest_jar", "distractorLetters": ["g", "e"] },
+    { "id": "sb009", "difficultyTier": 2, "targetWord": "map", "phonemeSegments": ["m", "a", "p"], "imageAsset": "forest_map", "distractorLetters": ["n", "u"] },
+    { "id": "sb010", "difficultyTier": 2, "targetWord": "bag", "phonemeSegments": ["b", "a", "g"], "imageAsset": "forest_bag", "distractorLetters": ["d", "o"], "note": "bag/bat share initial sound — pembezaan fonem akhir (HOTS)" },
+    { "id": "sb011", "difficultyTier": 3, "targetWord": "run", "phonemeSegments": ["r", "u", "n"], "imageAsset": "kancil_running", "distractorLetters": ["l", "a"] },
+    { "id": "sb012", "difficultyTier": 3, "targetWord": "hop", "phonemeSegments": ["h", "o", "p"], "imageAsset": "kancil_hopping", "distractorLetters": ["b", "i"] },
+    { "id": "sb013", "difficultyTier": 3, "targetWord": "mud", "phonemeSegments": ["m", "u", "d"], "imageAsset": "forest_mud", "distractorLetters": ["n", "t"] },
+    { "id": "sb014", "difficultyTier": 3, "targetWord": "web", "phonemeSegments": ["w", "e", "b"], "imageAsset": "forest_web", "distractorLetters": ["v", "d"] },
+    { "id": "sb015", "difficultyTier": 3, "targetWord": "fin", "phonemeSegments": ["f", "i", "n"], "imageAsset": "forest_fish", "distractorLetters": ["v", "m"] },
+    { "id": "sb016", "difficultyTier": 3, "targetWord": "den", "phonemeSegments": ["d", "e", "n"], "imageAsset": "forest_den", "distractorLetters": ["b", "hen"], "note": "den/hen rima — pembezaan onset (HOTS)" }
+  ],
+  "scoringLogic": {
+    "hintsUsed_to_PL": { "0": 6, "1-2": 5, "3-4": 4, "5-7": 3, "8-10": 2, "11+": 1 },
+    "passThreshold": 3
+  }
+}

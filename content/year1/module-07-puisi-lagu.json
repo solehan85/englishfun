@@ -1,0 +1,83 @@
+{
+  "moduleId": "y1_stories_languagearts_puisi_lagu",
+  "title": { "bm": "Zon Puisi & Lagu", "en": "Poem & Song Zone" },
+  "year": 1,
+  "world": "stories",
+  "skill": "language_arts",
+  "mechanicType": "rhyme_zone",
+  "hotsLevel": "application",
+  "cefrLevel": "working_towards_A1",
+  "passThreshold": null,
+  "designNote": "PENTING: Modul ini LOW-STAKES mengikut keperluan DSKP eksplisit — 'without penalization'. TIADA performanceLevel/PL gate di sini; semua penyertaan pelajar (betul/salah rhyme) diberi maklum balas positif. Ini zon eksplorasi kreatif, bukan zon ujian. Semua puisi/lagu adalah KANDUNGAN ASLI (original), bukan diambil daripada mana-mana sumber sedia ada, untuk elak isu hak cipta.",
+  "instructions": { "en": "Listen to the song. Tap the word that rhymes." },
+  "feedback": {
+    "correct": ["Lovely! You found the rhyme!", "Nice ear for rhymes!"],
+    "tryAgain": ["Listen again — which word sounds the same at the end?"]
+  },
+  "items": [
+    {
+      "id": "pl_song001",
+      "title": { "en": "Kancil's Hop" },
+      "verseText": { "en": "Little Kancil hops so light,\nOver the log, out of sight." },
+      "rhymeTargetLine": "Over the log, out of ___",
+      "correctRhymeWord": "sight",
+      "distractorWords": ["run", "cave"]
+    },
+    {
+      "id": "pl_song002",
+      "title": { "en": "River Song" },
+      "verseText": { "en": "The river flows both night and day,\nIt carries leaves so far away." },
+      "rhymeTargetLine": "It carries leaves so far ___",
+      "correctRhymeWord": "away",
+      "distractorWords": ["home", "green"]
+    },
+    {
+      "id": "pl_song003",
+      "title": { "en": "Sleepy Cave" },
+      "verseText": { "en": "In the cave so dark and deep,\nAll the forest friends will sleep." },
+      "rhymeTargetLine": "All the forest friends will ___",
+      "correctRhymeWord": "sleep",
+      "distractorWords": ["run", "hide"]
+    },
+    {
+      "id": "pl_song004",
+      "title": { "en": "Bridge of Wood" },
+      "verseText": { "en": "Across the bridge, so brown and old,\nKancil walks, brave and bold." },
+      "rhymeTargetLine": "Kancil walks, brave and ___",
+      "correctRhymeWord": "bold",
+      "distractorWords": ["fast", "kind"]
+    },
+    {
+      "id": "pl_song005",
+      "title": { "en": "Flower Field" },
+      "verseText": { "en": "Yellow flowers in the sun,\nWe pick and play, having fun." },
+      "rhymeTargetLine": "We pick and play, having ___",
+      "correctRhymeWord": "fun",
+      "distractorWords": ["walk", "shine"]
+    },
+    {
+      "id": "pl_song006",
+      "title": { "en": "Rocky Hill" },
+      "verseText": { "en": "Up the hill and past the stone,\nKancil never walks alone." },
+      "rhymeTargetLine": "Kancil never walks ___",
+      "correctRhymeWord": "alone",
+      "distractorWords": ["away", "slow"]
+    },
+    {
+      "id": "pl_song007",
+      "title": { "en": "Nest so Small" },
+      "verseText": { "en": "High up in the tree so tall,\nA little bird has built its nest so small." },
+      "rhymeTargetLine": "A little bird has built its nest so ___",
+      "correctRhymeWord": "small",
+      "distractorWords": ["warm", "far"]
+    },
+    {
+      "id": "pl_song008",
+      "title": { "en": "Pond at Dawn" },
+      "verseText": { "en": "The pond is still, the morning light,\nBrings colours warm and shining bright." },
+      "rhymeTargetLine": "Brings colours warm and shining ___",
+      "correctRhymeWord": "bright",
+      "distractorWords": ["blue", "wide"]
+    }
+  ]
+}

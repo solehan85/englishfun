@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Like / Don't Like — Eduverse English</title>
+<style>
+  :root{
+    --bg-1:#fff3e0; --bg-2:#eafbea;
+    --ink:#2b2b3d; --card:#ffffff;
+    --brand:#5b4bff; --brand-dark:#3f31c9;
+    --good:#2ecc71; --good-dark:#1f9e57;
+    --hint:#ffb84d; --hint-dark:#e0952a;
+    --radius:22px;
+    --shadow:0 8px 0 rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    color:var(--ink);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100%;
+    padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+    overflow-x:hidden;
+  }
+  .screen{ width:100%; max-width:520px; display:flex; flex-direction:column; align-items:center; flex:1; padding:16px 0 32px; }
+  .hidden{ display:none !important; }
+
+  .topbar{ width:100%; max-width:520px; display:flex; align-items:center; gap:10px; padding:10px 4px; }
+  .icon-btn{
+    border:none; background:var(--card); box-shadow:var(--shadow); border-radius:16px;
+    width:44px; height:44px; font-size:20px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex:0 0 auto;
+  }
+  .icon-btn:active{ transform:translateY(4px); box-shadow:none; }
+  .progress-track{ flex:1; height:14px; background:#ffffffaa; border-radius:999px; overflow:hidden; box-shadow:inset 0 2px 4px rgba(0,0,0,.08); }
+  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--brand),#8a7dff); border-radius:999px; transition:width .35s ease; }
+
+  .card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:28px 22px; width:100%; text-align:center;
+  }
+  .title-en{ font-size:2rem; font-weight:800; margin:0; }
+  .title-bm{ font-size:1rem; color:#6a6a80; margin:4px 0 18px; font-weight:600; }
+  .instructions{ font-size:1.05rem; line-height:1.5; background:#f4f2ff; border-radius:14px; padding:14px 16px; margin-bottom:22px; }
+  .big-btn{
+    border:none; cursor:pointer; font-weight:800; font-size:1.15rem;
+    color:#fff; background:var(--brand); box-shadow:0 6px 0 var(--brand-dark);
+    padding:16px 28px; border-radius:18px; width:100%; max-width:320px;
+  }
+  .big-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .big-btn.secondary{ background:var(--good); box-shadow:0 6px 0 var(--good-dark); margin-top:14px; }
+
+  .stage{ width:100%; display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:8px;}
+  .scene{
+    width:100%; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:26px 18px 20px; display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .npc-row{ display:flex; align-items:center; gap:12px; }
+  .npc-avatar{ font-size:3.4rem; line-height:1; }
+  .npc-name{ font-weight:800; color:var(--brand-dark); font-size:1rem; }
+  .speaker-btn{
+    border:none; cursor:pointer; border-radius:999px; width:68px; height:68px; font-size:1.9rem;
+    background:var(--brand); color:#fff; box-shadow:0 6px 0 var(--brand-dark);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .speaker-btn:active{ transform:translateY(6px); box-shadow:none; }
+  .speaker-btn.playing{ animation:pulse .5s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+  .prompt-text{ font-weight:700; color:#6a6a80; font-size:.92rem; text-align:center; }
+  .exchange-line{ font-size:1.02rem; font-weight:700; color:#3a3a52; min-height:1.4rem; text-align:center; }
+
+  .answers-list{ width:100%; display:flex; flex-direction:column; gap:12px; }
+  .answer-pill{
+    border:none; cursor:pointer; font-size:1.05rem; font-weight:700; text-align:center;
+    padding:16px 18px; border-radius:16px; background:#f0eeff; color:var(--brand-dark);
+    box-shadow:0 6px 0 #d8d4ff;
+  }
+  .answer-pill:active{ transform:translateY(6px); box-shadow:none; }
+  .answer-pill.chosen{ background:var(--good); color:#fff; box-shadow:0 6px 0 var(--good-dark); animation:bounce .5s ease; }
+  .answer-pill.disabled{ opacity:.55; pointer-events:none; }
+  @keyframes bounce{ 0%{transform:scale(1);} 40%{transform:scale(1.05);} 100%{transform:scale(1);} }
+
+  .feedback-banner{ width:100%; text-align:center; font-weight:800; font-size:1.1rem; min-height:1.6rem; color:var(--good-dark); }
+
+  .hint-row{ width:100%; display:flex; justify-content:center; }
+  .hint-btn{
+    border:none; cursor:pointer; background:var(--hint); color:#fff; font-weight:800;
+    padding:12px 20px; border-radius:16px; box-shadow:0 5px 0 var(--hint-dark); font-size:.95rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hint-btn:active{ transform:translateY(5px); box-shadow:none; }
+  .hint-panel{
+    width:100%; background:#fff7e8; border:2px dashed var(--hint); border-radius:14px;
+    padding:12px 14px; font-size:.95rem; text-align:center; color:#7a5b18;
+  }
+
+  .stars{ font-size:3rem; letter-spacing:6px; margin:10px 0 4px; }
+  .result-msg{ font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+  .result-sub{ color:#6a6a80; margin-bottom:24px; font-size:.95rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="icon-btn" id="backBtn" aria-label="Back" title="Back">←</button>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <button class="icon-btn" id="muteBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+</div>
+
+<!-- START SCREEN -->
+<section id="startScreen" class="screen">
+  <div class="card">
+    <p class="title-en" id="titleEn">Like / Don't Like</p>
+    <p class="title-bm" id="titleBm">Suka/Tak Suka</p>
+    <p class="instructions" id="instructionsText">Listen to the question. Tap how you feel about it.</p>
+    <button class="big-btn" id="startBtn">▶ Start</button>
+  </div>
+</section>
+
+<!-- GAME SCREEN -->
+<section id="gameScreen" class="screen hidden">
+  <div class="stage">
+    <div class="scene">
+      <div class="npc-row">
+        <div class="npc-avatar" id="npcAvatar">🙂</div>
+        <div class="npc-name" id="npcName"></div>
+      </div>
+      <button class="speaker-btn" id="speakerBtn" aria-label="Play question">🔊</button>
+      <div class="prompt-text">Tap the speaker to listen, then say how you feel.</div>
+      <div class="exchange-line" id="exchangeLine"></div>
+    </div>
+
+    <div class="answers-list" id="answers"></div>
+
+    <div class="feedback-banner" id="feedbackBanner"></div>
+
+    <div class="hint-row">
+      <button class="hint-btn" id="hintBtn">💡 Hint</button>
+    </div>
+    <div class="hint-panel hidden" id="hintPanel"></div>
+  </div>
+</section>
+
+<!-- RESULTS SCREEN -->
+<section id="resultsScreen" class="screen hidden">
+  <div class="card">
+    <div class="stars" id="starsDisplay">⭐⭐⭐</div>
+    <div class="result-msg" id="resultMsg">Great job!</div>
+    <div class="result-sub" id="resultSub">You shared how you feel about everything!</div>
+    <button class="big-btn secondary" id="playAgainBtn">🔁 Play Again</button>
+    <button class="big-btn" id="doneBtn" style="margin-top:12px;background:#8a8aa3;box-shadow:0 6px 0 #6d6d85;">✓ Done</button>
+  </div>
+</section>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+  /* ============================================================
+     Firebase config — same object duplicated in login.html, hub.html
+     and every modules/*.html file (each screen is a self-contained
+     page with no shared JS import). The API key is a public client
+     identifier; access is controlled by Firestore security rules.
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtlViRgm26PuMPvNC9GoKA9hBwtYT-HEg",
+    authDomain: "english-dbcda.firebaseapp.com",
+    projectId: "english-dbcda",
+    storageBucket: "english-dbcda.firebasestorage.app",
+    messagingSenderId: "174382751098",
+    appId: "1:174382751098:web:7736264ea3153970cd8ac3"
+  };
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+
+  /* ============================================================
+     CONFIG — every item in this module accepts EITHER response as
+     valid (see the JSON's scoringLogic note: this evaluates the
+     ABILITY to express a preference/value, not which stance the
+     student takes). There is no "incorrect" feedback array in the
+     content at all — the mechanic literally cannot be answered
+     wrong, so there's no correct/incorrect branching here, unlike
+     every other selection_dialogue module.
+     ============================================================ */
+  const CONTENT_URL = "../content/year1/module-13-suka-tak-suka.json";
+  const STUDENT_ID_KEY = "eduverse_student_id"; // set by login.html
+
+  const NPC_DISPLAY = {
+    friend_amir: { emoji: "👦", name: "Amir" },
+    friend_siti: { emoji: "👧", name: "Siti" },
+    teacher:     { emoji: "👩‍🏫", name: "Teacher" },
+    mum:         { emoji: "👩", name: "Mum" },
+    dad:         { emoji: "👨", name: "Dad" }
+  };
+  const DEFAULT_NPC = { emoji: "🙂", name: "" };
+
+  /* ============================================================
+     AUDIO ENGINE
+     ============================================================ */
+  const AudioEngine = (function(){
+    let muted = false;
+    let ctx = null;
+    function getCtx(){
+      if (!ctx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) ctx = new AC();
+      }
+      return ctx;
+    }
+    function tone(freq, duration, type){
+      if (muted) return;
+      const c = getCtx();
+      if (!c) return;
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, c.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.25, c.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + duration);
+      osc.connect(gain).connect(c.destination);
+      osc.start();
+      osc.stop(c.currentTime + duration + 0.02);
+    }
+    function speak(text, onend){
+      if (muted) { if (onend) onend(); return; }
+      if (!("speechSynthesis" in window)) {
+        tone(440, 0.18, "square"); setTimeout(() => tone(523, 0.25, "sine"), 250);
+        if (onend) setTimeout(onend, 600);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-GB";
+      u.rate = 0.8;
+      u.onend = () => { if (onend) onend(); };
+      window.speechSynthesis.speak(u);
+    }
+    return {
+      speak,
+      playChosen(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
+      playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
+      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      isMuted(){ return muted; }
+    };
+  })();
+
+  /* ============================================================
+     PL SCORING (reused unchanged).
+     ============================================================ */
+  function resolvePerformanceLevel(totalHints, table){
+    for (const key in table) {
+      if (key.endsWith("+")) {
+        const min = parseInt(key, 10);
+        if (totalHints >= min) return table[key];
+      } else if (key.includes("-")) {
+        const [min, max] = key.split("-").map(Number);
+        if (totalHints >= min && totalHints <= max) return table[key];
+      } else {
+        if (totalHints === parseInt(key, 10)) return table[key];
+      }
+    }
+    return 1;
+  }
+
+  async function saveProgress(record){
+    try {
+      await setDoc(doc(db, "progress", `${record.studentId}_${record.moduleId}`), record);
+    } catch (e) {
+      console.error("[progress] Firestore write failed", e);
+    }
+  }
+  function getStudentId(){
+    return localStorage.getItem(STUDENT_ID_KEY) || "guest_" + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* ============================================================
+     GAME STATE
+     ============================================================ */
+  const els = {
+    startScreen: document.getElementById("startScreen"),
+    gameScreen: document.getElementById("gameScreen"),
+    resultsScreen: document.getElementById("resultsScreen"),
+    titleEn: document.getElementById("titleEn"),
+    titleBm: document.getElementById("titleBm"),
+    instructionsText: document.getElementById("instructionsText"),
+    startBtn: document.getElementById("startBtn"),
+    backBtn: document.getElementById("backBtn"),
+    muteBtn: document.getElementById("muteBtn"),
+    progressFill: document.getElementById("progressFill"),
+    npcAvatar: document.getElementById("npcAvatar"),
+    npcName: document.getElementById("npcName"),
+    speakerBtn: document.getElementById("speakerBtn"),
+    exchangeLine: document.getElementById("exchangeLine"),
+    answers: document.getElementById("answers"),
+    feedbackBanner: document.getElementById("feedbackBanner"),
+    hintBtn: document.getElementById("hintBtn"),
+    hintPanel: document.getElementById("hintPanel"),
+    starsDisplay: document.getElementById("starsDisplay"),
+    resultMsg: document.getElementById("resultMsg"),
+    resultSub: document.getElementById("resultSub"),
+    playAgainBtn: document.getElementById("playAgainBtn"),
+    doneBtn: document.getElementById("doneBtn"),
+  };
+
+  let moduleData = null;
+  let pool = { 1: [], 2: [], 3: [] };
+  let playedCount = 0;
+  let totalItems = 0;
+  let currentTier = 1;
+  let currentItem = null;
+  let sessionHints = 0;
+  let sessionAttempts = 0;
+  let locked = false;
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function initPools(items){
+    pool = { 1: [], 2: [], 3: [] };
+    items.forEach(it => {
+      const tier = pool[it.difficultyTier] ? it.difficultyTier : 1;
+      pool[tier].push(it);
+    });
+    Object.keys(pool).forEach(t => { pool[t] = shuffle(pool[t]); });
+  }
+  function pickNextItem(){
+    const order = [currentTier, currentTier - 1, currentTier + 1, 1, 2, 3];
+    for (const t of order) {
+      if (pool[t] && pool[t].length) return pool[t].shift();
+    }
+    return null;
+  }
+
+  function loadModule(){
+    fetch(CONTENT_URL)
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => {
+        moduleData = data;
+        els.titleEn.textContent = data.title.en;
+        els.titleBm.textContent = data.title.bm;
+        els.instructionsText.textContent = data.instructions.en;
+        initPools(data.items);
+        totalItems = data.items.length;
+      })
+      .catch(err => {
+        els.instructionsText.textContent =
+          "Could not load module content (" + err.message + "). " +
+          "Serve this folder over http(s):// — opening the file directly " +
+          "blocks the fetch() to " + CONTENT_URL + ".";
+        els.startBtn.disabled = true;
+        els.startBtn.style.opacity = 0.5;
+      });
+  }
+
+  function showScreen(name){
+    els.startScreen.classList.toggle("hidden", name !== "start");
+    els.gameScreen.classList.toggle("hidden", name !== "game");
+    els.resultsScreen.classList.toggle("hidden", name !== "results");
+  }
+
+  function startSession(){
+    playedCount = 0;
+    sessionHints = 0;
+    sessionAttempts = 0;
+    currentTier = 1;
+    initPools(moduleData.items);
+    showScreen("game");
+    nextItem();
+  }
+
+  function updateProgressBar(){
+    const pct = totalItems ? Math.round((playedCount / totalItems) * 100) : 0;
+    els.progressFill.style.width = pct + "%";
+  }
+
+  function nextItem(){
+    updateProgressBar();
+    const item = pickNextItem();
+    if (!item) { endSession(); return; }
+    currentItem = item;
+    locked = false;
+
+    const npc = NPC_DISPLAY[item.npcCharacter] || DEFAULT_NPC;
+    els.npcAvatar.textContent = npc.emoji;
+    els.npcName.textContent = npc.name;
+    els.feedbackBanner.textContent = "";
+    els.exchangeLine.textContent = "";
+    els.hintPanel.classList.add("hidden");
+    els.hintBtn.disabled = false;
+    els.hintBtn.style.opacity = 1;
+
+    els.answers.innerHTML = "";
+    item.responseOptions.forEach(text => {
+      const btn = document.createElement("button");
+      btn.className = "answer-pill";
+      btn.textContent = text;
+      btn.addEventListener("click", () => chooseResponse(text, btn));
+      els.answers.appendChild(btn);
+    });
+
+    playCurrentAudio();
+  }
+
+  function playCurrentAudio(){
+    els.speakerBtn.classList.add("playing");
+    AudioEngine.speak(currentItem.npcLine.en, () => {
+      els.speakerBtn.classList.remove("playing");
+    });
+  }
+
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function chooseResponse(text, btn){
+    if (locked) return;
+    locked = true;
+    sessionAttempts++;
+    btn.classList.add("chosen");
+    Array.from(els.answers.children).forEach(b => { if (b !== btn) b.classList.add("disabled"); });
+    AudioEngine.playChosen();
+    els.feedbackBanner.textContent = pick(moduleData.feedback.correct);
+    els.exchangeLine.textContent = `"${currentItem.npcLine.en}" → "${text}"`;
+    playedCount++;
+    currentTier = Math.min(3, currentTier + 1);
+    setTimeout(nextItem, 1200);
+  }
+
+  function useHint(){
+    if (locked) return;
+    sessionHints++;
+    els.hintPanel.textContent = moduleData.feedback.hint;
+    els.hintPanel.classList.remove("hidden");
+    playCurrentAudio();
+  }
+
+  function endSession(){
+    const pl = resolvePerformanceLevel(sessionHints, moduleData.scoringLogic.hintsUsed_to_PL);
+    const masteryAchieved = pl >= moduleData.scoringLogic.passThreshold;
+
+    saveProgress({
+      studentId: getStudentId(),
+      moduleId: moduleData.moduleId,
+      performanceLevel: pl,      // internal only — never shown as a grade/number
+      hintsUsed: sessionHints,
+      attempts: sessionAttempts,
+      masteryAchieved,
+      lastPlayed: new Date().toISOString()
+    });
+
+    renderResults(pl, masteryAchieved);
+    showScreen("results");
+  }
+
+  function renderResults(pl, masteryAchieved){
+    let stars = 1, msg = "Good try!", sub = "Let's talk about more things next time.";
+    if (pl >= 5) { stars = 3; msg = "Amazing talking!"; sub = "You shared how you feel about everything!"; }
+    else if (pl >= 3) { stars = 2; msg = "Well done!"; sub = "You shared your feelings clearly!"; }
+    else { stars = 1; msg = "Nice try!"; sub = "Keep practising — you're learning!"; }
+
+    els.starsDisplay.textContent = "⭐".repeat(stars) + "☆".repeat(3 - stars);
+    els.resultMsg.textContent = msg;
+    els.resultSub.textContent = sub + (masteryAchieved ? "" : " Play again to master this set.");
+    if (masteryAchieved) AudioEngine.playComplete();
+  }
+
+  /* ============================================================
+     EVENTS
+     ============================================================ */
+  els.startBtn.addEventListener("click", startSession);
+  els.speakerBtn.addEventListener("click", playCurrentAudio);
+  els.hintBtn.addEventListener("click", useHint);
+  els.playAgainBtn.addEventListener("click", startSession);
+  els.backBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.doneBtn.addEventListener("click", () => { window.location.href = "../hub.html"; });
+  els.muteBtn.addEventListener("click", () => {
+    const next = !AudioEngine.isMuted();
+    AudioEngine.setMuted(next);
+    els.muteBtn.textContent = next ? "🔇" : "🔊";
+  });
+
+  loadModule();
+</script>
+</body>
+</html>

@@ -209,7 +209,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speakPassage(text){
+    function speakPassageFallback(text){
       if (muted || !("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
@@ -217,12 +217,27 @@
       u.rate = 0.75;
       window.speechSynthesis.speak(u);
     }
+    let currentAudioEl = null;
+    function speakPassage(item){
+      if (muted) return;
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year2/module-16-faham-perincian/${item.id}.mp3`);
+      currentAudioEl = audio;
+      audio.addEventListener("error", () => { speakPassageFallback(item.passageEn); });
+      audio.play().catch(() => { speakPassageFallback(item.passageEn); });
+    }
     return {
       speakPassage,
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();
@@ -432,7 +447,7 @@
     els.hintPanel.textContent = moduleData.feedback.hint;
     els.hintPanel.classList.remove("hidden");
     els.hintBtn.classList.remove("hint-pulse");
-    AudioEngine.speakPassage(currentItem.passageEn);
+    AudioEngine.speakPassage(currentItem);
   }
 
   function endSession(){

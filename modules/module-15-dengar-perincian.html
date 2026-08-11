@@ -216,7 +216,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speakNarrative(script, opts, onend){
+    function speakNarrativeFallback(script, opts, onend){
       opts = opts || {};
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
@@ -238,12 +238,35 @@
       }
       speakNext();
     }
+    /* Real recorded audio (ElevenLabs, UK English "Alice" voice) —
+       ../assets/audio/year2/module-15-dengar-perincian/{item.id}.mp3,
+       one continuous clip per narrative (this module's text is NEVER
+       shown on screen, so recording quality matters most here).
+       SpeechSynthesis sentence-chain is kept as a fallback only. */
+    let currentAudioEl = null;
+    function speakNarrative(item, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year2/module-15-dengar-perincian/${item.id}.mp3`);
+      audio.playbackRate = opts.slow ? 0.65 : 1;
+      currentAudioEl = audio;
+      audio.addEventListener("ended", () => { if (onend) onend(); });
+      audio.addEventListener("error", () => { speakNarrativeFallback(item.narrativeAudioScript, opts, onend); });
+      audio.play().catch(() => { speakNarrativeFallback(item.narrativeAudioScript, opts, onend); });
+    }
     return {
       speakNarrative,
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();
@@ -413,7 +436,7 @@
 
   function playCurrentAudio(slow){
     els.speakerBtn.classList.add("playing");
-    AudioEngine.speakNarrative(currentItem.narrativeAudioScript, { slow: !!slow }, () => {
+    AudioEngine.speakNarrative(currentItem, { slow: !!slow }, () => {
       els.speakerBtn.classList.remove("playing");
     });
   }

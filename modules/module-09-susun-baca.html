@@ -239,7 +239,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speakBlend(segments, word, opts, onend){
+    function speakBlendFallback(segments, word, opts, onend){
       opts = opts || {};
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
@@ -261,12 +261,44 @@
       }
       speakNext();
     }
+    let currentAudioEl = null;
+    function speakBlend(segments, word, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const parts = [...segments, word];
+      let i = 0;
+      let fellBack = false;
+      function playNext(){
+        if (fellBack) return;
+        if (i >= parts.length) { if (onend) onend(); return; }
+        const audio = new Audio(`../assets/audio/year1/module-09-susun-baca/${parts[i]}.mp3`);
+        audio.playbackRate = opts.slow ? 0.65 : 1;
+        currentAudioEl = audio;
+        audio.addEventListener("ended", () => { i++; setTimeout(playNext, 150); });
+        audio.addEventListener("error", () => {
+          fellBack = true;
+          speakBlendFallback(segments, word, opts, onend);
+        });
+        audio.play().catch(() => {
+          fellBack = true;
+          speakBlendFallback(segments, word, opts, onend);
+        });
+      }
+      playNext();
+    }
     return {
       speakBlend,
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();

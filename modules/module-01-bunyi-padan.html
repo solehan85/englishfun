@@ -212,12 +212,14 @@
 
   /* ============================================================
      AUDIO ENGINE
-     Fasa 1 guna placeholder cues (bukan rakaman/TTS sedia produksi):
-       - SpeechSynthesis (jika ada) menuturkan audioScript sebagai
-         placeholder yang boleh diuji terus dalam browser.
-       - Web Audio API oscillator sebagai fallback/kesan bunyi
-         (chime betul / buzz salah) — ini yang kekal walaupun
-         audio sebenar sudah masuk kelak.
+     Real recorded audio (ElevenLabs, UK English "Alice" voice) now
+     lives in ../assets/audio/year1/module-01-bunyi-padan/{id}.mp3
+     — one file per item, named after item.id. SpeechSynthesis is
+     kept as a fallback only (if a file 404s or the browser blocks
+     playback), not the primary path anymore. The "slow" hint replay
+     reuses the same file at a reduced playbackRate rather than a
+     separate recording. Web Audio API oscillator tones remain for
+     correct/incorrect/complete chimes — unrelated to word audio.
      ============================================================ */
   const AudioEngine = (function(){
     let muted = false;
@@ -247,11 +249,11 @@
       osc.stop(c.currentTime + duration + 0.02);
     }
 
-    function speak(script, opts, onend){
+    function speakFallback(script, opts, onend){
       opts = opts || {};
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
-        // Fallback placeholder: two short blips standing in for the
+        // Last-resort placeholder: two short blips standing in for the
         // phoneme + word, so the mechanic is testable without TTS.
         tone(440, 0.18, "square");
         setTimeout(() => tone(523, 0.25, "sine"), 250);
@@ -273,12 +275,31 @@
       speakNext();
     }
 
+    let currentAudioEl = null;
+    function playItemAudio(item, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year1/module-01-bunyi-padan/${item.id}.mp3`);
+      audio.playbackRate = opts.slow ? 0.65 : 1;
+      currentAudioEl = audio;
+      audio.addEventListener("ended", () => { if (onend) onend(); });
+      audio.addEventListener("error", () => { speakFallback(item.audioScript, opts, onend); });
+      audio.play().catch(() => { speakFallback(item.audioScript, opts, onend); });
+    }
+
     return {
-      speakItem(item, opts, onend){ speak(item.audioScript, opts, onend); },
+      speakItem(item, opts, onend){ playItemAudio(item, opts, onend); },
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();

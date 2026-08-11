@@ -198,7 +198,10 @@
   const DEFAULT_NPC = { emoji: "🙂", name: "" };
 
   /* ============================================================
-     AUDIO ENGINE
+     AUDIO ENGINE. Real recorded audio (ElevenLabs, UK English
+     "Alice" voice) lives in
+     ../assets/audio/year1/module-13-suka-tak-suka/{item.id}.mp3 —
+     one file per item. SpeechSynthesis is kept as a fallback only.
      ============================================================ */
   const AudioEngine = (function(){
     let muted = false;
@@ -225,7 +228,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speak(text, onend){
+    function speakFallback(text, onend){
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
         tone(440, 0.18, "square"); setTimeout(() => tone(523, 0.25, "sine"), 250);
@@ -239,11 +242,27 @@
       u.onend = () => { if (onend) onend(); };
       window.speechSynthesis.speak(u);
     }
+    let currentAudioEl = null;
+    function speak(item, onend){
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year1/module-13-suka-tak-suka/${item.id}.mp3`);
+      currentAudioEl = audio;
+      audio.addEventListener("ended", () => { if (onend) onend(); });
+      audio.addEventListener("error", () => { speakFallback(item.npcLine.en, onend); });
+      audio.play().catch(() => { speakFallback(item.npcLine.en, onend); });
+    }
     return {
       speak,
       playChosen(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();
@@ -412,7 +431,7 @@
 
   function playCurrentAudio(){
     els.speakerBtn.classList.add("playing");
-    AudioEngine.speak(currentItem.npcLine.en, () => {
+    AudioEngine.speak(currentItem, () => {
       els.speakerBtn.classList.remove("playing");
     });
   }

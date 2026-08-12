@@ -10,6 +10,9 @@
       "*.zip",
       "*.md",
       "docs/**"
+    ],
+    "rewrites": [
+      { "source": "/", "destination": "/login.html" }
     ]
   },
   "firestore": {

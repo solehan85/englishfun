@@ -4,21 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Like / Don't Like — Eduverse English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#fff3e0; --bg-2:#eafbea;
+    --bg-1:#e2edff; --bg-2:#eafbea; --bg-3:#fff3e0;
     --ink:#2b2b3d; --card:#ffffff;
-    --brand:#5b4bff; --brand-dark:#3f31c9;
-    --good:#2ecc71; --good-dark:#1f9e57;
+    --brand:#3a86ff; --brand-dark:#0353c4;
+    --good:#06d6a0; --good-dark:#039e77;
     --hint:#ffb84d; --hint-dark:#e0952a;
     --radius:22px;
     --shadow:0 8px 0 rgba(0,0,0,.12);
+    --font-display:'Baloo 2',cursive; --font-body:'Nunito',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;margin:0;}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    font-family:var(--font-body);
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-3) 55%,var(--bg-2));
     color:var(--ink);
     display:flex; flex-direction:column; align-items:center;
     min-height:100%;
@@ -42,7 +46,7 @@
     background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
     padding:28px 22px; width:100%; text-align:center;
   }
-  .title-en{ font-size:2rem; font-weight:800; margin:0; }
+  .title-en{ font-family:var(--font-display); font-size:2rem; font-weight:700; margin:0; color:var(--brand-dark); }
   .title-bm{ font-size:1rem; color:#6a6a80; margin:4px 0 18px; font-weight:600; }
   .instructions{ font-size:1.05rem; line-height:1.5; background:#f4f2ff; border-radius:14px; padding:14px 16px; margin-bottom:22px; }
   .big-btn{
@@ -98,7 +102,7 @@
   }
 
   .stars{ font-size:3rem; letter-spacing:6px; margin:10px 0 4px; }
-  .result-msg{ font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+  .result-msg{ font-family:var(--font-display); font-size:1.2rem; font-weight:700; margin-bottom:6px; color:var(--brand-dark); }
   .result-sub{ color:#6a6a80; margin-bottom:24px; font-size:.95rem; }
 </style>
 </head>

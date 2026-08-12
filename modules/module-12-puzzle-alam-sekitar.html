@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Environment Puzzle — Eduverse English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#eafbea; --bg-2:#e5f6ff;
+    --bg-1:#dffaf1; --bg-2:#e2edff; --bg-3:#eafbea;
     --ink:#2b2b3d; --card:#ffffff;
     --brand:#2f9e58; --brand-dark:#1f7a41;
-    --good:#2ecc71; --good-dark:#1f9e57;
+    --good:#06d6a0; --good-dark:#039e77;
     --bad:#ff5d5d; --bad-dark:#d63f3f;
     --hint:#ffb84d; --hint-dark:#e0952a;
     --paper:#5b8fd4; --paper-dark:#3f6bab;
@@ -17,12 +20,13 @@
     --organic:#6fbf5c; --organic-dark:#4a9c3a;
     --radius:22px;
     --shadow:0 8px 0 rgba(0,0,0,.12);
+    --font-display:'Baloo 2',cursive; --font-body:'Nunito',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;margin:0;}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    font-family:var(--font-body);
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-3) 55%,var(--bg-2));
     color:var(--ink);
     display:flex; flex-direction:column; align-items:center;
     min-height:100%;
@@ -50,7 +54,7 @@
      secondary subtitle (per user direction — this is an English
      learning product, so English should read as the main language,
      not just the instructional content). */
-  .title-en{ font-size:2rem; font-weight:800; margin:0; }
+  .title-en{ font-family:var(--font-display); font-size:2rem; font-weight:700; margin:0; color:var(--brand-dark); }
   .title-bm{ font-size:1rem; color:#6a6a80; margin:4px 0 18px; font-weight:600; }
   .instructions{ font-size:1.05rem; line-height:1.5; background:#eafbea; border-radius:14px; padding:14px 16px; margin-bottom:22px; }
   .big-btn{
@@ -104,7 +108,7 @@
   }
 
   .stars{ font-size:3rem; letter-spacing:6px; margin:10px 0 4px; }
-  .result-msg{ font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+  .result-msg{ font-family:var(--font-display); font-size:1.2rem; font-weight:700; margin-bottom:6px; color:var(--brand-dark); }
   .result-sub{ color:#6a6a80; margin-bottom:24px; font-size:.95rem; }
 </style>
 </head>

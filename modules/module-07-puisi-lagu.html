@@ -214,7 +214,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speakVerse(text, onend){
+    function speakVerseFallback(text, onend){
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
         tone(440, 0.18, "sine"); setTimeout(() => tone(523, 0.25, "sine"), 250);
@@ -235,12 +235,28 @@
       }
       speakNext();
     }
+    let currentAudioEl = null;
+    function speakVerse(item, onend){
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year1/module-07-puisi-lagu/${item.id}.mp3`);
+      currentAudioEl = audio;
+      audio.addEventListener("ended", () => { if (onend) onend(); });
+      audio.addEventListener("error", () => { speakVerseFallback(item.verseText.en, onend); });
+      audio.play().catch(() => { speakVerseFallback(item.verseText.en, onend); });
+    }
     return {
       speakVerse,
       playFoundRhyme(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playTryAgain(){ tone(420, 0.18, "sine"); },
       playAllExplored(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();
@@ -372,7 +388,7 @@
 
   function playCurrentVerse(){
     els.speakerBtn.classList.add("playing");
-    AudioEngine.speakVerse(moduleData.items[order[index]].verseText.en, () => {
+    AudioEngine.speakVerse(moduleData.items[order[index]], () => {
       els.speakerBtn.classList.remove("playing");
     });
   }

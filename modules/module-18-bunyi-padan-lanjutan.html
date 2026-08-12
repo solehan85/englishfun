@@ -222,7 +222,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speakItem(item, opts, onend){
+    function speakItemFallback(item, opts, onend){
       opts = opts || {};
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
@@ -244,12 +244,51 @@
       }
       speakNext();
     }
+    /* Real recorded audio (ElevenLabs, UK English "Alice" voice) —
+       ../assets/audio/year2/module-18-bunyi-padan-lanjutan/. Blend
+       clips are named by the blend text itself ({blend}.mp3, e.g.
+       sh.mp3) and reused for both isolated repeats; word clips are
+       named by the lowercase context word ({word}.mp3). All 16
+       blends and 16 words are distinct, so no cross-item dedup —
+       but no clip is recorded twice either (32 files, 48 plays). */
+    let currentAudioEl = null;
+    function speakItem(item, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const parts = [item.targetBlend, item.targetBlend, item.contextWord.en.toLowerCase()];
+      let i = 0;
+      let fellBack = false;
+      function playNext(){
+        if (fellBack) return;
+        if (i >= parts.length) { if (onend) onend(); return; }
+        const audio = new Audio(`../assets/audio/year2/module-18-bunyi-padan-lanjutan/${parts[i]}.mp3`);
+        audio.playbackRate = opts.slow ? 0.65 : 1;
+        currentAudioEl = audio;
+        audio.addEventListener("ended", () => { i++; setTimeout(playNext, 150); });
+        audio.addEventListener("error", () => {
+          fellBack = true;
+          speakItemFallback(item, opts, onend);
+        });
+        audio.play().catch(() => {
+          fellBack = true;
+          speakItemFallback(item, opts, onend);
+        });
+      }
+      playNext();
+    }
     return {
       speakItem,
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();

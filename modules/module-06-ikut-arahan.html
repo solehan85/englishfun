@@ -200,7 +200,13 @@
   const DEFAULT_EMOJI = "❓";
 
   /* ============================================================
-     AUDIO ENGINE
+     AUDIO ENGINE. Real recorded audio (ElevenLabs, UK English
+     "Alice" voice) lives in ../assets/audio/year1/module-06-ikut-arahan/
+     — {item.id}.mp3 for Kancil's full instruction sentence, and
+     {targetLocation}.mp3 (one per unique scene word) for the hint's
+     slow word-only repeat. SpeechSynthesis is kept as a fallback
+     only (file 404s or playback blocked). "slow" reuses the same
+     file at a reduced playbackRate rather than a separate recording.
      ============================================================ */
   const AudioEngine = (function(){
     let muted = false;
@@ -227,7 +233,7 @@
       osc.start();
       osc.stop(c.currentTime + duration + 0.02);
     }
-    function speak(text, opts, onend){
+    function speakFallback(text, opts, onend){
       opts = opts || {};
       if (muted) { if (onend) onend(); return; }
       if (!("speechSynthesis" in window)) {
@@ -243,12 +249,30 @@
       u.onend = () => { if (onend) onend(); };
       window.speechSynthesis.speak(u);
     }
+    let currentAudioEl = null;
+    function speak(source, opts, onend){
+      opts = opts || {};
+      if (muted) { if (onend) onend(); return; }
+      if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+      const audio = new Audio(`../assets/audio/year1/module-06-ikut-arahan/${source.src}.mp3`);
+      audio.playbackRate = opts.slow ? 0.65 : 1;
+      currentAudioEl = audio;
+      audio.addEventListener("ended", () => { if (onend) onend(); });
+      audio.addEventListener("error", () => { speakFallback(source.text, opts, onend); });
+      audio.play().catch(() => { speakFallback(source.text, opts, onend); });
+    }
     return {
       speak,
       playCorrect(){ tone(660, 0.15, "sine"); setTimeout(() => tone(880, 0.22, "sine"), 130); },
       playIncorrect(){ tone(180, 0.28, "sawtooth"); },
       playComplete(){ [523,659,784,1047].forEach((f,idx)=>setTimeout(()=>tone(f,0.22,"sine"), idx*140)); },
-      setMuted(v){ muted = v; if (muted && "speechSynthesis" in window) window.speechSynthesis.cancel(); },
+      setMuted(v){
+        muted = v;
+        if (muted) {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+          if (currentAudioEl) { currentAudioEl.pause(); currentAudioEl = null; }
+        }
+      },
       isMuted(){ return muted; }
     };
   })();
@@ -419,7 +443,7 @@
 
   function playCurrentAudio(slow){
     els.speakerBtn.classList.add("playing");
-    AudioEngine.speak(currentItem.npcLine.en, { slow: !!slow }, () => {
+    AudioEngine.speak({ text: currentItem.npcLine.en, src: currentItem.id }, { slow: !!slow }, () => {
       els.speakerBtn.classList.remove("playing");
     });
   }
@@ -473,7 +497,7 @@
     els.hintBtn.classList.remove("hint-pulse");
     // Hint text says Kancil repeats just the word, slowly — not the full instruction.
     els.speakerBtn.classList.add("playing");
-    AudioEngine.speak(currentItem.targetLocation, { slow: true }, () => {
+    AudioEngine.speak({ text: currentItem.targetLocation, src: currentItem.targetLocation }, { slow: true }, () => {
       els.speakerBtn.classList.remove("playing");
     });
   }

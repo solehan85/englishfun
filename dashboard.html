@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>World Map — Eduverse English</title>
+<title>My Progress — Eduverse English</title>
 <style>
   :root{
     --bg-1:#fff6e5; --bg-2:#e5f6ff;
@@ -26,49 +26,46 @@
     display:flex; align-items:center; justify-content:space-between; gap:10px;
     background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:20px;
   }
-  .welcome{ font-weight:800; font-size:1.05rem; }
-  .welcome-sub{ font-weight:600; font-size:.85rem; color:#6a6a80; }
-  .logout-btn{
+  .back-btn{
     border:none; cursor:pointer; background:#f0eeff; color:var(--brand-dark); font-weight:800;
-    padding:10px 14px; border-radius:14px; font-size:.85rem;
+    padding:10px 14px; border-radius:14px; font-size:.85rem; flex-shrink:0;
   }
-  .logout-btn:active{ transform:translateY(2px); }
-  .topbar-actions{ display:flex; gap:8px; flex-shrink:0; }
-  .progress-btn{
-    border:none; cursor:pointer; background:#fff3d6; color:#a8760a; font-weight:800;
-    padding:10px 14px; border-radius:14px; font-size:.85rem;
-  }
-  .progress-btn:active{ transform:translateY(2px); }
+  .back-btn:active{ transform:translateY(2px); }
+  .welcome{ font-weight:800; font-size:1.05rem; text-align:center; }
+  .welcome-sub{ font-weight:600; font-size:.85rem; color:#6a6a80; text-align:center; }
 
-  .world-section{ margin-bottom:26px; }
-  .world-header{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .world-emoji{ font-size:1.8rem; }
-  .world-title-primary{ font-weight:800; font-size:1.15rem; margin:0; }
-  .world-title-secondary{ font-weight:600; font-size:.85rem; color:#6a6a80; margin:0; }
-
-  .module-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  @media (min-width:480px){ .module-grid{ grid-template-columns:1fr 1fr 1fr; } }
-
-  .module-tile{
-    background:var(--card); border-radius:18px; box-shadow:var(--shadow);
-    padding:16px 12px; text-align:center; cursor:pointer; border:none;
-    display:flex; flex-direction:column; align-items:center; gap:6px;
-    font-family:inherit; color:var(--ink);
+  .summary-card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 16px; margin-bottom:22px; text-align:center;
   }
-  .module-tile:active{ transform:translateY(6px); box-shadow:none; }
-  .module-tile.locked{ opacity:.6; cursor:default; }
-  .module-tile.locked:active{ transform:none; box-shadow:var(--shadow); }
-  .module-emoji{ font-size:2rem; }
-  .module-title-primary{ font-weight:800; font-size:.92rem; line-height:1.2; }
-  .module-title-secondary{ font-weight:600; font-size:.72rem; color:#6a6a80; line-height:1.1; }
-  .module-status{
-    font-size:.72rem; font-weight:800; border-radius:999px; padding:3px 10px; margin-top:2px;
+  .summary-title-primary{ font-weight:800; font-size:1.3rem; margin:0 0 2px; }
+  .summary-title-secondary{ font-weight:600; font-size:.85rem; color:#6a6a80; margin:0 0 16px; }
+  .summary-stats{ display:flex; justify-content:center; gap:22px; flex-wrap:wrap; }
+  .stat{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .stat-value{ font-weight:800; font-size:1.6rem; color:var(--brand-dark); }
+  .stat-label-primary{ font-weight:700; font-size:.78rem; }
+  .stat-label-secondary{ font-weight:600; font-size:.68rem; color:#8a8aa3; }
+  .stars-total{ font-size:1.3rem; letter-spacing:1px; }
+
+  .world-section{ margin-bottom:24px; }
+  .world-header{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .world-emoji{ font-size:1.6rem; }
+  .world-title-primary{ font-weight:800; font-size:1.05rem; margin:0; }
+  .world-title-secondary{ font-weight:600; font-size:.8rem; color:#6a6a80; margin:0; }
+
+  .module-row{
+    background:var(--card); border-radius:16px; box-shadow:var(--shadow);
+    padding:12px 14px; margin-bottom:10px; display:flex; align-items:center; gap:12px;
   }
-  .status-new{ background:#f0eeff; color:var(--brand-dark); }
-  .status-played{ background:#fff3d6; color:#a8760a; }
-  .status-mastered{ background:#e3fbec; color:var(--good-dark); }
-  .status-explored{ background:#fdeee0; color:#b85c26; }
-  .status-soon{ background:#f0f0f4; color:var(--muted-dark); }
+  .module-row-emoji{ font-size:1.5rem; flex-shrink:0; }
+  .module-row-titles{ flex:1; min-width:0; }
+  .module-row-title-primary{ font-weight:800; font-size:.9rem; line-height:1.2; }
+  .module-row-title-secondary{ font-weight:600; font-size:.72rem; color:#6a6a80; line-height:1.1; }
+  .module-row-status{ flex-shrink:0; text-align:right; }
+  .stars-row{ font-size:1rem; letter-spacing:1px; }
+  .status-text{ font-size:.72rem; font-weight:700; color:var(--muted-dark); }
+  .status-text.explored{ color:#b85c26; }
+  .status-text.mastered{ color:var(--good-dark); }
 
   .empty-note{ color:#8a8aa3; font-weight:600; font-size:.9rem; padding:8px 4px; }
 </style>
@@ -76,13 +73,33 @@
 <body>
 <div class="wrap">
   <div class="topbar">
+    <button class="back-btn" id="backBtn">← Map</button>
     <div>
-      <div class="welcome" id="welcomeText">Hai!</div>
+      <div class="welcome" id="welcomeText">My Progress</div>
       <div class="welcome-sub" id="yearText"></div>
     </div>
-    <div class="topbar-actions">
-      <button class="progress-btn" id="progressBtn">⭐ My Progress</button>
-      <button class="logout-btn" id="logoutBtn">Log Out</button>
+    <button class="back-btn" id="logoutBtn">Log Out</button>
+  </div>
+
+  <div class="summary-card">
+    <p class="summary-title-primary">Your Progress</p>
+    <p class="summary-title-secondary">Kemajuan Anda</p>
+    <div class="summary-stats">
+      <div class="stat">
+        <div class="stat-value" id="statMastered">0/0</div>
+        <div class="stat-label-primary">Mastered</div>
+        <div class="stat-label-secondary">Dikuasai</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value stars-total" id="statStars">☆☆☆</div>
+        <div class="stat-label-primary">Total Stars</div>
+        <div class="stat-label-secondary">Jumlah Bintang</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="statTried">0</div>
+        <div class="stat-label-primary">Tried</div>
+        <div class="stat-label-secondary">Dicuba</div>
+      </div>
     </div>
   </div>
 
@@ -96,8 +113,8 @@
   } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
   /* ============================================================
-     Firebase config — same object duplicated in login.html and
-     every modules/*.html file (each screen is a self-contained
+     Firebase config — same object duplicated in login.html, hub.html
+     and every modules/*.html file (each screen is a self-contained
      page with no shared JS import). The API key is a public client
      identifier; access is controlled by Firestore security rules.
      ============================================================ */
@@ -132,9 +149,8 @@
   }
 
   /* ============================================================
-     Module manifest (MVP, 18 modules). Only Module 1 has a playable
-     game file so far — the rest show a "Coming soon" tile until
-     they're built from the same template.
+     Module manifest — kept identical to hub.html's (each page is
+     self-contained, no shared import).
      ============================================================ */
   const MODULES = [
     { id:"y1_sfaf_listening_bunyi_padan", num:1, world:"self_family_friends", skill:"listening", year:1, title:{bm:"Bunyi & Padan", en:"Sound & Match"}, path:"modules/module-01-bunyi-padan.html" },
@@ -165,77 +181,100 @@
 
   const SKILL_EMOJI = { listening:"🎧", speaking:"🗣️", reading:"📖", writing:"✍️", language_arts:"🎨" };
 
-  function statusBadge(mod, progressMap){
-    if (!mod.path) return { cls:"status-soon", label:"Coming Soon" };
+  /* PL (1-6) → stars, identical mapping to every module's own
+     renderResults() — PL itself is never shown, only this
+     translation (CLAUDE.md constraint 4). */
+  function starsForPL(pl){
+    if (pl >= 5) return 3;
+    if (pl >= 3) return 2;
+    return 1;
+  }
+  function starString(stars){ return "⭐".repeat(stars) + "☆".repeat(3 - stars); }
+
+  function moduleRow(mod, progressMap){
     const progress = progressMap[mod.id];
+    const row = document.createElement("div");
+    row.className = "module-row";
+
+    let statusHtml;
     if (mod.noGate) {
-      // No PL/mastery concept for this module (see module-07's designNote) —
-      // a distinct badge avoids implying it was graded like the others.
-      return progress ? { cls:"status-explored", label:"✓ Explored" } : { cls:"status-new", label:"Not Tried Yet" };
+      statusHtml = progress
+        ? `<div class="status-text explored">✓ Explored</div>`
+        : `<div class="status-text">Not tried yet</div>`;
+    } else if (!progress) {
+      statusHtml = `<div class="status-text">Not played yet</div>`;
+    } else {
+      const stars = starsForPL(progress.performanceLevel);
+      statusHtml = `<div class="stars-row">${starString(stars)}</div>` +
+        (progress.masteryAchieved ? `<div class="status-text mastered">Mastered</div>` : `<div class="status-text">Tried</div>`);
     }
-    if (!progress) return { cls:"status-new", label:"Not Played Yet" };
-    if (progress.masteryAchieved) return { cls:"status-mastered", label:"⭐ Mastered" };
-    return { cls:"status-played", label:"Tried" };
+
+    row.innerHTML = `
+      <div class="module-row-emoji">${SKILL_EMOJI[mod.skill] || "🎮"}</div>
+      <div class="module-row-titles">
+        <div class="module-row-title-primary">${mod.title.en}</div>
+        <div class="module-row-title-secondary">${mod.title.bm}</div>
+      </div>
+      <div class="module-row-status">${statusHtml}</div>`;
+    row.addEventListener("click", () => { window.location.href = mod.path; });
+    row.style.cursor = "pointer";
+    return row;
   }
 
   async function main(){
     const student = await getActiveStudent();
     if (!student) { window.location.href = "login.html"; return; }
 
-    document.getElementById("welcomeText").textContent = "Hi, " + student.name + "! 👋";
-    document.getElementById("yearText").textContent = "Year " + student.year;
+    document.getElementById("yearText").textContent = student.name + " — Year " + student.year;
 
     const progressMap = await loadProgressMap(student.studentId);
+    const yearModules = MODULES.filter(m => m.year === student.year);
+    const gatedModules = yearModules.filter(m => !m.noGate);
+
+    let masteredCount = 0, triedCount = 0, totalStars = 0;
+    gatedModules.forEach(mod => {
+      const progress = progressMap[mod.id];
+      if (!progress) return;
+      triedCount++;
+      if (progress.masteryAchieved) masteredCount++;
+      totalStars += starsForPL(progress.performanceLevel);
+    });
+
+    document.getElementById("statMastered").textContent = masteredCount + "/" + gatedModules.length;
+    document.getElementById("statStars").textContent = totalStars + " / " + (gatedModules.length * 3) + " ⭐";
+    document.getElementById("statTried").textContent = String(triedCount);
 
     const container = document.getElementById("worldsContainer");
     WORLDS.forEach(world => {
-      const modules = MODULES.filter(m => m.world === world.key && m.year === student.year);
+      const modules = yearModules.filter(m => m.world === world.key);
+      if (modules.length === 0) return;
 
-    const section = document.createElement("div");
-    section.className = "world-section";
+      const section = document.createElement("div");
+      section.className = "world-section";
 
-    const header = document.createElement("div");
-    header.className = "world-header";
-    header.innerHTML = `
-      <div class="world-emoji">${world.emoji}</div>
-      <div>
-        <p class="world-title-primary">${world.en}</p>
-        <p class="world-title-secondary">${world.bm}</p>
-      </div>`;
-    section.appendChild(header);
+      const header = document.createElement("div");
+      header.className = "world-header";
+      header.innerHTML = `
+        <div class="world-emoji">${world.emoji}</div>
+        <div>
+          <p class="world-title-primary">${world.en}</p>
+          <p class="world-title-secondary">${world.bm}</p>
+        </div>`;
+      section.appendChild(header);
 
-    if (modules.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "empty-note";
-      empty.textContent = "No modules for Year " + student.year + " in this world yet.";
-      section.appendChild(empty);
-    } else {
-      const grid = document.createElement("div");
-      grid.className = "module-grid";
-      modules.forEach(mod => {
-        const badge = statusBadge(mod, progressMap);
-        const tile = document.createElement("button");
-        tile.className = "module-tile" + (mod.path ? "" : " locked");
-        tile.innerHTML = `
-          <div class="module-emoji">${SKILL_EMOJI[mod.skill] || "🎮"}</div>
-          <div class="module-title-primary">${mod.title.en}</div>
-          <div class="module-title-secondary">${mod.title.bm}</div>
-          <div class="module-status ${badge.cls}">${badge.label}</div>`;
-        if (mod.path) {
-          tile.addEventListener("click", () => { window.location.href = mod.path; });
-        } else {
-          tile.disabled = true;
-        }
-        grid.appendChild(tile);
-      });
-      section.appendChild(grid);
-    }
-
-    container.appendChild(section);
+      modules.forEach(mod => section.appendChild(moduleRow(mod, progressMap)));
+      container.appendChild(section);
     });
 
-    document.getElementById("progressBtn").addEventListener("click", () => {
-      window.location.href = "dashboard.html";
+    if (yearModules.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-note";
+      empty.textContent = "No modules found for Year " + student.year + ".";
+      container.appendChild(empty);
+    }
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = "hub.html";
     });
     document.getElementById("logoutBtn").addEventListener("click", () => {
       localStorage.removeItem(STUDENT_ID_KEY);

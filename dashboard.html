@@ -4,20 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>My Progress — Eduverse English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#fff6e5; --bg-2:#e5f6ff;
+    --bg-1:#ffe8b3; --bg-2:#cdeeff; --bg-3:#ece0ff;
     --ink:#2b2b3d; --card:#ffffff;
-    --brand:#5b4bff; --brand-dark:#3f31c9;
-    --good:#2ecc71; --good-dark:#1f9e57;
+    --brand:#7c3aed; --brand-dark:#5b21b6;
+    --accent:#ffb703; --accent-dark:#d99400;
+    --good:#06d6a0; --good-dark:#039e77;
     --muted:#8a8aa3; --muted-dark:#6d6d85;
+    --world-sfaf:#ff5d8f; --world-sfaf-dark:#c9285f; --world-sfaf-bg:#ffe3ec;
+    --world-stories:#06a77d; --world-stories-dark:#04724d; --world-stories-bg:#dffaf1;
+    --world-knowledge:#3a86ff; --world-knowledge-dark:#0353c4; --world-knowledge-bg:#e2edff;
     --radius:20px; --shadow:0 8px 0 rgba(0,0,0,.12);
+    --font-display:'Baloo 2',cursive; --font-body:'Nunito',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;margin:0;}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
+    font-family:var(--font-body);
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-3) 55%,var(--bg-2));
     color:var(--ink); min-height:100%; padding:16px 12px 40px;
   }
   .wrap{ max-width:640px; margin:0 auto; }
@@ -31,43 +39,53 @@
     padding:10px 14px; border-radius:14px; font-size:.85rem; flex-shrink:0;
   }
   .back-btn:active{ transform:translateY(2px); }
-  .welcome{ font-weight:800; font-size:1.05rem; text-align:center; }
-  .welcome-sub{ font-weight:600; font-size:.85rem; color:#6a6a80; text-align:center; }
+  .welcome{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; text-align:center; color:var(--brand-dark); }
+  .welcome-sub{ font-weight:700; font-size:.85rem; color:#6a6a80; text-align:center; }
 
   .summary-card{
     background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
     padding:20px 16px; margin-bottom:22px; text-align:center;
   }
-  .summary-title-primary{ font-weight:800; font-size:1.3rem; margin:0 0 2px; }
-  .summary-title-secondary{ font-weight:600; font-size:.85rem; color:#6a6a80; margin:0 0 16px; }
+  .summary-title-primary{ font-family:var(--font-display); font-weight:700; font-size:1.4rem; margin:0 0 2px; color:var(--brand-dark); }
+  .summary-title-secondary{ font-weight:700; font-size:.85rem; color:#6a6a80; margin:0 0 16px; }
   .summary-stats{ display:flex; justify-content:center; gap:22px; flex-wrap:wrap; }
   .stat{ display:flex; flex-direction:column; align-items:center; gap:2px; }
-  .stat-value{ font-weight:800; font-size:1.6rem; color:var(--brand-dark); }
+  .stat-value{ font-family:var(--font-display); font-weight:700; font-size:1.7rem; color:var(--accent-dark); }
   .stat-label-primary{ font-weight:700; font-size:.78rem; }
   .stat-label-secondary{ font-weight:600; font-size:.68rem; color:#8a8aa3; }
   .stars-total{ font-size:1.3rem; letter-spacing:1px; }
 
   .world-section{ margin-bottom:24px; }
-  .world-header{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .world-header{ display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:8px 14px; border-radius:16px; }
+  .world-section[data-world="self_family_friends"] .world-header{ background:var(--world-sfaf-bg); }
+  .world-section[data-world="stories"] .world-header{ background:var(--world-stories-bg); }
+  .world-section[data-world="knowledge"] .world-header{ background:var(--world-knowledge-bg); }
   .world-emoji{ font-size:1.6rem; }
-  .world-title-primary{ font-weight:800; font-size:1.05rem; margin:0; }
-  .world-title-secondary{ font-weight:600; font-size:.8rem; color:#6a6a80; margin:0; }
+  .world-title-primary{ font-family:var(--font-display); font-weight:700; font-size:1.1rem; margin:0; }
+  .world-section[data-world="self_family_friends"] .world-title-primary{ color:var(--world-sfaf-dark); }
+  .world-section[data-world="stories"] .world-title-primary{ color:var(--world-stories-dark); }
+  .world-section[data-world="knowledge"] .world-title-primary{ color:var(--world-knowledge-dark); }
+  .world-title-secondary{ font-weight:700; font-size:.8rem; color:#6a6a80; margin:0; }
 
   .module-row{
     background:var(--card); border-radius:16px; box-shadow:var(--shadow);
     padding:12px 14px; margin-bottom:10px; display:flex; align-items:center; gap:12px;
+    border-left:5px solid transparent;
   }
+  .world-section[data-world="self_family_friends"] .module-row{ border-left-color:var(--world-sfaf); }
+  .world-section[data-world="stories"] .module-row{ border-left-color:var(--world-stories); }
+  .world-section[data-world="knowledge"] .module-row{ border-left-color:var(--world-knowledge); }
   .module-row-emoji{ font-size:1.5rem; flex-shrink:0; }
   .module-row-titles{ flex:1; min-width:0; }
   .module-row-title-primary{ font-weight:800; font-size:.9rem; line-height:1.2; }
-  .module-row-title-secondary{ font-weight:600; font-size:.72rem; color:#6a6a80; line-height:1.1; }
+  .module-row-title-secondary{ font-weight:700; font-size:.72rem; color:#6a6a80; line-height:1.1; }
   .module-row-status{ flex-shrink:0; text-align:right; }
   .stars-row{ font-size:1rem; letter-spacing:1px; }
   .status-text{ font-size:.72rem; font-weight:700; color:var(--muted-dark); }
   .status-text.explored{ color:#b85c26; }
   .status-text.mastered{ color:var(--good-dark); }
 
-  .empty-note{ color:#8a8aa3; font-weight:600; font-size:.9rem; padding:8px 4px; }
+  .empty-note{ color:#8a8aa3; font-weight:700; font-size:.9rem; padding:8px 4px; }
 </style>
 </head>
 <body>
@@ -251,6 +269,7 @@
 
       const section = document.createElement("div");
       section.className = "world-section";
+      section.dataset.world = world.key;
 
       const header = document.createElement("div");
       header.className = "world-header";
